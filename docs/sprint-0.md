@@ -6,10 +6,10 @@ Team 12
 
 ## Gruppmedlemmarnas namn och GitHub-användarnamn.
 
-Jenny Krusevall, jekr25
-Arian Nawas, Yakowboi
-Niklas Gustafsson, ZeroXray404
-Zebastian Wulff, Zebwul
+- Jenny Krusevall, jekr25
+- Arian Nawas, Yakowboi
+- Niklas Gustafsson, ZeroXray404
+- Zebastian Wulff, Zebwul
 
 ## Länk till ert GitHub-repo.
 
@@ -50,6 +50,12 @@ Vi har diskuterat möjligheten att använda Google fonterna Ubuntu, Nunito eller
 Konsoltext: 
 Vi har diskuterat möjligheten att använda konsoltexten Consolas från Adobe Fonts. 
 
+Eslint:
+Kommer att använda Eslint som code linter.
+
+Prettier: 
+Kommer att använda Prettier som formatterare.
+
 # 3. Initiala reflektioner kring kravspecifikationen.
 
 ## Vad är oklart eller saknar tillräcklig detalj?
@@ -63,6 +69,8 @@ Vi samtliga ligger efter i planeringen i föregående kursers kursmoment vilket 
 # 4. Gruppens arbetssätt.
 
 ## Hur planerar ni att kommunicera inom gruppen?
+
+Kommunikationen kommer att bygga på GitHub Flow. Detta innebär att vårt arbete kommer att följa en specifikt uppsatt process.Den innebär att vi utgår från main som innehåller alla godkända filer i vår applikation. När vi startar en ny uppgift, alltså när en ny task utformad från en userstory ska påbörjas, skapar vi alltid en ny Branch. När en task/uppgift/issue är klar skapar vi en Pull Request (PR), vilket gör att vi också kan automatisera uppdateringen av projekttavlan. PR ska alltid granskas innan den mergas in i main. Detta underlättar för oss att hålla en bra kvalitet i vårt arbete då vi kan validera och hjälpa varandra att hålla en så bra kodstandard som vi kan.
 
 Vi har flera verktyg för kommunikation:
 ### Discord: 
