@@ -20,7 +20,7 @@ To install the application clone the repository.
 `npm run lint`
 
 ## Run Prettier
-`npn run format`
+`npn run format`<br>
 `npn run format:check`
 
 # Tech stack
