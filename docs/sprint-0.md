@@ -55,6 +55,9 @@ Kommer att använda Eslint som code linter.
 Prettier:
 Kommer att använda Prettier som formatterare.
 
+Socket.io-client:
+Socket.IO-beroenden läggs till tidigt i sprint 1.
+
 # 3. Initiala reflektioner kring kravspecifikationen.
 
 ## Vad är oklart eller saknar tillräcklig detalj?
