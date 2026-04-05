@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - setup-github-pages # VIKTIGT: dessa overwritar live pages, skapa nya linjer med er branch och ändra till 'main' när ni är klara
+      - main
 
 permissions:
   contents: read
