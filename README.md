@@ -8,30 +8,31 @@ In the project we develop a webbased code editor that updates in real-time. This
 The project is deployed via GitHub Pages.
 To install the application clone the repository.
 
-git clone git@github.com:Zebwul/coed-grupp-12.git
+`git clone git@github.com:Zebwul/coed-grupp-12.git`
 
 ## Install dependencies
-npm install
+`npm install`
 
 ## Run server
-npm run dev
+`npm run dev`
+
+## Run Eslint
+`npm run lint`
+
+## Run Prettier
+`npn run format`
+`npn run format:check`
 
 # Tech stack
-React
-Vite
-Monaco Editor
-SCSS
-Prettier
+- React
+- Vite
+- Monaco Editor
+- SCSS
+- Prettier
 
 # GitHub Pages
 https://zebwul.github.io/coed-grupp-12/
 
-# Run Eslint
-npm run lint
-
-# Run Prettier
-npn run format
-npn run format:check
 
 # React + Vite
 
