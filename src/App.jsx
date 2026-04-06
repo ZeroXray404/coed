@@ -1,14 +1,12 @@
-import CodeEditor from "./components/CodeEditor";
+import MainArea from './components/MainArea'
 
 // Importerar CodeEditor komponenten.
 function App() {
   return (
     <main className="app">
-      <section className="editor-page">
-        <CodeEditor />
-      </section>
+      <MainArea />
     </main>
-  );
+  )
 }
 
-export default App;
+export default App

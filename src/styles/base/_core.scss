@@ -1,15 +1,39 @@
-@use './variables';
+@use './variables' as *;
 
-// Grundläggande style för Monaco Editor
-.app {
-  min-height: 100vh;
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
 }
 
-.editor-page {
+.app {
   height: 100vh;
-  padding: 1rem;
+  display: flex;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; // Krävs för att barn (dvs Monaco Editor) ska kunna krympa
+  background-color: $color-main-area;
+}
+
+.editor-section {
+  flex: 1;
+  min-height: 0;
+  background-color: $color-editor-section;
 }
 
 .editor-container {
   height: 100%;
+}
+
+.terminal-section {
+  height: 150px;
+  flex-shrink: 0;
+  background-color: $color-terminal-section;
+  border-top: 1px solid $color-border;
+  color: $color-text;
 }
