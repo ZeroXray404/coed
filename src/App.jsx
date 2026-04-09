@@ -4,7 +4,18 @@ import MainArea from './components/MainArea'
 function App() {
   return (
     <main className="app">
-      <MainArea />
+      <header className="app-header">
+        {/* Placera Header-komponent här */}
+      </header>
+      <aside className="app-sidebar">
+        {/* Placera Sidebar-komponent här */}
+      </aside>
+      <section className="app-main">
+        <MainArea />
+      </section>
+      <footer className="app-footer">
+        {/* Placera Footer-komponent här */}
+      </footer>
     </main>
   )
 }

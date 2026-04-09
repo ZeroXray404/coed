@@ -3,13 +3,10 @@ $font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
 $font-heading: system-ui, 'Segoe UI', Roboto, sans-serif;
 $font-mono: ui-monospace, Consolas, monospace;
 
-// Breakpoints
-$bp-tablet: 1024px;
-
 // Layout / Debug färger (tillfälliga)
-$color-main-area: #1e1e1e;
-$color-editor-section: #252526;
-$color-terminal-section: #333333;
+$color-bg-primary: #1e1e1e;
+$color-bg-secondary: #333333;
+$color-bg-tertiary: #2c2c2c;
 
 // Text färger
 $color-text: #fff;
