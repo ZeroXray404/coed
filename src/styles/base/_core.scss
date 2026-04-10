@@ -1,15 +1,54 @@
-@use './variables';
+@use './variables' as *;
 
-// Grundläggande style för Monaco Editor
-.app {
-  min-height: 100vh;
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-.editor-page {
+.app {
+  display: grid;
   height: 100vh;
-  padding: 1rem;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 60px 1fr 40px;
+  grid-template-areas:
+    'header header'
+    'sidebar main'
+    'footer footer';
+}
+
+.app-header {
+  grid-area: header;
+  background-color: $color-bg-secondary;
+}
+
+.app-sidebar {
+  grid-area: sidebar;
+  background-color: $color-bg-tertiary;
+}
+
+.app-main {
+  grid-area: main;
+  background-color: $color-bg-primary;
+  min-height: 0;
+  min-width: 0;
+}
+
+.app-footer {
+  grid-area: footer;
+  background-color: $color-bg-secondary;
+}
+
+.main-area {
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  min-width: 0;
 }
 
 .editor-container {
   height: 100%;
+  width: 100%;
 }
