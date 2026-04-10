@@ -1,0 +1,29 @@
+@use './variables' as *;
+
+%max-height {
+  height: 100%;
+}
+
+%placeholder-class {
+  @extend %max-height;
+  background: green;
+  width: 10vw;
+}
+
+.header {
+  @include flexStyling(row, normal, space-between);
+  @extend %max-height;
+  width: 100%;
+}
+
+.quick-actions {
+  @extend %placeholder-class;
+}
+
+.search-bar {
+  @extend %placeholder-class;
+}
+
+.user-btns {
+  @extend %placeholder-class;
+}
