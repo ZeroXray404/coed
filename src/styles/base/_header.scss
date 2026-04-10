@@ -4,26 +4,114 @@
   height: 100%;
 }
 
-%placeholder-class {
-  @extend %max-height;
-  background: green;
-  width: 10vw;
+%center-vert-relative {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+%header-corner-sections {
+  @extend %max-height;
+  position: relative;
+  width: fit-content;
+  margin: 0 10px;
+}
+
+$input-size: 40px;
+$radius-size: 10px;
 
 .header {
   @include flexStyling(row, normal, space-between);
   @extend %max-height;
   width: 100%;
+
+  button,
+  input {
+    border: none;
+    transition: background-color 0.2s ease;
+    background-color: $color-bg-tertiary;
+
+    &:hover {
+      background-color: $color-dark-hover;
+    }
+  }
 }
 
 .quick-actions {
-  @extend %placeholder-class;
+  @extend %header-corner-sections;
+
+  button {
+    @extend %center-vert-relative;
+    width: $input-size;
+    height: $input-size;
+    border-radius: $radius-size;
+
+    &:first-child {
+      margin-right: 5px;
+    }
+  }
 }
 
 .search-bar {
-  @extend %placeholder-class;
+  @extend %max-height;
+  width: 20vw;
+  position: relative;
+
+  .lucide-search {
+    position: absolute;
+    top: 18px;
+    left: 6px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  input {
+    @extend %center-vert-relative;
+    background-color: $color-bg-tertiary;
+    caret-color: $color-text;
+    color: $color-text;
+    width: 100%;
+    height: $input-size;
+    border-radius: $radius-size;
+    border: none;
+    padding-left: 36px;
+    z-index: 1;
+  }
 }
 
 .user-btns {
-  @extend %placeholder-class;
+  @extend %header-corner-sections;
+  display: flex;
+  gap: 10px;
+
+  .login {
+    @extend %center-vert-relative;
+    @extend %max-height;
+    $login-width: 60px;
+    width: $login-width;
+
+    &-btn {
+      width: $login-width;
+      height: $input-size;
+      border-radius: $radius-size;
+      background-color: $color-btn;
+      color: $color-text;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &:hover {
+        background-color: $color-hover;
+      }
+    }
+  }
+
+  .user {
+    @extend %center-vert-relative;
+    width: $input-size;
+    height: $input-size;
+    border-radius: 50%;
+    border: none;
+    margin-right: 5px;
+  }
 }
