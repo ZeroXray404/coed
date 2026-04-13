@@ -1,8 +1,8 @@
-# Short despcription about the project
+# Short description about the project
 
-In the project we develop a webbased code editor that updates in real-time. This means several developers can edit the code simultaniously. The application is user friendly, responsive and robust.
+In the project we develop a web-based code editor that updates in real-time. This means several developers can edit the code simultaneously. The application is user friendly, responsive and robust.
 
-## Instructions how to run the application locally
+## Instructions on how to run the application locally
 
 ### Installation
 
@@ -38,13 +38,14 @@ or
 
 ## Tech stack
 
-- [React] (https://react.dev/)
-- [Vite] (https://vite.dev/)
-- [Monaco-Editor] (https://microsoft.github.io/monaco-editor/)
-- [SCSS] (https://sass-lang.com/install/)
-- [socket.io-client] (https://socket.io/docs/v4/client-api/)
-- Prettier
-- Eslint
+- [React](https://react.dev/)
+- [Vite](https://vite.dev/)
+- [Monaco-Editor](https://microsoft.github.io/monaco-editor/)
+- [SCSS](https://sass-lang.com/install/)
+- [socket.io-client](https://socket.io/docs/v4/client-api/)
+- [Prettier](https://prettier.io/)
+- [Eslint](https://eslint.org/)
+- [Lucide](https://lucide.dev)
 
 ### GitHub Pages
 
