@@ -14,11 +14,7 @@ function Header() {
 
       <div className="search-bar">
         <Search size={24} />
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full pl-10 pr-4 py-2 border rounded-lg"
-        />
+        <input type="text" placeholder="Search..." />
       </div>
 
       <div className="user-btns">
