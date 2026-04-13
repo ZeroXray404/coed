@@ -24,17 +24,6 @@ $radius-size: 10px;
   @include flexStyling(row, normal, space-between);
   @extend %max-height;
   width: 100%;
-
-  button,
-  input {
-    border: none;
-    transition: background-color 0.2s ease;
-    background-color: $color-bg-tertiary;
-
-    &:hover {
-      background-color: $color-dark-hover;
-    }
-  }
 }
 
 .quick-actions {
