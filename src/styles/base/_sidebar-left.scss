@@ -1,0 +1,38 @@
+@use './variables' as *;
+
+.sidebar-left {
+  @include flexStyling(column, normal, space-between);
+  display: flex;
+  height: 100%;
+  color: $color-text;
+  background-color: $color-bg-secondary;
+  box-sizing: border-box;
+  min-height: 0;
+
+  .sidebar-header,
+  .sidebar-content,
+  .sidebar-footer {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0rem 0rem 1rem 1rem;
+  }
+
+  .sidebar-header {
+    flex-basis: 15%;
+    border-top: solid 1px $color-border;
+    border-bottom: 1px solid $color-border;
+    overflow: hidden; // Förhindrar att innehållet i headern sträcker sig utanför dess område
+  }
+
+  .sidebar-content {
+    flex: auto;
+    border-bottom: 1px solid $color-border;
+    overflow: auto; //scrollbar visas endast när innehållet överstiger tillgängligt utrymme
+  }
+
+  .sidebar-footer {
+    flex-basis: 10%;
+    border-bottom: 1px solid $color-border;
+    overflow: hidden; // Förhindrar att innehållet i footern sträcker sig utanför dess område
+  }
+}
