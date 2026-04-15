@@ -1,5 +1,6 @@
 import Header from './components/Header'
 import MainArea from './components/MainArea'
+import Footer from './components/Footer'
 
 // Importerar CodeEditor komponenten.
 function App() {
@@ -15,7 +16,7 @@ function App() {
         <MainArea />
       </section>
       <footer className="app-footer">
-        {/* Placera Footer-komponent här */}
+        <Footer />
       </footer>
     </main>
   )
