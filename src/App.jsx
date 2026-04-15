@@ -1,6 +1,6 @@
 import Header from './components/Header'
 import MainArea from './components/MainArea'
-import SidebarLeft from './components/SidebarLeft'
+import SidebarLeft from './components/Sidebar'
 
 // Importerar CodeEditor komponenten.
 function App() {
