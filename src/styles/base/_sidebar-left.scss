@@ -2,6 +2,7 @@
 
 .sidebar-left {
   @include flexStyling(column);
+  font-family: $font-sans;
   display: flex;
   height: 100%;
   color: $color-text;
