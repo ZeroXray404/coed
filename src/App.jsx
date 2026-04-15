@@ -1,5 +1,6 @@
 import Header from './components/Header'
 import MainArea from './components/MainArea'
+import SidebarLeft from './components/Sidebar'
 
 // Importerar CodeEditor komponenten.
 function App() {
@@ -9,7 +10,7 @@ function App() {
         <Header />
       </header>
       <aside className="app-sidebar">
-        {/* Placera Sidebar-komponent här */}
+        <SidebarLeft />
       </aside>
       <section className="app-main">
         <MainArea />
