@@ -6,12 +6,12 @@ function Footer() {
       <div className="projectinfo-left">
         <button
           onClick={() => alert('USER-PROFILE')}
-          className="prettierbutton"
+          className="prettier-button"
         >
           <CircleX size={24} />
           <div>
             <input
-              className="footertext"
+              className="footer-text"
               onClick={() => alert('LOGIN')}
               type="button"
               value="0"
@@ -20,7 +20,7 @@ function Footer() {
           <TriangleAlert size={24} />
           <div>
             <input
-              className="footertext"
+              className="footer-text"
               onClick={() => alert('LOGIN')}
               type="button"
               value="0"
@@ -34,12 +34,12 @@ function Footer() {
       <div className="projectinfo-right">
         <button
           onClick={() => alert('USER-PROFILE')}
-          className="prettierbutton"
+          className="prettier-button"
         >
           <Check size={24} />
           <div>
             <input
-              className="footertext"
+              className="footer-text"
               onClick={() => alert('LOGIN')}
               type="button"
               value="Prettier"
