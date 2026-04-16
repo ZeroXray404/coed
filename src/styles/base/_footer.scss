@@ -1,0 +1,56 @@
+@use './variables' as *;
+
+.footer {
+  @include flexStyling(row, normal, space-between);
+  display: flex;
+  height: 40px;
+  width: 100%;
+  gap: 10px;
+}
+
+.projectinfo-left {
+  position: relative;
+  display: flex;
+  margin: 5px;
+  color: $color-text;
+  height: 30px;
+  width: 100%;
+  justify-content: left;
+  align-items: center;
+  text-align: left;
+}
+
+.copyright-info {
+  position: relative;
+  display: flex;
+  color: $color-text;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 12px;
+}
+
+.projectinfo-right {
+  position: relative;
+  display: flex;
+  margin: 5px;
+  color: $color-text;
+  height: 30px;
+  width: 100%;
+  justify-content: right;
+  align-items: center;
+  text-align: right;
+}
+
+.prettier-button {
+  display: flex;
+  margin: 5px;
+  width: 100px;
+  align-items: center;
+}
+
+.footer-text {
+  color: $color-text;
+}
