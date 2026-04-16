@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* Overlay för auth-kortet, skuggar bakgrunden */
+.auth-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.auth-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #fff;
+  background: #333;
+  z-index: 1000;
+}
+
+.auth-step {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Inputfält */
+.auth-card input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* Knappar */
+.auth-card button:not(.close-btn) {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* Primary btn */
+.btn-primary {
+  background: linear-gradient(to right, #5c60b3, #5b6cff);
+  color: #ffffff;
+  border: none;
+}
+
+/* Secondary btn */
+.btn-secondary {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #cccccc;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  width: auto;
+  padding: 0.25rem 0.5rem;
+  background-color: transparent;
+  color: #ffffff;
+}

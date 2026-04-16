@@ -1,6 +1,6 @@
 import { Undo, Redo, Search, User } from 'lucide-react'
 
-function Header() {
+function Header({ onLoginClick }) {
   return (
     <section className="header">
       <div className="quick-actions">
@@ -19,8 +19,9 @@ function Header() {
 
       <div className="user-btns">
         <div className="login">
+          {/* När man klickar på login-knappen körs funktionen från App */}
           <input
-            onClick={() => alert('LOGIN')}
+            onClick={onLoginClick}
             className="login-btn"
             type="button"
             value="Login"
