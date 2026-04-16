@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Header from './components/Header'
 import MainArea from './components/MainArea'
 import AuthCard from './components/authcard/AuthCard'
+import Footer from './components/Footer'
+import SidebarLeft from './components/Sidebar'
 
 // Importerar CodeEditor komponenten.
 function App() {
@@ -15,13 +17,13 @@ function App() {
         <Header onLoginClick={() => setShowAuth(true)} />
       </header>
       <aside className="app-sidebar">
-        {/* Placera Sidebar-komponent här */}
+        <SidebarLeft />
       </aside>
       <section className="app-main">
         <MainArea />
       </section>
       <footer className="app-footer">
-        {/* Placera Footer-komponent här */}
+        <Footer />
       </footer>
 
       {/* Visar AuthCard bara om showAuth är true och skickar en onClose-funktion till AuthCard */}

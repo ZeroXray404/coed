@@ -27,6 +27,8 @@ body,
 .app-sidebar {
   grid-area: sidebar;
   background-color: $color-bg-tertiary;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .app-main {
