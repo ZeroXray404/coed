@@ -8,6 +8,7 @@ import './__auth-card.scss'
 function AuthCard({ onClose }) {
   // State som håller reda på vilket steg i auth-processen vi är på. Börjar på email.
   const [step, setStep] = useState('email')
+  const [email, setEmail] = useState('')
 
   return (
     <div className="auth-overlay">
@@ -16,17 +17,22 @@ function AuthCard({ onClose }) {
         <button type="button" className="close-btn" onClick={onClose}>
           X
         </button>
+
         {/* Om step är "email" visa EmailStep */}
         {step === 'email' && (
           <EmailStep
-            // Byter step till "login" och renderar LoginStep när Continue-knappen klickas
+            email={email}
+            setEmail={setEmail}
             goToLogin={() => setStep('login')}
-            // Byter steg till "register" och renderar RegisterStep när Create Account-knappen klickas
             goToRegister={() => setStep('register')}
           />
         )}
+
         {/* Om step är "login" visa LoginStep */}
-        {step === 'login' && <LoginStep goBack={() => setStep('email')} />}
+        {step === 'login' && (
+          <LoginStep email={email} goBack={() => setStep('email')} />
+        )}
+
         {/* Om step är "register" visa RegisterStep */}
         {step === 'register' && (
           <RegisterStep goBack={() => setStep('email')} />

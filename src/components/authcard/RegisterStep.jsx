@@ -10,10 +10,10 @@ function RegisterStep({ goBack }) {
     try {
       const result = await registerUser(email, password)
       console.log('Registration successful:', result)
-      // Logik för att hantera lyckad registrering / visa ett meddelande eller gå vidare till login
+      // Plats för logik för att hantera lyckad registrering / visa ett meddelande eller gå vidare till login
     } catch (error) {
       console.error('Registration failed:', error)
-      // Logik för att hantera fel / visa ett felmeddelande för användaren
+      // Plats för logik för att hantera fel / visa ett felmeddelande för användaren
     }
   }
 
@@ -21,7 +21,6 @@ function RegisterStep({ goBack }) {
     <div className="auth-step">
       <h2>Create account</h2>
       <p>Choose a password to register.</p>
-
       <input
         type="email"
         value={email}
