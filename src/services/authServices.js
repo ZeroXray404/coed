@@ -1,6 +1,5 @@
 // Läser in API-konfigurationen
-import { getApiConfig } from './apiConfig.js'
-const { API_KEY, BASE_URL } = getApiConfig()
+import { requireApiConfig } from './apiConfig.js'
 
 /*
 - Registerar en ny användare
@@ -10,6 +9,7 @@ const { API_KEY, BASE_URL } = getApiConfig()
 - eller kastar ett fel om registeringen misslyckades (Båda svaren behöver hanteras i den funktion som anropar denna funktion)
 */
 export async function registerUser(email, password) {
+  const { API_KEY, BASE_URL } = requireApiConfig()
   const url = `${BASE_URL}/register`
 
   const userData = {
@@ -44,6 +44,7 @@ export async function registerUser(email, password) {
 - Sparar JWT-token vid lyckad inloggning.
 */
 export async function loginUser(email, password) {
+  const { API_KEY, BASE_URL } = requireApiConfig()
   const url = `${BASE_URL}/login`
 
   const userData = {
