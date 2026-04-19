@@ -35,7 +35,11 @@ function AuthCard({ onClose }) {
 
         {/* Om step är "register" visa RegisterStep */}
         {step === 'register' && (
-          <RegisterStep goBack={() => setStep('email')} />
+          <RegisterStep
+            email={email}
+            setEmail={setEmail}
+            goBack={() => setStep('email')}
+          />
         )}
       </div>
     </div>

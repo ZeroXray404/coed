@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { registerUser } from '../../services/authServices'
 
-function RegisterStep({ goBack }) {
-  const [email, setEmail] = useState('')
+function RegisterStep({ email, setEmail, goBack }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
