@@ -1,23 +1,83 @@
 @use './variables' as *;
 
+$footer-height: 40px;
+
 .footer {
   @include flexStyling(row, normal, space-between);
-  display: flex;
-  height: 40px;
+  height: $footer-height;
   width: 100%;
   gap: 10px;
 }
 
-.projectinfo-left {
-  position: relative;
+%projectinfo-corner-sections {
   display: flex;
-  margin: 5px;
-  color: $color-text;
-  height: 30px;
+  position: relative;
+  height: 100%;
   width: 100%;
-  justify-content: left;
   align-items: center;
-  text-align: left;
+  color: $color-text;
+}
+
+.projectinfo {
+  &-left {
+    @extend %projectinfo-corner-sections;
+    justify-content: left;
+
+    .problem-info {
+      position: relative;
+      height: $footer-height;
+
+      .lucide {
+        position: absolute;
+        top: 8px;
+        left: 6px;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      input {
+        @include centerVert();
+        height: $footer-height;
+        font-size: 24px;
+        color: $color-text;
+        padding-left: 36px;
+        padding-right: 8px;
+        z-index: 1;
+      }
+    }
+  }
+
+  &-right {
+    @extend %projectinfo-corner-sections;
+    justify-content: right;
+
+    .prettier-button {
+      position: relative;
+      height: $footer-height;
+
+      .lucide {
+        position: absolute;
+        top: 8px;
+        left: 6px;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      input {
+        height: $footer-height;
+        color: $color-text;
+        font-size: 16px;
+        padding-left: 36px;
+        padding-right: 8px;
+        z-index: 1;
+      }
+    }
+
+    .notifications {
+      height: $footer-height;
+      padding: 0 8px;
+    }
+  }
 }
 
 .copyright-info {
@@ -30,27 +90,4 @@
   align-items: center;
   text-align: center;
   font-size: 12px;
-}
-
-.projectinfo-right {
-  position: relative;
-  display: flex;
-  margin: 5px;
-  color: $color-text;
-  height: 30px;
-  width: 100%;
-  justify-content: right;
-  align-items: center;
-  text-align: right;
-}
-
-.prettier-button {
-  display: flex;
-  margin: 5px;
-  width: 100px;
-  align-items: center;
-}
-
-.footer-text {
-  color: $color-text;
 }

@@ -4,12 +4,6 @@
   height: 100%;
 }
 
-%center-vert-relative {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 %header-corner-sections {
   @extend %max-height;
   position: relative;
@@ -30,7 +24,7 @@ $radius-size: 10px;
   @extend %header-corner-sections;
 
   button {
-    @extend %center-vert-relative;
+    @include centerVert();
     width: $input-size;
     height: $input-size;
     border-radius: $radius-size;
@@ -55,7 +49,7 @@ $radius-size: 10px;
   }
 
   input {
-    @extend %center-vert-relative;
+    @include centerVert();
     background-color: $color-bg-tertiary;
     caret-color: $color-text;
     color: $color-text;
@@ -74,7 +68,7 @@ $radius-size: 10px;
   gap: 10px;
 
   .login {
-    @extend %center-vert-relative;
+    @include centerVert();
     @extend %max-height;
     $login-width: 60px;
     width: $login-width;
@@ -83,20 +77,15 @@ $radius-size: 10px;
       width: $login-width;
       height: $input-size;
       border-radius: $radius-size;
-      background-color: $color-btn;
       color: $color-text;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-
-      &:hover {
-        background-color: $color-hover;
-      }
     }
   }
 
   .user {
-    @extend %center-vert-relative;
+    @include centerVert();
     width: $input-size;
     height: $input-size;
     border-radius: 50%;

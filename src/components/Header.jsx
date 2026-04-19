@@ -22,7 +22,7 @@ function Header({ onLoginClick }) {
           {/* När man klickar på login-knappen körs funktionen från App */}
           <input
             onClick={onLoginClick}
-            className="login-btn"
+            className="login-btn btn-primary"
             type="button"
             value="Login"
           />

@@ -4,49 +4,39 @@ function Footer() {
   return (
     <section className="footer">
       <div className="projectinfo-left">
-        <button
-          onClick={() => alert('USER-PROFILE')}
-          className="prettier-button"
-        >
+        <div className="problem-info">
           <CircleX size={24} />
-          <div>
-            <input
-              className="footer-text"
-              onClick={() => alert('LOGIN')}
-              type="button"
-              value="0"
-            />
-          </div>
+          <input
+            onClick={() => alert('ERROR COUNTER')}
+            type="button"
+            value="0"
+          />
+        </div>
+        <div className="problem-info">
           <TriangleAlert size={24} />
-          <div>
-            <input
-              className="footer-text"
-              onClick={() => alert('LOGIN')}
-              type="button"
-              value="0"
-            />
-          </div>
-        </button>
+          <input
+            onClick={() => alert('WARNING COUNTER')}
+            type="button"
+            value="0"
+          />
+        </div>
       </div>
       <div className="copyright-info">
         <p>&copy; ProjFront - Copyright by Team 12</p>
       </div>
       <div className="projectinfo-right">
-        <button
-          onClick={() => alert('USER-PROFILE')}
-          className="prettier-button"
-        >
+        <div className="prettier-button">
           <Check size={24} />
-          <div>
-            <input
-              className="footer-text"
-              onClick={() => alert('LOGIN')}
-              type="button"
-              value="Prettier"
-            />
-          </div>
-        </button>
-        <button onClick={() => alert('USER-PROFILE')} className="user">
+          <input
+            onClick={() => alert('PRETTIER')}
+            type="button"
+            value="Prettier"
+          />
+        </div>
+        <button
+          onClick={() => alert('NOTIFICATIONS')}
+          className="notifications"
+        >
           <Bell size={24} />
         </button>
       </div>

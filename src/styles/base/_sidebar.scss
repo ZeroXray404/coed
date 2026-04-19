@@ -1,8 +1,14 @@
 @use './variables' as *;
 
+%sidebar-default-styling {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0rem 0rem 1rem 1rem;
+  border-bottom: 1px solid $color-border;
+}
+
 .sidebar-left {
   @include flexStyling(column);
-  font-family: $font-sans;
   display: flex;
   height: 100%;
   color: $color-text;
@@ -11,32 +17,28 @@
   min-height: 0;
   overflow: hidden;
 
-  .sidebar-header,
-  .sidebar-content,
-  .sidebar-footer {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0rem 0rem 1rem 1rem;
-  }
-
   .sidebar-header {
+    @extend %sidebar-default-styling;
     flex: 0 0 auto;
     border-top: solid 1px $color-border;
-    border-bottom: 1px solid $color-border;
     overflow: hidden;
   }
 
   .sidebar-content {
+    @extend %sidebar-default-styling;
     flex: 1 1 auto;
     min-height: 0;
-    border-bottom: 1px solid $color-border;
     overflow-y: auto;
     overflow-x: hidden;
+
+    ul {
+      padding-left: 20px;
+    }
   }
 
   .sidebar-footer {
+    @extend %sidebar-default-styling;
     flex: 0 0 auto;
-    border-bottom: 1px solid $color-border;
     overflow: hidden;
   }
 }
