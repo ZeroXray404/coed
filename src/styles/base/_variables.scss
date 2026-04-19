@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 // Typografi
-$font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+$font-inter: 'Inter', sans-serif;
 $font-heading: system-ui, 'Segoe UI', Roboto, sans-serif;
 $font-mono: ui-monospace, Consolas, monospace;
 
@@ -30,7 +32,27 @@ $color-border: #555;
   flex-wrap: $wrap;
 }
 
+// Center using transform
+@mixin centerVert($position: relative) {
+  position: $position;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin centerHori($position: relative) {
+  position: $position;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// Linear gradient mixin
+@mixin linearGradientMixin($direction, $colors...) {
+  background: linear-gradient($direction, $colors);
+}
+
 // Button
 $color-btn: #0066ff;
 $color-hover: #75acff;
 $color-dark-hover: #4e4e4e;
+
+// linear-gradient(to right, #5c60b3, #5b6cff)

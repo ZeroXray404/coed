@@ -1,5 +1,18 @@
 @use './variables' as *;
 
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+button,
+input,
+li,
+a {
+  font-family: $font-inter;
+}
+
 html,
 body,
 #root {
@@ -67,5 +80,28 @@ input {
 
   &:hover {
     background-color: $color-dark-hover;
+  }
+}
+
+/* Primary btn */
+.btn-primary {
+  @include linearGradientMixin(to right, #5c60b3, #5b6cff);
+  color: #fff;
+  border: none;
+
+  &:hover {
+    @include linearGradientMixin(to right, #9c9fe2, #b4bbff);
+  }
+}
+
+/* Secondary btn */
+.btn-secondary {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  transition: none;
+
+  &:hover {
+    background-color: #bbb;
   }
 }

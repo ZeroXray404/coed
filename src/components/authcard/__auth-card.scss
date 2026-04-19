@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 /* Overlay för auth-kortet, skuggar bakgrunden */
 .auth-overlay {
   position: fixed;
@@ -29,42 +30,29 @@
   color: #fff;
   background: #333;
   z-index: 1000;
+
+  /* Inputfält */
+  input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  /* Knappar */
+  button:not(.close-btn) {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
 }
 
 .auth-step {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-/* Inputfält */
-.auth-card input {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-
-/* Knappar */
-.auth-card button:not(.close-btn) {
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-/* Primary btn */
-.btn-primary {
-  background: linear-gradient(to right, #5c60b3, #5b6cff);
-  color: #ffffff;
-  border: none;
-}
-
-/* Secondary btn */
-.btn-secondary {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #cccccc;
 }
 
 .close-btn {
@@ -76,4 +64,5 @@
   padding: 0.25rem 0.5rem;
   background-color: transparent;
   color: #ffffff;
+  border-radius: 50%;
 }
