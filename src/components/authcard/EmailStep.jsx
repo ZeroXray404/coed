@@ -1,12 +1,14 @@
-function EmailStep({ goToLogin, goToRegister }) {
+function EmailStep({ email, setEmail, goToLogin, goToRegister }) {
   return (
     <div className="auth-step">
       <h2>Sign in or create account</h2>
       <p>Enter your email to continue</p>
-      {/* Visuell input, ingen state är kopplad ännu */}
-      <input type="email" placeholder="name@email.com" />
-
-      {/* Knappar för att gå till login/ register-steget */}
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="name@email.com"
+      />
       <button type="button" className="btn-primary" onClick={goToLogin}>
         Continue
       </button>

@@ -1,16 +1,33 @@
-function LoginStep({ goBack }) {
+import { useState } from 'react'
+import { loginUser } from '../../services/authServices'
+
+function LoginStep({ email, goBack }) {
+  const [password, setPassword] = useState('')
+
+  async function handleLogin() {
+    try {
+      const result = await loginUser(email, password)
+      console.log('Login successful:', result)
+      // Plats för logik för att hantera lyckad inloggning / visa ett meddelande eller gå vidare i appen
+    } catch (error) {
+      console.error('Login failed:', error)
+      // Plats för logik för att hantera fel / visa ett felmeddelande för användaren
+    }
+  }
+
   return (
     <div className="auth-step">
       <h2>Welcome back</h2>
       <p>Enter your password to log in.</p>
-      {/* Lösenordsfält, ännu utan state */}
-      <input type="password" placeholder="Password" />
-
-      {/* Själva login-logiken kopplas in senare */}
-      <button type="button" className="btn-primary">
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button type="button" className="btn-primary" onClick={handleLogin}>
         Log in
       </button>
-      {/* Går tillbaka till första steget */}
       <button type="button" className="btn-secondary" onClick={goBack}>
         Back
       </button>
