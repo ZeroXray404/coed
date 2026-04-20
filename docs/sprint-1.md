@@ -202,13 +202,22 @@ Faktisk tid: ??h
 
 #### En user story anses vara klar när:
 
-Funktionaliteten är implementerad enligt acceptanskriterierna  
-Koden är testad manuellt och fungerar utan krascher  
-Koden är pushad till repository och inkluderad i en Pull request  
-Koden är granskad av minst en annan gruppmedlem  
-Koden går igenom kontroller vid push.  
-Inga känsliga uppgifter (API-nycklar. etc) finns i koden  
-Projektet går att köra lokalt utan fel
+- Funktionen **uppfyller** sin user stories **acceptance criteria**
+- User story har **rätt namngivning** och task kan **spåras till user story**
+- Tidsestimering och **tidsrapport** för task är **dokumenterad**
+- Koden **fungerar** lokalt **utan fel**
+- **Felhantering** är implementerad **där det är relevant**
+- README är uppdaterad när det behövs
+- **PR**-beskrivningen **förklarar vad** som gjorts och **kopplar till en user story**
+- **Minst en** annan gruppmedlem **har granskat** och godkänt PR:en
+- Koden är mergad till main
+- Koden följer gruppens kodkonventioner:
+  - Commits, kod & filnamn: Engelsk text
+  - Brödtext i ex Trello/PR/Code-review: Svensk text
+  - React, jsx-filer: PascalCase
+  - js-filer, variabler, props: camelCase
+  - CSS, SASS: kebab-case
+  - mappar: lowercase
 
 ## Backlog
 
