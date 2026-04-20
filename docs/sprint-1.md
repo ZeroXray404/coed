@@ -51,7 +51,7 @@ Nedan tasks är avslutade för US-102:
 | T-101-5 | 1      | ~2h     | ~5h         | Jenny  |
 | T-101-6 | 1      | ~2h     | ~4h         | Arian  |
 
-Estimerad tid: 11h
+Estimerad tid: 11h<br>
 Faktisk tid: 22h
 
 **US-102:**
@@ -63,44 +63,44 @@ Faktisk tid: 22h
 | T-102-3 | 1      | ~6h     | ~7h         | Niklas |
 | T-102-4 | 1      | ~4h     | ~4h         | Arian  |
 
-Estimerad tid: 24h
+Estimerad tid: 24h<br>
 Faktisk tid: 22h
 
 ## Acceptanskriterier
 
 **US-101:**
 
-- Givet att applikationen startas,
-  När sidan laddas,
+- Givet att applikationen startas,<br>
+  När sidan laddas,<br>
   Då ska en layout med filpanel, editor, footer och navbar visas.
   <br>
-- Givet att sidan är renderad,
-  När jag tittar på arbetsytan,
+- Givet att sidan är renderad,<br>
+  När jag tittar på arbetsytan,<br>
   - Då ska filpanelen vara placerad till vänster om editor-ytan.
   - Då ska Editor-ytan vara placerad till höger om filpanelen.
   - Då ska navbaren vara placerad högst upp på sidan.
   - Då ska footern vara placerad längst ner på sidan.
     <br>
-- Givet att layouten visas,
-  När jag ändrar storlek på webbläsarfönstret,
+- Givet att layouten visas,<br>
+  När jag ändrar storlek på webbläsarfönstret,<br>
   Då ska fönstren vara responsiva och anpassas utan att bryta layouten.
 
 **US-102:**
 
-- Givet att man inte har ett konto,
-  När jag klickar på logga in,
+- Givet att man inte har ett konto,<br>
+  När jag klickar på logga in,<br>
   Då ska det finnas en knapp för att gå till registeringssidan.
   <br>
-- Givet att man inte har ett konto,
-  När jag klickar på logga in utan ett existerande konto,
+- Givet att man inte har ett konto,<br>
+  När jag klickar på logga in utan ett existerande konto,<br>
   Då ska jag bli omdirigerad automatiskt till registeringssidan.
   <br>
-- Givet att skriver in en giltig email och lösenord,
-  När jag registrerar mig,
+- Givet att skriver in en giltig email och lösenord,<br>
+  När jag registrerar mig,<br>
   Då ska kontot skapas.
   <br>
-- Givet att jag skriver en ogiltig email eller lösenord,
-  När jag försöker registrera mig,
+- Givet att jag skriver en ogiltig email eller lösenord,<br>
+  När jag försöker registrera mig,<br>
   Då ska felmeddelanden visas.
 
 ## Backlog
@@ -122,12 +122,12 @@ Startläge för backloggen och Trello tavla:
 
 #### Under sprinten färdigställdes följande user stories:
 
-US-101: Skapa grundläggande layout för editor
-US-102: Registrering (delvis implementerad - UI klart och validering + API koppling påbörjad)
+US-101: Skapa grundläggande layout för editor<br>
+US-102: Registrering
 
 #### Under sprinten påbörjades följande user stories
 
-US-103: Logga in och autentisering (delvis implementerad - UI klart och validering + API koppling påbörjad
+US-103: Logga in och autentisering (delvis implementerad - UI klart och validering + API koppling påbörjad)
 
 Utöver detta lades även tid på så kallade spikes (förberedande arbete), där samtliga i teamet la varierande antal timmar på att tex. sätta sig in i React, SASS och hur man arbetar agilt med Github och Github Flow. Syftet var att minska osäkerheten och försöka bygga en så stabil grund som möjligt.
 
@@ -151,9 +151,9 @@ T-103-1: Skapa Login-komponent med formulär
 
 ### Fördelning av färdigställda tasks
 
-Jenny: T-101-5, T-102-3, T-103-2
-Niklas: T-101-4, Task: Uppdatera Labbmiljön med socket.io-client, T-102-3, T-103-2
-Arian: T-101-3, Task: Implementera PR Checks, T-101-6, T-102-4
+Jenny: T-101-5, T-102-3, T-103-2<br>
+Niklas: T-101-4, Task: Uppdatera Labbmiljön med socket.io-client, T-102-3, T-103-2<br>
+Arian: T-101-3, Task: Implementera PR Checks, T-101-6, T-102-4<br>
 Zebastian: T-101-1, T-101-2, T-102-1, T-102-2, T-103-1
 
 ## Tidsutfall
@@ -169,7 +169,7 @@ Zebastian: T-101-1, T-101-2, T-102-1, T-102-2, T-103-1
 | T-101-5 | 1      | ~2h     | ~5h         | Jenny  |
 | T-101-6 | 1      | ~2h     | ~4h         | Arian  |
 
-Estimerad tid: 11h
+Estimerad tid: 11h<br>
 Faktisk tid: 22h
 
 ### US-102:
@@ -183,7 +183,7 @@ Faktisk tid: 22h
 | T-102-3 | 1      | ~6h     | ~7h         | Niklas |
 | T-102-4 | 1      | ~4h     | ~4h         | Arian  |
 
-Estimerad tid: 24h
+Estimerad tid: 24h<br>
 Faktisk tid: 22h
 
 ### US-103:
@@ -195,7 +195,7 @@ Faktisk tid: 22h
 | #84     | 1      | ~6h     | ~N/A        |      |
 | #87     | 1      | ~2h     | ~N/A        |      |
 
-Estimerad tid: ~20h
+Estimerad tid: ~20h<br>
 Faktisk tid: ??h
 
 ## Definition of Done
