@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { registerUser } from '../../services/authServices'
 
-function RegisterStep({ email, setEmail, goBack }) {
+function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -9,6 +9,7 @@ function RegisterStep({ email, setEmail, goBack }) {
     try {
       const result = await registerUser(email, password)
       console.log('Registration successful:', result)
+      onRegisterSuccess?.()
       // Plats för logik för att hantera lyckad registrering / visa ett meddelande eller gå vidare till login
     } catch (error) {
       console.error('Registration failed:', error)

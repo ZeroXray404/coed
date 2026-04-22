@@ -1,5 +1,5 @@
 // Wrapper för inloggings/registeringskortens olika steg.
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import EmailStep from './EmailStep'
 import LoginStep from './LoginStep'
 import RegisterStep from './RegisterStep'
@@ -9,6 +9,14 @@ function AuthCard({ onClose, onLoginSuccess }) {
   // State som håller reda på vilket steg i auth-processen vi är på. Börjar på email.
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
+
+  useEffect(() => {
+    if (step !== 'register-success') return
+    const timeoutId = setTimeout(() => {
+      onClose()
+    }, 1500)
+    return () => clearTimeout(timeoutId)
+  }, [step, onClose])
 
   return (
     <div className="auth-overlay">
@@ -43,7 +51,16 @@ function AuthCard({ onClose, onLoginSuccess }) {
             email={email}
             setEmail={setEmail}
             goBack={() => setStep('email')}
+            onRegisterSuccess={() => setStep('register-success')}
           />
+        )}
+
+        {/* Om step är "register-success" visa ett enkelt meddelande */}
+        {step === 'register-success' && (
+          <div className="auth-step">
+            <h2>Account created</h2>
+            <p>Your account has been created successfully!</p>
+          </div>
         )}
       </div>
     </div>
