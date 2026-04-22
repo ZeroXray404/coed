@@ -27,7 +27,12 @@ function App() {
       </footer>
 
       {/* Visar AuthCard bara om showAuth är true och skickar en onClose-funktion till AuthCard */}
-      {showAuth && <AuthCard onClose={() => setShowAuth(false)} />}
+      {showAuth && (
+        <AuthCard
+          onClose={() => setShowAuth(false)}
+          onLoginSuccess={() => setShowAuth(false)}
+        />
+      )}
     </main>
   )
 }

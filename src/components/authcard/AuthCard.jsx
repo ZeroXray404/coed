@@ -5,7 +5,7 @@ import LoginStep from './LoginStep'
 import RegisterStep from './RegisterStep'
 import './__auth-card.scss'
 
-function AuthCard({ onClose }) {
+function AuthCard({ onClose, onLoginSuccess }) {
   // State som håller reda på vilket steg i auth-processen vi är på. Börjar på email.
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
@@ -30,7 +30,11 @@ function AuthCard({ onClose }) {
 
         {/* Om step är "login" visa LoginStep */}
         {step === 'login' && (
-          <LoginStep email={email} goBack={() => setStep('email')} />
+          <LoginStep
+            email={email}
+            goBack={() => setStep('email')}
+            onLoginSuccess={onLoginSuccess}
+          />
         )}
 
         {/* Om step är "register" visa RegisterStep */}
