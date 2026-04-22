@@ -1,0 +1,58 @@
+@use '../base/variables' as *;
+
+.main-area {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Toolbar */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: rgb(68, 116, 159);
+  border-bottom: 1px solid white;
+
+  select,
+  button {
+    height: 2rem;
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    font-size: $font-size-m;
+
+    display: flex;
+    align-items: center;
+
+    background-color: $color-bg-secondary;
+    color: $color-text;
+    border: 1px solid $color-dark-hover;
+    cursor: pointer;
+  }
+}
+/* Language Selector */
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  label {
+    font-size: $font-size-m;
+    color: $color-text;
+  }
+}
+
+.toolbar-save-button {
+  margin-left: auto; /* Trycker knappen till höger */
+}
+
+/* Editor */
+.editor-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}

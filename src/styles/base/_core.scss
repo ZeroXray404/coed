@@ -56,18 +56,6 @@ body,
   background-color: $color-bg-secondary;
 }
 
-.main-area {
-  height: 100%;
-  width: 100%;
-  min-height: 0;
-  min-width: 0;
-}
-
-.editor-container {
-  height: 100%;
-  width: 100%;
-}
-
 .lucide {
   color: $color-text;
 }
@@ -104,4 +92,16 @@ input {
   &:hover {
     background-color: #bbb;
   }
+}
+
+/* Screen reader only klass, döljer element */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

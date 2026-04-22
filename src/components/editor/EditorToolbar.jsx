@@ -2,7 +2,9 @@
 function LanguageSelector({ language, onLanguageChange }) {
   return (
     <div className="language-selector">
-      <label htmlFor="language-select">Språk: </label>
+      <label htmlFor="language-select" className="sr-only">
+        Språk:{' '}
+      </label>
       <select
         id="language-select"
         value={language}
@@ -23,7 +25,7 @@ function SaveButton() {
     alert('Placeholder: Implementera spara-funktionalitet här!')
   }
   return (
-    <button type="button" onClick={handleClick} className="save-button">
+    <button type="button" onClick={handleClick} className="toolbar-save-button">
       Save File
     </button>
   )
