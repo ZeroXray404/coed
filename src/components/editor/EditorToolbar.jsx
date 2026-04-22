@@ -1,9 +1,11 @@
+import { ChevronsDown, ChevronsUp, Save } from 'lucide-react'
+
 // Komponent för att välja programmeringsspråk
 function LanguageSelector({ language, onLanguageChange }) {
   return (
     <div className="language-selector">
       <label htmlFor="language-select" className="sr-only">
-        Språk:{' '}
+        Programming Language:{' '}
       </label>
       <select
         id="language-select"
@@ -25,21 +27,38 @@ function SaveButton() {
     alert('Placeholder: Implementera spara-funktionalitet här!')
   }
   return (
-    <button type="button" onClick={handleClick} className="toolbar-save-button">
-      Save File
+    <button
+      type="button"
+      onClick={handleClick}
+      className="toolbar-save-button"
+      title="Save File"
+      aria-label="Save File"
+    >
+      <Save size={20} />
     </button>
   )
 }
 
 // Toolbar-komponent som grupperar editor-relaterade kontroller
-function EditorToolbar({ language, onLanguageChange }) {
+function EditorToolbar({ language, onLanguageChange, isOpen, onToggle }) {
   return (
-    <div className="editor-toolbar">
-      <LanguageSelector
-        language={language}
-        onLanguageChange={onLanguageChange}
-      />
-      <SaveButton />
+    <div className={`editor-toolbar ${isOpen ? 'is-open' : 'is-collapsed'}`}>
+      {isOpen && (
+        <div className="editor-toolbar-content">
+          <LanguageSelector
+            language={language}
+            onLanguageChange={onLanguageChange}
+          />
+          <SaveButton />
+        </div>
+      )}
+      <button
+        type="button"
+        className="editor-toolbar-toggle"
+        onClick={onToggle}
+      >
+        {isOpen ? <ChevronsUp size={20} /> : <ChevronsDown size={20} />}
+      </button>
     </div>
   )
 }

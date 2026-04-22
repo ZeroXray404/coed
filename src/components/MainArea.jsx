@@ -14,6 +14,7 @@ function MainArea() {
   // State för att hålla reda på valt språk och kod i editorn(default javascript)
   const [language, setLanguage] = useState('javascript')
   const [code, setCode] = useState(languageTemplates.javascript)
+  const [isToolbarOpen, setIsToolbarOpen] = useState(false)
 
   // Funktion som hanterar språkbyte
   // Uppdaterar både språket och sätter utgångskoden för det nya språket
@@ -22,12 +23,18 @@ function MainArea() {
     setCode(languageTemplates[newLanguage] || '')
   }
 
+  function toggleToolbar() {
+    setIsToolbarOpen((prev) => !prev)
+  }
+
   return (
     <section className="main-area">
       {/* Skickar state och handler-funktion som props till toolbar */}
       <EditorToolbar
         language={language}
         onLanguageChange={handleLanguageChange}
+        isOpen={isToolbarOpen}
+        onToggle={toggleToolbar}
       />
       {/* Skickar state och setter-funktion till editorn */}
       <CodeEditor language={language} value={code} onChange={setCode} />
