@@ -1,0 +1,94 @@
+@use '../base/variables' as *;
+
+.main-area {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Toolbar */
+.editor-toolbar {
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #333;
+}
+
+.editor-toolbar-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  select,
+  button {
+    height: 2rem;
+    padding: 0 0.5rem;
+    font-size: $font-size-m;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    justify-content: center;
+    background-color: #2d2d2d;
+    color: $color-text;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #3a3a3a;
+    }
+  }
+}
+.editor-toolbar-content .toolbar-save-button {
+  border-radius: 50%;
+}
+
+/* Language Selector */
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  label {
+    font-size: $font-size-m;
+    color: $color-text;
+  }
+}
+
+.toolbar-save-button {
+  margin-left: auto; /* Trycker knappen till höger */
+}
+
+/* Toggle-knappen längst ner */
+.editor-toolbar-toggle {
+  width: 100%;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0;
+  background-color: #1e1e1e;
+  color: $color-text;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #3a3a3a;
+  }
+}
+
+/* När toolbaren är stängd */
+.editor-toolbar.is-collapsed {
+  .editor-toolbar-content {
+    display: none;
+  }
+}
+
+/* Editor */
+.editor-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  padding-top: 1rem;
+  overflow: hidden;
+}

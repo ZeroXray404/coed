@@ -1,6 +1,10 @@
+/* Globala styles */
 @use './base/variables';
 @use './base/theme';
 @use './base/core';
-@use './base/header';
-@use './base/footer';
-@use './base/sidebar';
+
+/* layout */
+@use './layout/header';
+@use './layout/footer';
+@use './layout/sidebar';
+@use './layout/main-area';
