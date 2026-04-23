@@ -6,6 +6,11 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   async function handleRegister() {
+    if (password !== confirmPassword) {
+      console.error('Passwords do not match')
+      return
+    }
+
     try {
       const result = await registerUser(email, password)
       console.log('Registration successful:', result)
