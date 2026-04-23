@@ -1,6 +1,6 @@
 import { Undo, Redo, Search, User } from 'lucide-react'
 
-function Header({ onLoginClick }) {
+function Header({ isLoggedIn, onLoginClick, onLogoutClick }) {
   return (
     <section className="header">
       <div className="quick-actions">
@@ -21,10 +21,10 @@ function Header({ onLoginClick }) {
         <div className="login">
           {/* När man klickar på login-knappen körs funktionen från App */}
           <input
-            onClick={onLoginClick}
+            onClick={isLoggedIn ? onLogoutClick : onLoginClick}
             className="login-btn btn-primary"
             type="button"
-            value="Login"
+            value={isLoggedIn ? 'Logout' : 'Login'}
           />
         </div>
         <button onClick={() => alert('USER-PROFILE')} className="user">

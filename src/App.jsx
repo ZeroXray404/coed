@@ -7,14 +7,27 @@ import SidebarLeft from './components/Sidebar'
 
 // Importerar CodeEditor komponenten.
 function App() {
-  // State som styr om auth-kortet ska visas eller ej
   const [showAuth, setShowAuth] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  function handleLoginSuccess() {
+    setIsLoggedIn(true)
+    setShowAuth(false)
+  }
+
+  function handleLogout() {
+    setIsLoggedIn(false)
+  }
 
   return (
     <main className="app">
       <header className="app-header">
-        {/* Skickar en funktion till Header som öppnar auth-kortet */}
-        <Header onLoginClick={() => setShowAuth(true)} />
+        {/* Skickar isLoggedIn, onLoginClick och onLogoutClick som props till Header-komponenten */}
+        <Header
+          isLoggedIn={isLoggedIn}
+          onLoginClick={() => setShowAuth(true)}
+          onLogoutClick={handleLogout}
+        />
       </header>
       <aside className="app-sidebar">
         <SidebarLeft />
@@ -30,7 +43,7 @@ function App() {
       {showAuth && (
         <AuthCard
           onClose={() => setShowAuth(false)}
-          onLoginSuccess={() => setShowAuth(false)}
+          onLoginSuccess={handleLoginSuccess}
         />
       )}
     </main>
