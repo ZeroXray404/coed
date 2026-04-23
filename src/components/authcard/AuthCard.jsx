@@ -12,10 +12,6 @@ function AuthCard({ onClose, onLoginSuccess }) {
 
   useEffect(() => {
     if (step !== 'register-success') return
-    const timeoutId = setTimeout(() => {
-      onClose()
-    }, 1500)
-    return () => clearTimeout(timeoutId)
   }, [step, onClose])
 
   return (
@@ -60,6 +56,9 @@ function AuthCard({ onClose, onLoginSuccess }) {
           <div className="auth-step">
             <h2>Account created</h2>
             <p>Your account has been created successfully!</p>
+            <button type="button" className="btn-primary" onClick={onClose}>
+              Continue
+            </button>
           </div>
         )}
       </div>
