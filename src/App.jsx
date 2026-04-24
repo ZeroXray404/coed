@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { logoutUser, getToken } from './services/authServices'
 import Header from './components/Header'
 import MainArea from './components/MainArea'
 import AuthCard from './components/authcard/AuthCard'
@@ -8,7 +9,7 @@ import SidebarLeft from './components/Sidebar'
 // Importerar CodeEditor komponenten.
 function App() {
   const [showAuth, setShowAuth] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()))
 
   function handleLoginSuccess() {
     setIsLoggedIn(true)
@@ -17,6 +18,8 @@ function App() {
 
   function handleLogout() {
     setIsLoggedIn(false)
+    logoutUser()
+    console.log('Logout successful')
   }
 
   return (
