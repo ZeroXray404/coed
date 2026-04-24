@@ -5,10 +5,14 @@ import LoginStep from './LoginStep'
 import RegisterStep from './RegisterStep'
 import './__auth-card.scss'
 
-function AuthCard({ onClose }) {
+function AuthCard({ onClose, onLoginSuccess }) {
   // State som håller reda på vilket steg i auth-processen vi är på. Börjar på email.
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
+
+  function handleRegisterContinue() {
+    onLoginSuccess?.()
+  }
 
   return (
     <div className="auth-overlay">
@@ -30,7 +34,11 @@ function AuthCard({ onClose }) {
 
         {/* Om step är "login" visa LoginStep */}
         {step === 'login' && (
-          <LoginStep email={email} goBack={() => setStep('email')} />
+          <LoginStep
+            email={email}
+            goBack={() => setStep('email')}
+            onLoginSuccess={onLoginSuccess}
+          />
         )}
 
         {/* Om step är "register" visa RegisterStep */}
@@ -39,7 +47,23 @@ function AuthCard({ onClose }) {
             email={email}
             setEmail={setEmail}
             goBack={() => setStep('email')}
+            onRegisterSuccess={() => setStep('register-success')}
           />
+        )}
+
+        {/* Om step är "register-success" visa ett enkelt meddelande */}
+        {step === 'register-success' && (
+          <div className="auth-step">
+            <h2>Account created</h2>
+            <p>Your account has been created successfully!</p>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={handleRegisterContinue}
+            >
+              Continue
+            </button>
+          </div>
         )}
       </div>
     </div>

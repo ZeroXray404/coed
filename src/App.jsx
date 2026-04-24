@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { logoutUser, getToken } from './services/authServices'
 import Header from './components/Header'
 import MainArea from './components/MainArea'
 import AuthCard from './components/authcard/AuthCard'
@@ -7,14 +8,29 @@ import SidebarLeft from './components/Sidebar'
 
 // Importerar CodeEditor komponenten.
 function App() {
-  // State som styr om auth-kortet ska visas eller ej
   const [showAuth, setShowAuth] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()))
+
+  function handleLoginSuccess() {
+    setIsLoggedIn(true)
+    setShowAuth(false)
+  }
+
+  function handleLogout() {
+    setIsLoggedIn(false)
+    logoutUser()
+    console.log('Logout successful')
+  }
 
   return (
     <main className="app">
       <header className="app-header">
-        {/* Skickar en funktion till Header som öppnar auth-kortet */}
-        <Header onLoginClick={() => setShowAuth(true)} />
+        {/* Skickar isLoggedIn, onLoginClick och onLogoutClick som props till Header-komponenten */}
+        <Header
+          isLoggedIn={isLoggedIn}
+          onLoginClick={() => setShowAuth(true)}
+          onLogoutClick={handleLogout}
+        />
       </header>
       <aside className="app-sidebar">
         <SidebarLeft />
@@ -27,7 +43,12 @@ function App() {
       </footer>
 
       {/* Visar AuthCard bara om showAuth är true och skickar en onClose-funktion till AuthCard */}
-      {showAuth && <AuthCard onClose={() => setShowAuth(false)} />}
+      {showAuth && (
+        <AuthCard
+          onClose={() => setShowAuth(false)}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      )}
     </main>
   )
 }

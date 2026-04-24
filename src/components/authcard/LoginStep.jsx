@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { loginUser } from '../../services/authServices'
 
-function LoginStep({ email, goBack }) {
+function LoginStep({ email, goBack, onLoginSuccess }) {
   const [password, setPassword] = useState('')
 
   async function handleLogin() {
     try {
       const result = await loginUser(email, password)
       console.log('Login successful:', result)
-      // Plats för logik för att hantera lyckad inloggning / visa ett meddelande eller gå vidare i appen
+      onLoginSuccess?.()
     } catch (error) {
       console.error('Login failed:', error)
       // Plats för logik för att hantera fel / visa ett felmeddelande för användaren

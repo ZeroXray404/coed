@@ -1,18 +1,28 @@
 import { useState } from 'react'
-import { registerUser } from '../../services/authServices'
+import { loginUser, registerUser } from '../../services/authServices'
 
-function RegisterStep({ email, setEmail, goBack }) {
+function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
   async function handleRegister() {
+    if (password !== confirmPassword) {
+      console.error('Passwords do not match')
+      return
+    }
+
     try {
-      const result = await registerUser(email, password)
-      console.log('Registration successful:', result)
-      // Plats för logik för att hantera lyckad registrering / visa ett meddelande eller gå vidare till login
+      const registerResult = await registerUser(email, password)
+      const loginResult = await loginUser(email, password)
+      console.log(
+        'Registration successful:',
+        registerResult,
+        'Login successful:',
+        loginResult
+      )
+      onRegisterSuccess?.()
     } catch (error) {
-      console.error('Registration failed:', error)
-      // Plats för logik för att hantera fel / visa ett felmeddelande för användaren
+      console.error('Registration or login failed:', error)
     }
   }
 
