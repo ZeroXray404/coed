@@ -11,7 +11,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
       onLoginSuccess?.()
     } catch (error) {
       console.error('Login failed:', error)
-      // Plats för logik för att hantera fel / visa ett felmeddelande för användaren
+      // Plats för logik för att hantera fel / visa ett felmeddelande för användaren.
     }
   }
 
