@@ -1,5 +1,5 @@
 // Wrapper för inloggings/registeringskortens olika steg.
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import EmailStep from './EmailStep'
 import LoginStep from './LoginStep'
 import RegisterStep from './RegisterStep'
@@ -10,9 +10,9 @@ function AuthCard({ onClose, onLoginSuccess }) {
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
 
-  useEffect(() => {
-    if (step !== 'register-success') return
-  }, [step, onClose])
+  function handleRegisterContinue() {
+    onLoginSuccess?.()
+  }
 
   return (
     <div className="auth-overlay">
@@ -56,7 +56,11 @@ function AuthCard({ onClose, onLoginSuccess }) {
           <div className="auth-step">
             <h2>Account created</h2>
             <p>Your account has been created successfully!</p>
-            <button type="button" className="btn-primary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={handleRegisterContinue}
+            >
               Continue
             </button>
           </div>
