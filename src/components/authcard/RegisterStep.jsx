@@ -5,6 +5,17 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
+  const recognizeSubmitButton = (e) => {
+    e.preventDefault()
+    const submitButton = e.nativeEvent.submitter
+    console.log(submitButton.value)
+    if (submitButton.value == 'register') {
+      handleRegister()
+    } else {
+      goBack()
+    }
+  }
+
   async function handleRegister() {
     if (password !== confirmPassword) {
       console.error('Passwords do not match')
@@ -27,7 +38,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   }
 
   return (
-    <div className="auth-step">
+    <form className="auth-step" onSubmit={recognizeSubmitButton}>
       <h2>Create account</h2>
       <p>Choose a password to register.</p>
       <input
@@ -42,20 +53,22 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
+        required
       />
       <input
         type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         placeholder="Confirm password"
+        required
       />
-      <button type="button" className="btn-primary" onClick={handleRegister}>
+      <button type="submit" value="register" className="btn-primary">
         Register
       </button>
-      <button type="button" className="btn-secondary" onClick={goBack}>
+      <button type="submit" value="back" className="btn-secondary">
         Back
       </button>
-    </div>
+    </form>
   )
 }
 

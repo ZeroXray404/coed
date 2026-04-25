@@ -4,6 +4,17 @@ import { loginUser } from '../../services/authServices'
 function LoginStep({ email, goBack, onLoginSuccess }) {
   const [password, setPassword] = useState('')
 
+  const recognizeSubmitButton = (e) => {
+    e.preventDefault()
+    const submitButton = e.nativeEvent.submitter
+    console.log(submitButton.value)
+    if (submitButton.value == 'login') {
+      handleLogin()
+    } else {
+      goBack()
+    }
+  }
+
   async function handleLogin() {
     try {
       const result = await loginUser(email, password)
@@ -16,7 +27,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
   }
 
   return (
-    <div className="auth-step">
+    <form className="auth-step" onSubmit={recognizeSubmitButton}>
       <h2>Welcome back</h2>
       <p>Enter your password to log in.</p>
       <input
@@ -24,14 +35,15 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
+        required
       />
-      <button type="button" className="btn-primary" onClick={handleLogin}>
+      <button type="submit" value="login" className="btn-primary" required>
         Log in
       </button>
-      <button type="button" className="btn-secondary" onClick={goBack}>
+      <button type="submit" value="back" className="btn-secondary" required>
         Back
       </button>
-    </div>
+    </form>
   )
 }
 
