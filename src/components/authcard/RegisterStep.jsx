@@ -35,6 +35,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="name@email.com"
+        required
       />
       <input
         type="password"
