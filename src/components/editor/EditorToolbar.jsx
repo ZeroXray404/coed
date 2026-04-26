@@ -1,4 +1,4 @@
-import { ChevronsDown, ChevronsUp, Save } from 'lucide-react'
+import { ChevronsDown, ChevronsUp, Save, Settings } from 'lucide-react'
 
 // Komponent för att välja programmeringsspråk
 // Tar emot:
@@ -26,6 +26,21 @@ function LanguageSelector({ language, onLanguageChange }) {
   )
 }
 
+// Settings knapp för att öppna editorinställningar i ett modal fönster
+function SettingsButton({ onClick }) {
+  return (
+    <button
+      type="button"
+      className="toolbar-button settings-button"
+      onClick={onClick}
+      title="Editor Settings"
+      aria-label="Editor Settings"
+    >
+      <Settings size={20} />
+    </button>
+  )
+}
+
 // Placeholder-komponent för att spara en fil, kommer utvecklas senare med funktionalitiet för att spara kod från editorn
 function SaveButton() {
   function handleClick() {
@@ -35,7 +50,7 @@ function SaveButton() {
     <button
       type="button"
       onClick={handleClick}
-      className="toolbar-save-button"
+      className="toolbar-button save-button"
       title="Save File"
       aria-label="Save File"
     >
@@ -50,7 +65,13 @@ function SaveButton() {
 // - onLanguageChange: funktion för att uppdatera språk
 // - isOpen: boolean som styr om toolbaren är öppen eller stängd
 // - onToggle: fuktion för att toggla toolbarens öppna/stängda tillstånd.
-function EditorToolbar({ language, onLanguageChange, isOpen, onToggle }) {
+function EditorToolbar({
+  language,
+  onLanguageChange,
+  isOpen,
+  onToggle,
+  onOptionsToggle,
+}) {
   return (
     // Dynamisk klass baserat på isOpen för att styra styling av toolbaren
     <div className={`editor-toolbar ${isOpen ? 'is-open' : 'is-collapsed'}`}>
@@ -61,6 +82,7 @@ function EditorToolbar({ language, onLanguageChange, isOpen, onToggle }) {
             language={language}
             onLanguageChange={onLanguageChange}
           />
+          <SettingsButton onClick={onOptionsToggle} />
           <SaveButton />
         </div>
       )}

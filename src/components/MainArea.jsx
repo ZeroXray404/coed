@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import CodeEditor from './editor/CodeEditor'
 import EditorToolbar from './editor/EditorToolbar'
+import EditorOptions from './editor/EditorOptions'
 
 // Objekt som innehåller en standard utskrift för varje språk, används när man byter språk i dropdownen
 const languageTemplates = {
@@ -17,8 +18,9 @@ function MainArea() {
   // State för aktuell kod i editorn
   // intitialiseras med standardkod för JavaScript
   const [code, setCode] = useState(languageTemplates.javascript)
-  // State som styr om toolbaren är öppen eller stängd
+  // State som styr om toolbaren/Options är öppen eller stängd
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   // State som håller editor-inställningar
   const [editorOptions] = useState({
     wordWrap: 'on',
@@ -41,10 +43,13 @@ function MainArea() {
     setCode(languageTemplates[newLanguage] || '')
   }
 
-  // Funktion för att toggla toolbarens synlighet
+  // Funktioner som styrsynlighet för Toolbar och Options
   // Växlar mellan true/false baserat på tidigare state
   function toggleToolbar() {
     setIsToolbarOpen((prev) => !prev)
+  }
+  function toggleOptions() {
+    setIsOptionsOpen((prev) => !prev)
   }
 
   return (
@@ -59,11 +64,15 @@ function MainArea() {
         onLanguageChange={handleLanguageChange}
         isOpen={isToolbarOpen}
         onToggle={toggleToolbar}
+        onOptionsToggle={toggleOptions}
       />
+      {isOptionsOpen && <EditorOptions onClose={toggleOptions} />}
       {/* CodeEditor-komponent:
       - Tar emot aktuellt språk (för syntaxhighlighting)
       - Tar emot kod (value)
-      - Tar emot setter-funktion för att uppdatera kod när användaren skriver */}
+      - Tar emot setter-funktion för att uppdatera kod när användaren skriver
+      - Tar emot editor-inställningar
+      - Tar emot tema */}
       <CodeEditor
         language={language}
         value={code}
