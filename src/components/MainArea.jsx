@@ -22,7 +22,7 @@ function MainArea() {
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   // State som håller editor-inställningar
-  const [editorOptions] = useState({
+  const [editorOptions, setEditorOptions] = useState({
     wordWrap: 'on',
     tabSize: 2,
     insertSpaces: true,
@@ -32,7 +32,7 @@ function MainArea() {
     scrollBeyondLastLine: false,
   })
   // State för valt tema i editorn
-  const [theme] = useState('vs-dark')
+  const [theme, setTheme] = useState('vs-dark')
 
   // Handler som körs när användaren byter språk i dropdownen
   // Uppdaterar:
@@ -66,7 +66,15 @@ function MainArea() {
         onToggle={toggleToolbar}
         onOptionsToggle={toggleOptions}
       />
-      {isOptionsOpen && <EditorOptions onClose={toggleOptions} />}
+      {isOptionsOpen && (
+        <EditorOptions
+          onClose={toggleOptions}
+          options={editorOptions}
+          setOptions={setEditorOptions}
+          theme={theme}
+          setTheme={setTheme}
+        />
+      )}
       {/* CodeEditor-komponent:
       - Tar emot aktuellt språk (för syntaxhighlighting)
       - Tar emot kod (value)
