@@ -40,7 +40,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
       <button type="submit" value="login" className="btn-primary" required>
         Log in
       </button>
-      <button type="submit" value="back" className="btn-secondary" required>
+      <button type="button" className="btn-secondary" onClick={goBack}>
         Back
       </button>
     </form>

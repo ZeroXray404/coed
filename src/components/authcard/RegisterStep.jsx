@@ -10,9 +10,11 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
     const submitButton = e.nativeEvent.submitter
     console.log(submitButton.value)
     if (submitButton.value == 'register') {
-      handleRegister()
-    } else {
-      goBack()
+      if (password == confirmPassword) {
+        handleRegister()
+      } else {
+        console.log("Passwords don't match")
+      }
     }
   }
 
@@ -48,12 +50,19 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         placeholder="name@email.com"
         required
       />
+      <p>
+        Password must contain at least
+        <li>one uppercase letter</li>
+        <li>one lowercase letter and</li>
+        <li>one digit.</li>
+      </p>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
+        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$"
       />
       <input
         type="password"
@@ -65,7 +74,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
       <button type="submit" value="register" className="btn-primary">
         Register
       </button>
-      <button type="submit" value="back" className="btn-secondary">
+      <button type="button" className="btn-secondary" onClick={goBack}>
         Back
       </button>
     </form>
