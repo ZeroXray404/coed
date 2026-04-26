@@ -19,6 +19,18 @@ function MainArea() {
   const [code, setCode] = useState(languageTemplates.javascript)
   // State som styr om toolbaren är öppen eller stängd
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
+  // State som håller editor-inställningar
+  const [editorOptions] = useState({
+    wordWrap: 'on',
+    tabSize: 2,
+    insertSpaces: true,
+    minimap: { enabled: false },
+    fontSize: 14,
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+  })
+  // State för valt tema i editorn
+  const [theme] = useState('vs-dark')
 
   // Handler som körs när användaren byter språk i dropdownen
   // Uppdaterar:
@@ -52,7 +64,13 @@ function MainArea() {
       - Tar emot aktuellt språk (för syntaxhighlighting)
       - Tar emot kod (value)
       - Tar emot setter-funktion för att uppdatera kod när användaren skriver */}
-      <CodeEditor language={language} value={code} onChange={setCode} />
+      <CodeEditor
+        language={language}
+        value={code}
+        onChange={setCode}
+        options={editorOptions}
+        theme={theme}
+      />
     </section>
   )
 }
