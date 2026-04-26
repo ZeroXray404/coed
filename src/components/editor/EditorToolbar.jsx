@@ -1,12 +1,17 @@
 import { ChevronsDown, ChevronsUp, Save } from 'lucide-react'
 
 // Komponent för att välja programmeringsspråk
+// Tar emot:
+// - language: aktuellt valt språk (state från parent)
+// - onLanguangeChange: callback-funktion för att uppdatera språk i parent state
 function LanguageSelector({ language, onLanguageChange }) {
   return (
     <div className="language-selector">
+      {/* Label används för tillgänglighet (skrämläsare9, men är visuellt dold) */}
       <label htmlFor="language-select" className="sr-only">
         Programming Language:{' '}
       </label>
+      {/* Select-element kopplat till state via value onChange med fördefinerade alternativ*/}
       <select
         id="language-select"
         value={language}
@@ -40,9 +45,16 @@ function SaveButton() {
 }
 
 // Toolbar-komponent som grupperar editor-relaterade kontroller
+// Tar emot:
+// - language: aktuellt språk
+// - onLanguageChange: funktion för att uppdatera språk
+// - isOpen: boolean som styr om toolbaren är öppen eller stängd
+// - onToggle: fuktion för att toggla toolbarens öppna/stängda tillstånd.
 function EditorToolbar({ language, onLanguageChange, isOpen, onToggle }) {
   return (
+    // Dynamisk klass baserat på isOpen för att styra styling av toolbaren
     <div className={`editor-toolbar ${isOpen ? 'is-open' : 'is-collapsed'}`}>
+      {/* Renderas endast om toolbaren är öppen */}
       {isOpen && (
         <div className="editor-toolbar-content">
           <LanguageSelector
@@ -52,15 +64,17 @@ function EditorToolbar({ language, onLanguageChange, isOpen, onToggle }) {
           <SaveButton />
         </div>
       )}
+      {/* Toggle-knapp för att öppna/stänga toolbaren */}
       <button
         type="button"
         className="editor-toolbar-toggle"
         onClick={onToggle}
       >
+        {/* Visar olika ikon beroende på isOpen's state */}
         {isOpen ? <ChevronsUp size={20} /> : <ChevronsDown size={20} />}
       </button>
     </div>
   )
 }
-
+// Exporterar komponenten för användning i MainArea
 export default EditorToolbar

@@ -7,36 +7,51 @@ const languageTemplates = {
   javascript: 'console.log("Hello World")',
   python: 'print("Hello World")',
   html: '<h1>Hello World</h1>',
-  css: 'H1 {color: red;}',
+  css: 'h1 {color: red;}',
 }
 
 function MainArea() {
-  // State för att hålla reda på valt språk och kod i editorn(default javascript)
+  // State för valt programmeringsspråk
+  // Används av båda toolbarens select och editorn
   const [language, setLanguage] = useState('javascript')
+  // State för aktuell kod i editorn
+  // intitialiseras med standardkod för JavaScript
   const [code, setCode] = useState(languageTemplates.javascript)
+  // State som styr om toolbaren är öppen eller stängd
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
 
-  // Funktion som hanterar språkbyte
-  // Uppdaterar både språket och sätter utgångskoden för det nya språket
+  // Handler som körs när användaren byter språk i dropdownen
+  // Uppdaterar:
+  // 1. Valt språk i state
+  // 2. Kod i edtorn baserat på fördefinerad template för det valda språket
   function handleLanguageChange(newLanguage) {
     setLanguage(newLanguage)
     setCode(languageTemplates[newLanguage] || '')
   }
 
+  // Funktion för att toggla toolbarens synlighet
+  // Växlar mellan true/false baserat på tidigare state
   function toggleToolbar() {
     setIsToolbarOpen((prev) => !prev)
   }
 
   return (
     <section className="main-area">
-      {/* Skickar state och handler-funktion som props till toolbar */}
+      {/* Toolbar-komponent:
+      - Tar emot aktuellt språk (state)
+      - Tar emot callback för att ändra språk
+      - Tar emot state för om den är öppen eller stängd
+      - Tar emot funktionm för att toggla state */}
       <EditorToolbar
         language={language}
         onLanguageChange={handleLanguageChange}
         isOpen={isToolbarOpen}
         onToggle={toggleToolbar}
       />
-      {/* Skickar state och setter-funktion till editorn */}
+      {/* CodeEditor-komponent:
+      - Tar emot aktuellt språk (för syntaxhighlighting)
+      - Tar emot kod (value)
+      - Tar emot setter-funktion för att uppdatera kod när användaren skriver */}
       <CodeEditor language={language} value={code} onChange={setCode} />
     </section>
   )
