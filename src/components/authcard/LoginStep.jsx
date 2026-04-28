@@ -3,16 +3,12 @@ import { loginUser } from '../../services/authServices'
 
 function LoginStep({ email, goBack, onLoginSuccess }) {
   const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
 
   const recognizeSubmitButton = (e) => {
+    setMessage('')
     e.preventDefault()
-    const submitButton = e.nativeEvent.submitter
-    console.log(submitButton.value)
-    if (submitButton.value == 'login') {
-      handleLogin()
-    } else {
-      goBack()
-    }
+    handleLogin()
   }
 
   async function handleLogin() {
@@ -21,8 +17,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
       console.log('Login successful:', result)
       onLoginSuccess?.()
     } catch (error) {
-      console.error('Login failed:', error)
-      // Plats för logik för att hantera fel / visa ett felmeddelande för användaren.
+      setMessage('Login failed')
     }
   }
 
@@ -37,6 +32,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
         placeholder="Password"
         required
       />
+      <div className="error-message">{message}</div>
       <button type="submit" value="login" className="btn-primary" required>
         Log in
       </button>

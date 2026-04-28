@@ -4,23 +4,16 @@ import { loginUser, registerUser } from '../../services/authServices'
 function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-
+  const [message, setMessage] = useState('')
   const recognizeSubmitButton = (e) => {
+    setMessage('')
     e.preventDefault()
-    const submitButton = e.nativeEvent.submitter
-    console.log(submitButton.value)
-    if (submitButton.value == 'register') {
-      if (password == confirmPassword) {
-        handleRegister()
-      } else {
-        console.log("Passwords don't match")
-      }
-    }
+    handleRegister()
   }
 
   async function handleRegister() {
     if (password !== confirmPassword) {
-      console.error('Passwords do not match')
+      setMessage("Passwords don't match")
       return
     }
 
@@ -35,7 +28,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
       )
       onRegisterSuccess?.()
     } catch (error) {
-      console.error('Registration or login failed:', error)
+      setMessage('Registration or login failed')
     }
   }
 
@@ -50,12 +43,14 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         placeholder="name@email.com"
         required
       />
-      <p>
-        Password must contain at least
-        <li>one uppercase letter</li>
-        <li>one lowercase letter and</li>
-        <li>one digit.</li>
-      </p>
+      <div className="info-sign">
+        Password must contain at least:
+        <div>
+          <ul>1 uppercase letter,</ul>
+          <ul>1 lowercase letter and</ul>
+          <ul>1 digit.</ul>
+        </div>
+      </div>
       <input
         type="password"
         value={password}
@@ -71,6 +66,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         placeholder="Confirm password"
         required
       />
+      <div className="error-message">{message}</div>
       <button type="submit" value="register" className="btn-primary">
         Register
       </button>

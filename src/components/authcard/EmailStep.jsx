@@ -1,4 +1,5 @@
 import { Form } from 'lucide-react'
+// import { useTranslation } from 'react-i18next'
 
 function EmailStep({ email, setEmail, goToLogin, goToRegister }) {
   const recognizeSubmitButton = (e) => {

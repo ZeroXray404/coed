@@ -9,6 +9,7 @@ function AuthCard({ onClose, onLoginSuccess }) {
   // State som håller reda på vilket steg i auth-processen vi är på. Börjar på email.
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
 
   function handleRegisterContinue() {
     onLoginSuccess?.()
