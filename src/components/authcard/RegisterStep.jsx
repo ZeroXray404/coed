@@ -29,6 +29,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
       onRegisterSuccess?.()
     } catch (error) {
       setMessage('Registration or login failed')
+      console.error('Registration or login failed:', error)
     }
   }
 

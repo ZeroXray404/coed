@@ -18,6 +18,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
       onLoginSuccess?.()
     } catch (error) {
       setMessage('Login failed')
+      console.error('Login failed:', error)
     }
   }
 
