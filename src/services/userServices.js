@@ -1,6 +1,6 @@
 // Läser in API-konfigurationen
 import { getApiConfig } from './apiConfig.js'
-const { API_KEY, BASE_URL } = getApiConfig()
+const { API_KEY, AUTH_BASE_URL } = getApiConfig()
 
 // Användardata
 

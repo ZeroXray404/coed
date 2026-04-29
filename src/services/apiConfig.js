@@ -1,18 +1,19 @@
 // Hämtar API-konfiguration från env
-// Returnerar { API_KEY, BASE_URL } eller null om något saknas
+// Returnerar { API_KEY, AUTH_BASE_URL, DOCKET_BASE_URL } eller null om något saknas
 export function getApiConfig() {
   // 1. Läser env
   const API_KEY = import.meta.env.VITE_API_KEY
-  const BASE_URL = import.meta.env.VITE_BASE_URL
+  const AUTH_BASE_URL = import.meta.env.VITE_AUTH_BASE_URL
+  const DOCKET_BASE_URL = import.meta.env.VITE_DOCKET_BASE_URL
 
   // 2. Validerar att det finns
-  if (!API_KEY || !BASE_URL) {
+  if (!API_KEY || !AUTH_BASE_URL || !DOCKET_BASE_URL) {
     console.warn('API-konfiguration saknas. API-funktioner är inaktiverade.')
     return null
   }
 
   // 3. Returnera konfigruationen
-  return { API_KEY, BASE_URL }
+  return { API_KEY, AUTH_BASE_URL, DOCKET_BASE_URL }
 }
 
 // Säker version av getApiConfig
