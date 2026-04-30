@@ -8,6 +8,8 @@
 }
 
 $input-size: 40px;
+$list-icon-size: 16px;
+$list-padding: 6px;
 
 .sidebar-left {
   @include flexStyling(column);
@@ -46,6 +48,15 @@ $input-size: 40px;
       .lucide {
         @include centerFully(absolute);
       }
+
+      &.disabled {
+        cursor: unset;
+        background-color: #222;
+
+        .lucide {
+          color: $color-bg-secondary;
+        }
+      }
     }
   }
 
@@ -62,16 +73,23 @@ $input-size: 40px;
       list-style-type: none;
 
       li {
+        position: relative;
         cursor: pointer;
-        padding: 6px;
+        padding: $list-padding;
         -webkit-user-select: none; /* Safari */
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none; /* Standard syntax */
-        font-size: 1rem;
+        font-size: 12px;
         transition: background-color 0.2s ease;
+        padding-left: $list-padding * 2 + $list-icon-size; // padding + icon + padding
 
         &:hover {
           background-color: $color-dark-hover;
+        }
+
+        .lucide {
+          position: absolute;
+          left: $list-padding;
         }
       }
     }
