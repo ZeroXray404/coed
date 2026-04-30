@@ -56,9 +56,24 @@ $input-size: 40px;
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 0;
 
     ul {
       list-style-type: none;
+
+      li {
+        cursor: pointer;
+        padding: 6px;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+        font-size: 1rem;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: $color-dark-hover;
+        }
+      }
     }
   }
 
