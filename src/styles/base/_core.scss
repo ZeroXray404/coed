@@ -65,6 +65,7 @@ input {
   border: none;
   transition: background-color 0.2s ease;
   background-color: $color-bg-tertiary;
+  cursor: pointer;
 
   &:hover {
     background-color: $color-dark-hover;
