@@ -3,14 +3,14 @@ function FileListContent() {
     <div className="sidebar-content">
       <ul>
         {demoProjects.data.map((project) => (
-          <li key={project.uid}>{project.name}</li>
+          <li onClick={() => alert(project.uid)} key={project.uid}>
+            {project.name}
+          </li>
         ))}
       </ul>
     </div>
   )
 }
-
-function FileExplorer() {}
 
 const demoProjects = {
   // Mockad data för projekten i sidofältet.
