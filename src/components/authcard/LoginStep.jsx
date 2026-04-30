@@ -17,8 +17,8 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
       console.log('Login successful:', result)
       onLoginSuccess?.()
     } catch (error) {
-      setMessage('Login failed')
-      console.error('Login failed:', error)
+      setMessage("User doesn't exist or password is wrong")
+      console.error("User doesn't exist or password is wrong", error)
     }
   }
 

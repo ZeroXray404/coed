@@ -108,8 +108,14 @@ input {
 
 .error-message {
   color: red;
+  height: $font-size-xs;
+  font-size: $font-size-xs;
+  font-family: $font-inter;
+  visibility: visible;
 }
 
 .info-sign {
   padding: 5px;
+  font-size: $font-size-xs;
+  font-family: $font-inter;
 }

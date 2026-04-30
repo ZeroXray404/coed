@@ -21,6 +21,7 @@ function EmailStep({ email, setEmail, goToLogin, goToRegister }) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="name@email.com"
+        pattern="^[^@\s]+@[a-z0-9-]+\.[a-z]$"
         required
       />
       <button type="submit" value="login" className="btn-primary">

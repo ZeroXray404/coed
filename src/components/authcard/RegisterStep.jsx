@@ -28,8 +28,8 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
       )
       onRegisterSuccess?.()
     } catch (error) {
-      setMessage('Registration or login failed')
-      console.error('Registration or login failed:', error)
+      setMessage('User account already exist')
+      console.error('User account already exist:', error)
     }
   }
 
@@ -42,14 +42,13 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="name@email.com"
+        pattern="^[^@\s]+@[a-z0-9-]+\.[a-z]$"
         required
       />
       <div className="info-sign">
-        Password must contain at least:
         <div>
-          <ul>1 uppercase letter,</ul>
-          <ul>1 lowercase letter and</ul>
-          <ul>1 digit.</ul>
+          Password must contain at least 1 uppercase letter, 1 lowercase letter
+          and 1 digit.
         </div>
       </div>
       <input
