@@ -1,10 +1,12 @@
+import { AppWindow } from 'lucide-react'
+
 function FileListContent() {
   return (
     <div className="sidebar-content">
       <ul>
         {demoProjects.data.map((project) => (
           <li onClick={() => alert(project.uid)} key={project.uid}>
-            {project.name}
+            <AppWindow size={16} /> {project.name}
           </li>
         ))}
       </ul>

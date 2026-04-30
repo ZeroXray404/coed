@@ -1,4 +1,4 @@
-import { Trash2, HardDriveDownload, FolderPlus, FilePlus } from 'lucide-react'
+import { Trash2, FolderOutput, FolderPlus, FilePlus } from 'lucide-react'
 
 function CreateFileHeader() {
   return (
@@ -9,8 +9,8 @@ function CreateFileHeader() {
         </button>
       </div>
       <div className="sidebar-header-right">
-        <button className="sidebar-header-btn btn-loadproj">
-          <HardDriveDownload />
+        <button className="sidebar-header-btn btn-projback">
+          <FolderOutput />
         </button>
         <button className="sidebar-header-btn btn-newproj">
           <FolderPlus />
