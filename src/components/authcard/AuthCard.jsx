@@ -3,6 +3,7 @@ import { useState } from 'react'
 import EmailStep from './EmailStep'
 import LoginStep from './LoginStep'
 import RegisterStep from './RegisterStep'
+import RegisterSuccessStep from './RegisterSuccessStep'
 import './__auth-card.scss'
 
 function AuthCard({ onClose, onLoginSuccess }) {
@@ -18,9 +19,11 @@ function AuthCard({ onClose, onLoginSuccess }) {
     <div className="auth-overlay">
       <div className="auth-card">
         {/* Tar emot onClose-funktionen från App-komponenten */}
-        <button type="button" className="close-btn" onClick={onClose}>
-          X
-        </button>
+        {step !== 'register-success' && (
+          <button type="button" className="close-btn" onClick={onClose}>
+            X
+          </button>
+        )}
 
         {/* Om step är "email" visa EmailStep */}
         {step === 'email' && (
@@ -53,17 +56,7 @@ function AuthCard({ onClose, onLoginSuccess }) {
 
         {/* Om step är "register-success" visa ett enkelt meddelande */}
         {step === 'register-success' && (
-          <div className="auth-step">
-            <h2>Account created</h2>
-            <p>Your account has been created successfully!</p>
-            <button
-              type="button"
-              className="btn-primary"
-              onClick={handleRegisterContinue}
-            >
-              Continue
-            </button>
-          </div>
+          <RegisterSuccessStep onContinue={handleRegisterContinue} />
         )}
       </div>
     </div>
