@@ -7,6 +7,8 @@
   border-bottom: 1px solid $color-border;
 }
 
+$input-size: 40px;
+
 .sidebar-left {
   @include flexStyling(column);
   display: flex;
@@ -19,9 +21,30 @@
 
   .sidebar-header {
     @extend %sidebar-default-styling;
-    flex: 0 0 auto;
+    @include flexStyling($justify: space-between);
+    background-color: $color-bg-tertiary;
+    gap: 10px;
+    height: $input-size;
     border-top: solid 1px $color-border;
-    overflow: hidden;
+    padding: 0;
+
+    &-left {
+      // background-color: blue;
+    }
+
+    &-right {
+      // background-color: red;
+    }
+
+    &-btn {
+      position: relative;
+      width: $input-size;
+      height: 100%;
+
+      .lucide {
+        @include centerFully(absolute);
+      }
+    }
   }
 
   .sidebar-content {
