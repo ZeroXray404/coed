@@ -1,9 +1,7 @@
+import CreateFileHeader from './files/CreateFile'
+
 function SidebarHeader() {
-  return (
-    <div className="sidebar-header">
-      <h3>Sidebar Header</h3>
-    </div>
-  )
+  return <CreateFileHeader />
 }
 
 function SidebarContent() {
