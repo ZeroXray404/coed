@@ -11,6 +11,7 @@ $input-size: 40px;
 
 .sidebar-left {
   @include flexStyling(column);
+
   display: flex;
   height: 100%;
   color: $color-text;
@@ -22,6 +23,7 @@ $input-size: 40px;
   .sidebar-header {
     @extend %sidebar-default-styling;
     @include flexStyling($justify: space-between);
+
     background-color: $color-bg-tertiary;
     gap: 10px;
     height: $input-size;
@@ -49,18 +51,20 @@ $input-size: 40px;
 
   .sidebar-content {
     @extend %sidebar-default-styling;
+
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
 
     ul {
-      padding-left: 20px;
+      list-style-type: none;
     }
   }
 
   .sidebar-footer {
     @extend %sidebar-default-styling;
+
     flex: 0 0 auto;
     overflow: hidden;
   }
