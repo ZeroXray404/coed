@@ -1,12 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { loginUser } from '../../services/authServices'
 
 function LoginStep({ email, goBack, onLoginSuccess }) {
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
+  const [errors, setErrors] = useState([])
+
+  useEffect(() => {
+    const errorMessage = console.error
+
+    console.error = (...loadingMessage) => {
+      setErrors([])
+
+      setErrors((p) => [...p, loadingMessage.join(' ')])
+      errorMessage.apply(console, loadingMessage)
+    }
+    return () => {
+      console.error = errorMessage
+    }
+  }, [])
 
   const recognizeSubmitButton = (e) => {
-    setMessage('')
     e.preventDefault()
     handleLogin()
   }
@@ -17,8 +31,8 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
       console.log('Login successful:', result)
       onLoginSuccess?.()
     } catch (error) {
-      setMessage("User doesn't exist or password is wrong")
-      console.error("User doesn't exist or password is wrong", error)
+      console.error('', error)
+      setMessage('')
     }
   }
 
@@ -33,7 +47,12 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
         placeholder="Password"
         required
       />
-      <div className="error-message">{message}</div>
+      {/*<div className="error-message">{message}</div>*/}
+      <div className="error-message">
+        {errors.map((error, i) => (
+          <div key={i}>{error.slice(7)}</div>
+        ))}
+      </div>
       <button type="submit" value="login" className="btn-primary" required>
         Log in
       </button>

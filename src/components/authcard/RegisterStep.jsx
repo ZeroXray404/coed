@@ -5,15 +5,18 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState('')
+
   const recognizeSubmitButton = (e) => {
     setMessage('')
     e.preventDefault()
+
     handleRegister()
   }
 
   async function handleRegister() {
     if (password !== confirmPassword) {
       setMessage("Passwords don't match")
+
       return
     }
 
