@@ -30,7 +30,6 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
       onLoginSuccess?.()
     } catch (error) {
       console.error('', error)
-      setMessage('')
     }
   }
 
