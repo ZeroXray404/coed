@@ -3,7 +3,6 @@ import { loginUser } from '../../services/authServices'
 
 function LoginStep({ email, goBack, onLoginSuccess }) {
   const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
@@ -11,7 +10,6 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
 
     console.error = (...loadingMessage) => {
       setErrors([])
-
       setErrors((p) => [...p, loadingMessage.join(' ')])
       errorMessage.apply(console, loadingMessage)
     }
@@ -47,7 +45,6 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
         placeholder="Password"
         required
       />
-      {/*<div className="error-message">{message}</div>*/}
       <div className="error-message">
         {errors.map((error, i) => (
           <div key={i}>{error.slice(7)}</div>
