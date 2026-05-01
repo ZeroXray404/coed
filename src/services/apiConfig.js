@@ -8,7 +8,7 @@ export function getApiConfig() {
 
   // 2. Validerar att det finns
   if (!API_KEY || !AUTH_BASE_URL || !DOCKET_BASE_URL) {
-    console.warn('API-konfiguration saknas. API-funktioner är inaktiverade.')
+    console.warn('API configuration is missing. API functions are disabled.')
     return null
   }
 
@@ -22,7 +22,10 @@ export function requireApiConfig() {
   const config = getApiConfig()
 
   if (!config) {
-    throw new Error('API är inte tillgängligt i denna miljö')
+    throw new Error(
+      'API is not available in this environment.' +
+        ' Please check your environment variables.'
+    )
   }
 
   return config
