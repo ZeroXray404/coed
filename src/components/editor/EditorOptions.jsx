@@ -84,11 +84,7 @@ function EditorOptions({ onClose, options, setOptions, theme, setTheme }) {
               min="10"
               max="24"
               value={options.fontSize}
-              onChange={(e) => {
-                const value = Number(e.target.value)
-                const clmapedValue = Math.min(24, Math.max(10, value))
-                updateOption('fontSize', clmapedValue)
-              }}
+              onChange={(e) => updateOption('fontSize', Number(e.target.value))}
             />
           </label>
 
