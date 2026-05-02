@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CodeEditor from './editor/CodeEditor'
 import EditorToolbar from './editor/EditorToolbar'
 import EditorOptions from './editor/EditorOptions'
@@ -9,6 +9,20 @@ const languageTemplates = {
   python: 'print("Hello World")',
   html: '<h1>Hello World</h1>',
   css: 'h1 {color: red;}',
+}
+
+// Standardinställningar för Monaco-Editorn
+const defaultEditorOptions = {
+  // Allmänna user experience inställningar
+  wordWrap: 'on',
+  tabSize: 2,
+  minimap: { enabled: false },
+  fontSize: 14,
+
+  // Interna default-värden för Editor beteende
+  insertSpaces: true,
+  automaticLayout: true,
+  scrollBeyondLastLine: false,
 }
 
 function MainArea() {
@@ -22,17 +36,29 @@ function MainArea() {
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   // State som håller editor-inställningar
-  const [editorOptions, setEditorOptions] = useState({
-    wordWrap: 'on',
-    tabSize: 2,
-    insertSpaces: true,
-    minimap: { enabled: false },
-    fontSize: 14,
-    automaticLayout: true,
-    scrollBeyondLastLine: false,
+  const [editorOptions, setEditorOptions] = useState(() => {
+    // Försöker hämta sparade inställningar från localStorage
+    const savedOptions = localStorage.getItem('editorOptions')
+    // Om det finns sparade inställningar, parsea och returnera dem, annars returnera defaultinställningarna
+    return savedOptions ? JSON.parse(savedOptions) : defaultEditorOptions
   })
   // State för valt tema i editorn
-  const [theme, setTheme] = useState('vs-dark')
+  const [theme, setTheme] = useState(() => {
+    // Försöker hämta sparat tema från localStorage
+    const savedTheme = localStorage.getItem('editorTheme')
+    // Om det finns ett sparat tema, returnera det, annars default vs-dark
+    return savedTheme || 'vs-dark'
+  })
+
+  // Sparar editor-instllningar i localStorage när de ändras
+  useEffect(() => {
+    localStorage.setItem('editorOptions', JSON.stringify(editorOptions))
+  }, [editorOptions])
+
+  // Sparar valt tema i localStorage när det ändras
+  useEffect(() => {
+    localStorage.setItem('editorTheme', theme)
+  }, [theme])
 
   // Handler som körs när användaren byter språk i dropdownen
   // Uppdaterar:
