@@ -65,6 +65,7 @@ input {
   border: none;
   transition: background-color 0.2s ease;
   background-color: $color-bg-tertiary;
+  cursor: pointer;
 
   &:hover {
     background-color: $color-dark-hover;
@@ -104,4 +105,18 @@ input {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.error-message {
+  color: red;
+  height: $font-size-xs;
+  font-size: $font-size-xs;
+  font-family: $font-inter;
+  visibility: visible;
+}
+
+.info-sign {
+  padding: 5px;
+  font-size: $font-size-xs;
+  font-family: $font-inter;
 }
