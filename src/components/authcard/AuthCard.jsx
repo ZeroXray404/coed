@@ -35,7 +35,7 @@ function AuthCard({ onClose, onLoginSuccess }) {
             aria-label="Close Window"
           >
             <X size={20} />
-        </button>
+          </button>
         )}
 
         {/* Om step är "email" visa EmailStep */}
