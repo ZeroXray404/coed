@@ -49,6 +49,10 @@ $list-padding: 6px;
         @include centerFully(absolute);
       }
 
+      &.delete-mode {
+        background-color: #ff2626;
+      }
+
       &.disabled {
         cursor: unset;
         background-color: #222;
