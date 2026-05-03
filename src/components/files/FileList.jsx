@@ -1,9 +1,6 @@
 import { AppWindow } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
-function FileListContent({ deleteMode }) {
-  const [selectedFiles, setSelectedFiles] = useState([])
-
+function FileListContent({ deleteMode, selectedFiles, setSelectedFiles }) {
   /*
    * prev = current selected IDs
    * includes(id) = check if selected (if ID exists)
@@ -15,12 +12,6 @@ function FileListContent({ deleteMode }) {
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     )
   }
-
-  useEffect(() => {
-    if (!deleteMode) {
-      setSelectedFiles([])
-    }
-  }, [deleteMode])
 
   return (
     <div className="sidebar-content">

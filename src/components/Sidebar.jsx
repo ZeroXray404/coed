@@ -8,8 +8,14 @@ function SidebarHeader({ deleteMode, setDeleteMode }) {
   )
 }
 
-function SidebarContent({ deleteMode }) {
-  return <FileListContent deleteMode={deleteMode} />
+function SidebarContent({ deleteMode, selectedFiles, setSelectedFiles }) {
+  return (
+    <FileListContent
+      deleteMode={deleteMode}
+      selectedFiles={selectedFiles}
+      setSelectedFiles={setSelectedFiles}
+    />
+  )
 }
 
 function SidebarFooter() {
@@ -22,11 +28,20 @@ function SidebarFooter() {
 
 function SidebarLeft() {
   const [deleteMode, setDeleteMode] = useState(false)
+  const [selectedFiles, setSelectedFiles] = useState([])
+
+  if (!deleteMode && selectedFiles.length > 0) {
+    setSelectedFiles([])
+  }
 
   return (
     <div className="sidebar-left">
       <SidebarHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
-      <SidebarContent deleteMode={deleteMode} />
+      <SidebarContent
+        deleteMode={deleteMode}
+        selectedFiles={selectedFiles}
+        setSelectedFiles={setSelectedFiles}
+      />
       <SidebarFooter />
     </div>
   )
