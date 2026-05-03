@@ -1,10 +1,16 @@
 import { Trash2, FolderOutput, FolderPlus, FilePlus } from 'lucide-react'
+import { useState } from 'react'
 
 function CreateFileHeader() {
+  const [deleteMode, setDeleteMode] = useState(false)
+
   return (
     <div className="sidebar-header">
       <div className="sidebar-header-left">
-        <button className="sidebar-header-btn btn-delete">
+        <button
+          onClick={() => setDeleteMode((prev) => !prev)}
+          className={`sidebar-header-btn btn-delete ${deleteMode ? 'delete-mode' : ''}`}
+        >
           <Trash2 />
         </button>
       </div>
