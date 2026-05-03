@@ -11,6 +11,10 @@ function FileListContent({ deleteMode, selectedFiles, setSelectedFiles }) {
     setSelectedFiles((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     )
+
+    if (0 < selectedFiles.length < 1) {
+      alert('MODAL WINDOW HERE')
+    }
   }
 
   return (
