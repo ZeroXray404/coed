@@ -50,7 +50,7 @@ $list-padding: 6px;
       }
 
       &.delete-mode {
-        background-color: #ff2626;
+        background-color: $delete-color;
       }
 
       &.disabled {
@@ -84,7 +84,11 @@ $list-padding: 6px;
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none; /* Standard syntax */
         font-size: 12px;
-        transition: background-color 0.2s ease;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease,
+          border-bottom 0.2s ease;
+        border-bottom: transparent solid 1px;
         padding-left: $list-padding * 2 + $list-icon-size; // padding + icon + padding
 
         &:hover {
@@ -94,6 +98,31 @@ $list-padding: 6px;
         .lucide {
           position: absolute;
           left: $list-padding;
+        }
+
+        input {
+          @include centerVert(absolute);
+          right: $list-padding;
+          visibility: hidden;
+
+          &.active {
+            visibility: unset;
+
+            &.delete-mode {
+              outline: transparent solid 1px;
+              transition: outline 0.2s ease;
+              accent-color: $delete-color;
+
+              &:checked {
+                outline: $color-text solid 1px;
+              }
+            }
+          }
+        }
+
+        &.selected {
+          background-color: #ff4848;
+          border-bottom: $color-text solid 1px;
         }
       }
     }
