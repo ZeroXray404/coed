@@ -7,8 +7,13 @@
   border-bottom: 1px solid $color-border;
 }
 
+$input-size: 40px;
+$list-icon-size: 16px;
+$list-padding: 6px;
+
 .sidebar-left {
   @include flexStyling(column);
+
   display: flex;
   height: 100%;
   color: $color-text;
@@ -19,25 +24,113 @@
 
   .sidebar-header {
     @extend %sidebar-default-styling;
-    flex: 0 0 auto;
+    @include flexStyling($justify: space-between);
+
+    background-color: $color-bg-tertiary;
+    gap: 10px;
+    height: $input-size;
     border-top: solid 1px $color-border;
-    overflow: hidden;
+    padding: 0;
+
+    &-left {
+      // background-color: blue;
+    }
+
+    &-right {
+      // background-color: red;
+    }
+
+    &-btn {
+      position: relative;
+      width: $input-size;
+      height: 100%;
+
+      .lucide {
+        @include centerFully(absolute);
+      }
+
+      &.delete-mode {
+        background-color: $delete-color;
+      }
+
+      &.disabled {
+        cursor: unset;
+        background-color: #222;
+
+        .lucide {
+          color: $color-bg-secondary;
+        }
+      }
+    }
   }
 
   .sidebar-content {
     @extend %sidebar-default-styling;
+
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 0;
 
     ul {
-      padding-left: 20px;
+      list-style-type: none;
+
+      li {
+        position: relative;
+        cursor: pointer;
+        padding: $list-padding;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+        font-size: 12px;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease,
+          border-bottom 0.2s ease;
+        border-bottom: transparent solid 1px;
+        padding-left: $list-padding * 2 + $list-icon-size; // padding + icon + padding
+
+        &:hover {
+          background-color: $color-dark-hover;
+        }
+
+        .lucide {
+          position: absolute;
+          left: $list-padding;
+        }
+
+        input {
+          @include centerVert(absolute);
+          right: $list-padding;
+          visibility: hidden;
+
+          &.active {
+            visibility: unset;
+
+            &.delete-mode {
+              outline: transparent solid 1px;
+              transition: outline 0.2s ease;
+              accent-color: $delete-color;
+
+              &:checked {
+                outline: $color-text solid 1px;
+              }
+            }
+          }
+        }
+
+        &.selected {
+          background-color: #ff4848;
+          border-bottom: $color-text solid 1px;
+        }
+      }
     }
   }
 
   .sidebar-footer {
     @extend %sidebar-default-styling;
+
     flex: 0 0 auto;
     overflow: hidden;
   }

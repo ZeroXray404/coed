@@ -52,6 +52,13 @@ $color-border: #555;
   transform: translateX(-50%);
 }
 
+@mixin centerFully($position: relative) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 // Linear gradient mixin
 @mixin linearGradientMixin($direction, $colors...) {
   background: linear-gradient($direction, $colors);
@@ -61,5 +68,8 @@ $color-border: #555;
 $color-btn: #0066ff;
 $color-hover: #75acff;
 $color-dark-hover: #4e4e4e;
+
+$delete-selected: #ff4848;
+$delete-color: #ff2626;
 
 // linear-gradient(to right, #5c60b3, #5b6cff)
