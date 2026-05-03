@@ -1,14 +1,47 @@
 import { AppWindow } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
-function FileListContent() {
+function FileListContent({ deleteMode }) {
+  const [selectedFiles, setSelectedFiles] = useState([])
+
+  /*
+   * prev = current selected IDs
+   * includes(id) = check if selected (if ID exists)
+   * filter(...) = removes if ID already exists
+   * [...prev, id] = adds ID if none exist
+   */
+  function toggle(id) {
+    setSelectedFiles((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    )
+  }
+
+  useEffect(() => {
+    if (!deleteMode) {
+      setSelectedFiles([])
+    }
+  }, [deleteMode])
+
   return (
     <div className="sidebar-content">
       <ul>
-        {demoProjects.data.map((project) => (
-          <li onClick={() => alert(project.uid)} key={project.uid}>
-            <AppWindow size={16} /> {project.name}
-          </li>
-        ))}
+        {demoProjects.data.map((project) => {
+          const isSelected = selectedFiles.includes(project.uid)
+
+          return (
+            <li key={project.uid} className={isSelected ? 'selected' : ''}>
+              <AppWindow size={16} />
+              {project.name}
+              <input
+                type="checkbox"
+                name="fileSelect"
+                className={deleteMode ? 'active delete-mode' : ''}
+                checked={isSelected}
+                onChange={() => toggle(project.uid)}
+              />
+            </li>
+          )
+        })}
       </ul>
     </div>
   )
