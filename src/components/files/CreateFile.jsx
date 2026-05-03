@@ -1,9 +1,6 @@
 import { Trash2, FolderOutput, FolderPlus, FilePlus } from 'lucide-react'
-import { useState } from 'react'
 
-function CreateFileHeader() {
-  const [deleteMode, setDeleteMode] = useState(false)
-
+function CreateFileHeader({ deleteMode, setDeleteMode }) {
   return (
     <div className="sidebar-header">
       <div className="sidebar-header-left">
