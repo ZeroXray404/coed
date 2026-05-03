@@ -1,12 +1,15 @@
 import CreateFileHeader from './files/CreateFile'
 import FileListContent from './files/FileList'
+import { useState } from 'react'
 
-function SidebarHeader() {
-  return <CreateFileHeader />
+function SidebarHeader({ deleteMode, setDeleteMode }) {
+  return (
+    <CreateFileHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
+  )
 }
 
-function SidebarContent() {
-  return <FileListContent />
+function SidebarContent({ deleteMode }) {
+  return <FileListContent deleteMode={deleteMode} />
 }
 
 function SidebarFooter() {
@@ -18,10 +21,12 @@ function SidebarFooter() {
 }
 
 function SidebarLeft() {
+  const [deleteMode, setDeleteMode] = useState(false)
+
   return (
     <div className="sidebar-left">
-      <SidebarHeader />
-      <SidebarContent />
+      <SidebarHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
+      <SidebarContent deleteMode={deleteMode} />
       <SidebarFooter />
     </div>
   )
