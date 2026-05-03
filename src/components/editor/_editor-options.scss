@@ -1,12 +1,6 @@
 @use '../../styles/base/variables' as *;
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-/* Overlay för auth-kortet, skuggar bakgrunden */
-.auth-overlay {
+.editor-options-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -16,13 +10,13 @@
   z-index: 999;
 }
 
-.auth-card {
+.editor-options-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 360px;
+  max-width: 420px;
   padding: 2rem;
   border-radius: 20px;
   display: flex;
@@ -31,32 +25,9 @@
   color: #fff;
   background: #333;
   z-index: 1000;
-
-  /* Inputfält */
-  input {
-    width: 100%;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 0.9rem;
-  }
-
-  /* Knappar */
-  button:not(.close-btn) {
-    width: 100%;
-    padding: 0.6rem;
-    border-radius: 6px;
-    cursor: pointer;
-  }
 }
 
-.auth-step {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.close-btn {
+.editor-options-close-btn {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
@@ -78,5 +49,48 @@
   &:hover {
     background-color: #333;
     transform: scale(1.15);
+  }
+}
+
+.editor-options-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #fff;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: $font-size-m;
+    color: $color-text;
+  }
+
+  select,
+  input {
+    width: 100%;
+    height: 2.25rem;
+
+    padding: 0 0.75rem;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #2d2d2d;
+    color: $color-text;
+    font-size: $font-size-m;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #333;
+      border-color: #555;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #5b6cff;
+    }
+  }
+  input {
+    cursor: text;
   }
 }

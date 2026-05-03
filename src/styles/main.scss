@@ -8,3 +8,6 @@
 @use './layout/footer';
 @use './layout/sidebar';
 @use './layout/main-area';
+
+/* komponenter */
+@use '../components/editor/editor-options';
