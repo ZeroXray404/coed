@@ -33,7 +33,7 @@ function App() {
         />
       </header>
       <aside className="app-sidebar">
-        <SidebarLeft />
+        <SidebarLeft isLoggedIn={isLoggedIn} />
       </aside>
       <section className="app-main">
         <MainArea />
