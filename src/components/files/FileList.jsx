@@ -1,4 +1,5 @@
-import { AppWindow } from 'lucide-react'
+import { AppWindow, X } from 'lucide-react'
+import { useState } from 'react'
 
 function FileListContent({
   deleteMode,
@@ -8,6 +9,8 @@ function FileListContent({
   isLoading,
   error,
 }) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
   /*
    * prev = current selected IDs
    * includes(id) = check if selected (if ID exists)
@@ -18,12 +21,55 @@ function FileListContent({
     setSelectedFiles((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     )
+
+    if (selectedFiles) {
+      setShowDeleteModal(true)
+    }
+  }
+
+  function cancelDeletion() {
+    setShowDeleteModal(false)
+    setSelectedFiles([])
+  }
+
+  function confirmDeletion() {
+    alert('DELETION FUNCTION HERE')
+    setShowDeleteModal(false)
+    setSelectedFiles([])
   }
 
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
       {error && <p>{error}</p>}
+      {showDeleteModal && selectedFiles.length !== 0 && (
+        <div className="delete-modal">
+          <div className="delete-modal-text">
+            <h1>Confirm Deletion?</h1>
+            <p>Are you sure you want to delete?</p>
+            <p>Files cannot be recovered once you have confirmed deletion.</p>
+            <p>Files to be deleted: {selectedFiles.length}</p>
+          </div>
+          <div className="delete-modal-btns">
+            <button
+              type="button"
+              className="confirm"
+              onClick={confirmDeletion}
+              aria-label="Confirm Deletion"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className="cancel"
+              onClick={cancelDeletion}
+              aria-label="Cancel Deletion"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
       <ul>
         {projects
           .filter((project) => project.name && project.name.trim() !== '')
