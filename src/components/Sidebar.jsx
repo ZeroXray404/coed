@@ -1,6 +1,7 @@
 import CreateFileHeader from './files/CreateFile'
 import FileListContent from './files/FileList'
-import { useState } from 'react'
+import { getAllProjects } from '../services/fileServices'
+import { useEffect, useState } from 'react'
 
 function SidebarHeader({ deleteMode, setDeleteMode }) {
   return (
@@ -8,12 +9,22 @@ function SidebarHeader({ deleteMode, setDeleteMode }) {
   )
 }
 
-function SidebarContent({ deleteMode, selectedFiles, setSelectedFiles }) {
+function SidebarContent({
+  deleteMode,
+  selectedFiles,
+  setSelectedFiles,
+  projects,
+  isLoading,
+  error,
+}) {
   return (
     <FileListContent
       deleteMode={deleteMode}
       selectedFiles={selectedFiles}
       setSelectedFiles={setSelectedFiles}
+      projects={projects}
+      isLoading={isLoading}
+      error={error}
     />
   )
 }
@@ -26,13 +37,39 @@ function SidebarFooter() {
   )
 }
 
-function SidebarLeft() {
+function SidebarLeft({ isLoggedIn }) {
   const [deleteMode, setDeleteMode] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([])
+  const [projects, setProjects] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   if (!deleteMode && selectedFiles.length > 0) {
     setSelectedFiles([])
   }
+
+  useEffect(() => {
+    async function fetchProjects() {
+      if (!isLoggedIn) {
+        setProjects([])
+        setError('')
+        return
+      }
+
+      try {
+        setIsLoading(true)
+        setError('')
+        const result = await getAllProjects()
+        setProjects(result?.data || [])
+      } catch (loadError) {
+        setError(loadError.message || 'Failed to fetch projects')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchProjects()
+  }, [isLoggedIn])
 
   return (
     <div className="sidebar-left">
@@ -41,6 +78,9 @@ function SidebarLeft() {
         deleteMode={deleteMode}
         selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
+        projects={projects}
+        isLoading={isLoading}
+        error={error}
       />
       <SidebarFooter />
     </div>
