@@ -1,8 +1,10 @@
 import { AppWindow, X } from 'lucide-react'
+import { deleteProjectWithFiles } from '../../services/fileServices.js'
 import { useState } from 'react'
 
 function FileListContent({
   deleteMode,
+  setdeleteMode,
   selectedFiles,
   setSelectedFiles,
   projects,
@@ -33,9 +35,10 @@ function FileListContent({
   }
 
   function confirmDeletion() {
-    alert('DELETION FUNCTION HERE')
+    deleteProjectWithFiles(selectedFiles)
     setShowDeleteModal(false)
     setSelectedFiles([])
+    setdeleteMode(false)
   }
 
   return (

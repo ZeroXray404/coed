@@ -11,6 +11,7 @@ function SidebarHeader({ deleteMode, setDeleteMode }) {
 
 function SidebarContent({
   deleteMode,
+  setDeleteMode,
   selectedFiles,
   setSelectedFiles,
   projects,
@@ -20,6 +21,7 @@ function SidebarContent({
   return (
     <FileListContent
       deleteMode={deleteMode}
+      setdeleteMode={setDeleteMode}
       selectedFiles={selectedFiles}
       setSelectedFiles={setSelectedFiles}
       projects={projects}
@@ -76,6 +78,7 @@ function SidebarLeft({ isLoggedIn }) {
       <SidebarHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
       <SidebarContent
         deleteMode={deleteMode}
+        setDeleteMode={setDeleteMode}
         selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
         projects={projects}
