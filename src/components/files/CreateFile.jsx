@@ -1,4 +1,10 @@
-import { Trash2, FolderOutput, FolderPlus, FilePlus } from 'lucide-react'
+import {
+  Trash2,
+  FolderOutput,
+  FolderPlus,
+  FilePlus,
+  UserPlus,
+} from 'lucide-react'
 
 function CreateFileHeader({ deleteMode, setDeleteMode }) {
   return (
@@ -9,6 +15,9 @@ function CreateFileHeader({ deleteMode, setDeleteMode }) {
           className={`sidebar-header-btn btn-delete ${deleteMode ? 'delete-mode' : ''}`}
         >
           <Trash2 />
+        </button>
+        <button className="sidebar-header-btn btn-newprojmemb">
+          <UserPlus />
         </button>
       </div>
       <div className="sidebar-header-right">
