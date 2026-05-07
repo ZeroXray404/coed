@@ -1,7 +1,14 @@
 import { AppWindow, X } from 'lucide-react'
 import { useState } from 'react'
 
-function FileListContent({ deleteMode, selectedFiles, setSelectedFiles }) {
+function FileListContent({
+  deleteMode,
+  selectedFiles,
+  setSelectedFiles,
+  projects,
+  isLoading,
+  error,
+}) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   /*
@@ -33,6 +40,8 @@ function FileListContent({ deleteMode, selectedFiles, setSelectedFiles }) {
 
   return (
     <div className="sidebar-content">
+      {isLoading && <p>Loading projects...</p>}
+      {error && <p>{error}</p>}
       {showDeleteModal && selectedFiles.length !== 0 && (
         <div className="delete-modal">
           <div className="delete-modal-text">
@@ -62,52 +71,27 @@ function FileListContent({ deleteMode, selectedFiles, setSelectedFiles }) {
         </div>
       )}
       <ul>
-        {demoProjects.data.map((project) => {
-          const isSelected = selectedFiles.includes(project.uid)
-
-          return (
-            <li key={project.uid} className={isSelected ? 'selected' : ''}>
-              <AppWindow size={16} />
-              {project.name}
-              <input
-                type="checkbox"
-                name="fileSelect"
-                className={deleteMode ? 'active delete-mode' : ''}
-                checked={isSelected}
-                onChange={() => toggle(project.uid)}
-              />
-            </li>
-          )
-        })}
+        {projects
+          .filter((project) => project.name && project.name.trim() !== '')
+          .map((project) => {
+            const isSelected = selectedFiles.includes(project.uid)
+            return (
+              <li key={project.uid} className={isSelected ? 'selected' : ''}>
+                <AppWindow size={16} />
+                {project.name}
+                <input
+                  type="checkbox"
+                  name="fileSelect"
+                  className={deleteMode ? 'active delete-mode' : ''}
+                  checked={isSelected}
+                  onChange={() => toggle(project.uid)}
+                />
+              </li>
+            )
+          })}
       </ul>
     </div>
   )
-}
-
-const demoProjects = {
-  // Mockad data för projekten i sidofältet.
-  data: [
-    {
-      uid: 'project-1',
-      name: 'Starter project',
-    },
-    {
-      uid: 'project-2',
-      name: 'Greatest project ever',
-    },
-    {
-      uid: 'project-3',
-      name: 'Another project',
-    },
-    {
-      uid: 'project-4',
-      name: 'Yet another project',
-    },
-    {
-      uid: 'project-5',
-      name: 'Yet another project',
-    },
-  ],
 }
 
 export default FileListContent

@@ -47,6 +47,10 @@ export async function createProject(name) {
   const url = `${DOCKET_BASE_URL}/projects`
   const TOKEN = getToken()
 
+  if (!name || name.trim() === '') {
+    throw new Error('Project name cannot be empty')
+  }
+
   const response = await fetch(url, {
     method: 'POST',
     headers: {
