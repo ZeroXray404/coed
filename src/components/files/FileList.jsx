@@ -1,5 +1,8 @@
 import { AppWindow, X } from 'lucide-react'
-import { deleteProjectWithFiles } from '../../services/fileServices.js'
+import {
+  deleteProjectWithFiles,
+  getProjectWithFilesAndUsers,
+} from '../../services/fileServices.js'
 import { useState } from 'react'
 
 function FileListContent({
@@ -11,6 +14,10 @@ function FileListContent({
   isLoading,
   error,
   fetchProjects,
+  expandedProjectUid,
+  setExpandedProjectUid,
+  projectDetails,
+  setProjectDetails,
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
@@ -33,6 +40,7 @@ function FileListContent({
   function cancelDeletion() {
     setShowDeleteModal(false)
     setSelectedFiles([])
+    setdeleteMode(false)
   }
 
   async function confirmDeletion() {
@@ -48,6 +56,23 @@ function FileListContent({
     setSelectedFiles([])
     setdeleteMode(false)
     console.log('Deletion successful')
+  }
+
+  async function handleProjectClick(uid) {
+    try {
+      const result = await getProjectWithFilesAndUsers(uid)
+      console.log('Project details:', result)
+    } catch (error) {
+      console.error('Error fetching project details:', error)
+    }
+  }
+
+  function handleProjectRowClick(uid) {
+    if (deleteMode) {
+      toggle(uid)
+      return
+    }
+    handleProjectClick(uid)
   }
 
   return (
@@ -89,8 +114,13 @@ function FileListContent({
             const isSelected = selectedFiles.includes(project.uid)
             return (
               <li key={project.uid} className={isSelected ? 'selected' : ''}>
-                <AppWindow size={16} />
-                {project.name}
+                <button
+                  className="project-btn"
+                  onClick={() => handleProjectRowClick(project.uid)}
+                >
+                  <AppWindow size={16} />
+                  {project.name}
+                </button>
                 <input
                   type="checkbox"
                   name="fileSelect"

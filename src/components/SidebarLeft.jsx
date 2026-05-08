@@ -18,6 +18,10 @@ function SidebarLeftContent({
   isLoading,
   error,
   fetchProjects,
+  expandedProjectUid,
+  setExpandedProjectUid,
+  projectDetails,
+  setProjectDetails,
 }) {
   return (
     <FileListContent
@@ -29,6 +33,10 @@ function SidebarLeftContent({
       isLoading={isLoading}
       error={error}
       fetchProjects={fetchProjects}
+      expandedProjectUid={expandedProjectUid}
+      setExpandedProjectUid={setExpandedProjectUid}
+      projectDetails={projectDetails}
+      setProjectDetails={setProjectDetails}
     />
   )
 }
@@ -47,6 +55,8 @@ function SidebarLeft({ isLoggedIn }) {
   const [projects, setProjects] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [expandedProjectUid, setExpandedProjectUid] = useState(null)
+  const [projectDetails, setProjectDetails] = useState({})
 
   if (!deleteMode && selectedFiles.length > 0) {
     setSelectedFiles([])
@@ -90,6 +100,10 @@ function SidebarLeft({ isLoggedIn }) {
         isLoading={isLoading}
         error={error}
         fetchProjects={fetchProjects}
+        expandedProjectUid={expandedProjectUid}
+        setExpandedProjectUid={setExpandedProjectUid}
+        projectDetails={projectDetails}
+        setProjectDetails={setProjectDetails}
       />
       <SidebarLeftFooter />
     </div>
