@@ -10,6 +10,7 @@ function FileListContent({
   projects,
   isLoading,
   error,
+  fetchProjects,
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
@@ -37,6 +38,7 @@ function FileListContent({
   async function confirmDeletion() {
     const uid = selectedFiles[0]
     await deleteProjectWithFiles(uid)
+    await fetchProjects()
     setShowDeleteModal(false)
     setSelectedFiles([])
     setdeleteMode(false)

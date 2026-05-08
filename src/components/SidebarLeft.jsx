@@ -17,6 +17,7 @@ function SidebarLeftContent({
   projects,
   isLoading,
   error,
+  fetchProjects,
 }) {
   return (
     <FileListContent
@@ -27,6 +28,7 @@ function SidebarLeftContent({
       projects={projects}
       isLoading={isLoading}
       error={error}
+      fetchProjects={fetchProjects}
     />
   )
 }
@@ -50,26 +52,26 @@ function SidebarLeft({ isLoggedIn }) {
     setSelectedFiles([])
   }
 
-  useEffect(() => {
-    async function fetchProjects() {
-      if (!isLoggedIn) {
-        setProjects([])
-        setError('')
-        return
-      }
-
-      try {
-        setIsLoading(true)
-        setError('')
-        const result = await getAllProjects()
-        setProjects(result?.data || [])
-      } catch (loadError) {
-        setError(loadError.message || 'Failed to fetch projects')
-      } finally {
-        setIsLoading(false)
-      }
+  async function fetchProjects() {
+    if (!isLoggedIn) {
+      setProjects([])
+      setError('')
+      return
     }
 
+    try {
+      setIsLoading(true)
+      setError('')
+      const result = await getAllProjects()
+      setProjects(result?.data || [])
+    } catch (loadError) {
+      setError(loadError.message || 'Failed to fetch projects')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
     fetchProjects()
   }, [isLoggedIn])
 
@@ -87,6 +89,7 @@ function SidebarLeft({ isLoggedIn }) {
         projects={projects}
         isLoading={isLoading}
         error={error}
+        fetchProjects={fetchProjects}
       />
       <SidebarLeftFooter />
     </div>
