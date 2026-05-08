@@ -34,8 +34,9 @@ function FileListContent({
     setSelectedFiles([])
   }
 
-  function confirmDeletion() {
-    deleteProjectWithFiles(selectedFiles)
+  async function confirmDeletion() {
+    const uid = selectedFiles[0]
+    await deleteProjectWithFiles(uid)
     setShowDeleteModal(false)
     setSelectedFiles([])
     setdeleteMode(false)

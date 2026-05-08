@@ -3,13 +3,13 @@ import FileListContent from './files/FileList'
 import { getAllProjects } from '../services/fileServices'
 import { useEffect, useState } from 'react'
 
-function SidebarHeader({ deleteMode, setDeleteMode }) {
+function SidebarLeftHeader({ deleteMode, setDeleteMode }) {
   return (
     <CreateFileHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
   )
 }
 
-function SidebarContent({
+function SidebarLeftContent({
   deleteMode,
   setDeleteMode,
   selectedFiles,
@@ -31,7 +31,7 @@ function SidebarContent({
   )
 }
 
-function SidebarFooter() {
+function SidebarLeftFooter() {
   return (
     <div className="sidebar-footer">
       <h3>Sidebar Footer</h3>
@@ -75,8 +75,11 @@ function SidebarLeft({ isLoggedIn }) {
 
   return (
     <div className="sidebar-left">
-      <SidebarHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
-      <SidebarContent
+      <SidebarLeftHeader
+        deleteMode={deleteMode}
+        setDeleteMode={setDeleteMode}
+      />
+      <SidebarLeftContent
         deleteMode={deleteMode}
         setDeleteMode={setDeleteMode}
         selectedFiles={selectedFiles}
@@ -85,7 +88,7 @@ function SidebarLeft({ isLoggedIn }) {
         isLoading={isLoading}
         error={error}
       />
-      <SidebarFooter />
+      <SidebarLeftFooter />
     </div>
   )
 }
