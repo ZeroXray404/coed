@@ -10,6 +10,7 @@ function FileListContent({
   error,
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  //const [showAddUserModal, setShowAddUserModal] = useState(false)
 
   /*
    * prev = current selected IDs
@@ -23,6 +24,7 @@ function FileListContent({
     )
 
     if (selectedFiles) {
+      showAddUserModal(true)
       setShowDeleteModal(true)
     }
   }
@@ -70,6 +72,7 @@ function FileListContent({
           </div>
         </div>
       )}
+
       <ul>
         {projects
           .filter((project) => project.name && project.name.trim() !== '')

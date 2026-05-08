@@ -53,6 +53,10 @@ $list-padding: 6px;
         background-color: $delete-color;
       }
 
+      &.add-member {
+        background-color: $delete-color;
+      }
+
       &.disabled {
         cursor: unset;
         background-color: #222;

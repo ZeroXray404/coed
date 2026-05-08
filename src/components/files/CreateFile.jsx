@@ -6,7 +6,12 @@ import {
   UserPlus,
 } from 'lucide-react'
 
-function CreateFileHeader({ deleteMode, setDeleteMode }) {
+function CreateFileHeader({
+  deleteMode,
+  setDeleteMode,
+  addMember,
+  setAddMember,
+}) {
   return (
     <div className="sidebar-header">
       <div className="sidebar-header-left">
@@ -16,7 +21,13 @@ function CreateFileHeader({ deleteMode, setDeleteMode }) {
         >
           <Trash2 />
         </button>
-        <button className="sidebar-header-btn btn-newprojmemb">
+        <button
+          onClick={() => setAddMember((prev) => !prev)}
+          //onClick={() => {
+          //  addUserToProject(uid, email)
+          //}}
+          className={`sidebar-header-btn btn-newprojmemb ${addMember ? 'add-member' : ''}`}
+        >
           <UserPlus />
         </button>
       </div>

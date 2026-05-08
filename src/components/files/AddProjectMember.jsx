@@ -1,0 +1,112 @@
+import { useEffect, useState } from 'react'
+
+function AddProjectMemberContent({
+  addMember,
+  selectedProjects,
+  setSelectedProjects,
+  projects,
+  isLoading,
+  error,
+  users,
+  selectedUser,
+}) {
+  //const [showAddUserModal, setShowAddUserModal] = useState(false)
+  //const [users, setUsers] = useState([])
+  //const [selectedUser, setSelectedUser] = useState('')
+
+  /*
+  useEffect(() => {
+    if (showAddUserModal) {
+      async function addProjectMember() {
+        const projectMembers = await addUserToProject(uid, email)
+      }
+      addProjectMember()
+    }
+  }, [showAddUserModal])
+*/
+  function toggleProject(id) {
+    setSelectedProjects((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    )
+
+    if (!showAddUserModal && !selectedProjects.includes(id)) {
+      setShowAddUserModal(true)
+    }
+  }
+
+  function cancelAddUser() {
+    setShowAddUserModal(false)
+    setSelectedProjects([])
+    setSelectedUser('')
+  }
+
+  //async function confirmAddUser() {
+  // if (!selectedUser) {
+  //   alert("Välj en användare först")
+  // return
+  // }
+  //try {
+  //  const projectMembers = await addUserToProject(uid, email)
+  //}
+  //}
+
+  return (
+    <div className="sidebar-content">
+      {isLoading && <p>Loading projects...</p>}
+      {error && <p>{error}</p>}
+      {showAddUserModal && selectedProjects.length !== 0 && (
+        <div className="add-member">
+          <div className="delete-modal-text">
+            <h1>Add a user to a project</h1>
+            <p>""""</p>
+            <p>""</p>
+            <p>
+              User vill be added to following projects:{' '}
+              {selectedProjects.length}
+            </p>
+          </div>
+          <select
+            value={selectedUser}
+            onChange={(e) => setSelectedUser(e.target.value)}
+          >
+            <option value="">-- Select User --</option>
+
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+
+          <div className="delete-modal-btns">
+            <button onClick={confirmAddUser}>Add user</button>
+            <button onClick={cancelAddUser}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      <ul>
+        {projects
+          .filter((project) => project.name && project.name.trim() !== '')
+          .map((project) => {
+            const isSelected = selectedProjects.includes(project.uid)
+            return (
+              <li key={project.uid} className={isSelected ? 'selected' : ''}>
+                <AppWindow size={16} />
+                {project.name}
+                <input
+                  type="checkbox"
+                  name="fileSelect"
+                  className={deleteMode ? 'active delete-mode' : ''}
+                  checked={isSelected}
+                  onChange={() => toggle(project.uid)}
+                />
+              </li>
+            )
+          })}
+      </ul>
+    </div>
+  )
+}
+
+export default AddProjectMemberContent
