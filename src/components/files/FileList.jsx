@@ -36,12 +36,18 @@ function FileListContent({
   }
 
   async function confirmDeletion() {
-    const uid = selectedFiles[0]
-    await deleteProjectWithFiles(uid)
+    if (selectedFiles.length === 0) {
+      setShowDeleteModal(false)
+      return
+    }
+    for (const uid of selectedFiles) {
+      await deleteProjectWithFiles(uid)
+    }
     await fetchProjects()
     setShowDeleteModal(false)
     setSelectedFiles([])
     setdeleteMode(false)
+    console.log('Deletion successful')
   }
 
   return (
