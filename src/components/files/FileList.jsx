@@ -1,13 +1,16 @@
 import { AppWindow, X } from 'lucide-react'
+import { deleteProjectWithFiles } from '../../services/fileServices.js'
 import { useState } from 'react'
 
 function FileListContent({
   deleteMode,
+  setdeleteMode,
   selectedFiles,
   setSelectedFiles,
   projects,
   isLoading,
   error,
+  fetchProjects,
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
@@ -32,10 +35,19 @@ function FileListContent({
     setSelectedFiles([])
   }
 
-  function confirmDeletion() {
-    alert('DELETION FUNCTION HERE')
+  async function confirmDeletion() {
+    if (selectedFiles.length === 0) {
+      setShowDeleteModal(false)
+      return
+    }
+    for (const uid of selectedFiles) {
+      await deleteProjectWithFiles(uid)
+    }
+    await fetchProjects()
     setShowDeleteModal(false)
     setSelectedFiles([])
+    setdeleteMode(false)
+    console.log('Deletion successful')
   }
 
   return (

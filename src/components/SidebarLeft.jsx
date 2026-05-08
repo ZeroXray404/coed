@@ -3,33 +3,37 @@ import FileListContent from './files/FileList'
 import { getAllProjects } from '../services/fileServices'
 import { useEffect, useState } from 'react'
 
-function SidebarHeader({ deleteMode, setDeleteMode }) {
+function SidebarLeftHeader({ deleteMode, setDeleteMode }) {
   return (
     <CreateFileHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
   )
 }
 
-function SidebarContent({
+function SidebarLeftContent({
   deleteMode,
+  setDeleteMode,
   selectedFiles,
   setSelectedFiles,
   projects,
   isLoading,
   error,
+  fetchProjects,
 }) {
   return (
     <FileListContent
       deleteMode={deleteMode}
+      setdeleteMode={setDeleteMode}
       selectedFiles={selectedFiles}
       setSelectedFiles={setSelectedFiles}
       projects={projects}
       isLoading={isLoading}
       error={error}
+      fetchProjects={fetchProjects}
     />
   )
 }
 
-function SidebarFooter() {
+function SidebarLeftFooter() {
   return (
     <div className="sidebar-footer">
       <h3>Sidebar Footer</h3>
@@ -48,41 +52,46 @@ function SidebarLeft({ isLoggedIn }) {
     setSelectedFiles([])
   }
 
-  useEffect(() => {
-    async function fetchProjects() {
-      if (!isLoggedIn) {
-        setProjects([])
-        setError('')
-        return
-      }
-
-      try {
-        setIsLoading(true)
-        setError('')
-        const result = await getAllProjects()
-        setProjects(result?.data || [])
-      } catch (loadError) {
-        setError(loadError.message || 'Failed to fetch projects')
-      } finally {
-        setIsLoading(false)
-      }
+  async function fetchProjects() {
+    if (!isLoggedIn) {
+      setProjects([])
+      setError('')
+      return
     }
 
+    try {
+      setIsLoading(true)
+      setError('')
+      const result = await getAllProjects()
+      setProjects(result?.data || [])
+    } catch (loadError) {
+      setError(loadError.message || 'Failed to fetch projects')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
     fetchProjects()
   }, [isLoggedIn])
 
   return (
     <div className="sidebar-left">
-      <SidebarHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
-      <SidebarContent
+      <SidebarLeftHeader
         deleteMode={deleteMode}
+        setDeleteMode={setDeleteMode}
+      />
+      <SidebarLeftContent
+        deleteMode={deleteMode}
+        setDeleteMode={setDeleteMode}
         selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
         projects={projects}
         isLoading={isLoading}
         error={error}
+        fetchProjects={fetchProjects}
       />
-      <SidebarFooter />
+      <SidebarLeftFooter />
     </div>
   )
 }
