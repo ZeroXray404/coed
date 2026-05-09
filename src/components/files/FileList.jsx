@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 function FileListContent({
   deleteMode,
+  setDeleteMode,
   selectedFiles,
   setSelectedFiles,
   projects,
@@ -24,7 +25,7 @@ function FileListContent({
     )
 
     if (selectedFiles) {
-      showAddUserModal(true)
+      //showAddUserModal(true)
       setShowDeleteModal(true)
     }
   }

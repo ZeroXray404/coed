@@ -16,17 +16,27 @@ function CreateFileHeader({
     <div className="sidebar-header">
       <div className="sidebar-header-left">
         <button
-          onClick={() => setDeleteMode((prev) => !prev)}
           className={`sidebar-header-btn btn-delete ${deleteMode ? 'delete-mode' : ''}`}
+          onClick={() => {
+            console.log(deleteMode)
+            if (addMember === false) {
+              setDeleteMode((prev) => !prev)
+            } else {
+              setProjects(false)
+            }
+          }}
         >
           <Trash2 />
         </button>
+
         <button
-          onClick={() => setAddMember((prev) => !prev)}
-          //onClick={() => {
-          //  addUserToProject(uid, email)
-          //}}
           className={`sidebar-header-btn btn-newprojmemb ${addMember ? 'add-member' : ''}`}
+          onClick={() => {
+            console.log(addMember)
+            if (deleteMode === false) {
+              setAddMember((prev) => !prev)
+            }
+          }}
         >
           <UserPlus />
         </button>

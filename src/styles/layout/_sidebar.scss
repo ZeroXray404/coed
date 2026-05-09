@@ -54,7 +54,7 @@ $list-padding: 6px;
       }
 
       &.add-member {
-        background-color: $delete-color;
+        background-color: $add-color;
       }
 
       &.disabled {
@@ -73,6 +73,7 @@ $list-padding: 6px;
 
     flex: 1 1 auto;
     min-height: 0;
+
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -121,11 +122,25 @@ $list-padding: 6px;
                 outline: $color-text solid 1px;
               }
             }
+
+            &.add-member {
+              outline: transparent solid 1px;
+              transition: outline 0.2s ease;
+              accent-color: $add-color;
+
+              &:checked {
+                outline: $color-text solid 1px;
+              }
+            }
           }
         }
 
         &.selected {
           background-color: #ff4848;
+          border-bottom: $color-text solid 1px;
+        }
+        &.selected-add {
+          background-color: $add-color;
           border-bottom: $color-text solid 1px;
         }
       }

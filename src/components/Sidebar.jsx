@@ -5,21 +5,22 @@ import { getAllProjects } from '../services/fileServices'
 import { useEffect, useState } from 'react'
 
 function SidebarHeader({ deleteMode, setDeleteMode, addMember, setAddMember }) {
+  //
   return (
-    <>
-      <CreateFileHeader
-        deleteMode={deleteMode}
-        setDeleteMode={setDeleteMode}
-        addMember={addMember}
-        setAddMember={setAddMember}
-      />
-    </>
+    <CreateFileHeader
+      deleteMode={deleteMode}
+      setDeleteMode={setDeleteMode}
+      addMember={addMember}
+      setAddMember={setAddMember}
+    />
   )
 }
 
 function SidebarContent({
   deleteMode,
+  setDeleteMode,
   addMember,
+  setAddMember,
   selectedFiles,
   selectedProjects,
   setSelectedProjects,
@@ -30,23 +31,23 @@ function SidebarContent({
   users,
   selectedUser,
 }) {
-  if (addMember) {
-    return (
-      <AddProjectMemberContent
-        addMember={addMember}
-        selectedProjects={selectedProjects}
-        setSelectedProjects={setSelectedProjects}
-        projects={projects}
-        isLoading={isLoading}
-        error={error}
-        users={users}
-        selectedUser={selectedUser}
-      />
-    )
-  } else {
-    return (
+  let content = (
+    <FileListContent
+      deleteMode={deleteMode}
+      setDeleteMode={setDeleteMode}
+      selectedFiles={selectedFiles}
+      setSelectedFiles={setSelectedFiles}
+      projects={projects}
+      isLoading={isLoading}
+      error={error}
+    />
+  )
+
+  if (deleteMode) {
+    content = (
       <FileListContent
         deleteMode={deleteMode}
+        setDeleteMode={setDeleteMode}
         selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
         projects={projects}
@@ -54,7 +55,26 @@ function SidebarContent({
         error={error}
       />
     )
+  } else if (addMember) {
+    content = (
+      <AddProjectMemberContent
+        addMember={addMember}
+        deleteMode={deleteMode}
+        setAddMember={setAddMember}
+        selectedProjects={selectedProjects}
+        setSelectedProjects={setSelectedProjects}
+        selectedFiles={selectedFiles}
+        setSelectedFiles={setSelectedFiles}
+        projects={projects}
+        isLoading={isLoading}
+        error={error}
+        users={users}
+        selectedUser={selectedUser}
+      />
+    )
   }
+
+  return <div>{content}</div>
 }
 
 function SidebarFooter() {
@@ -68,6 +88,7 @@ function SidebarFooter() {
 function SidebarLeft({ isLoggedIn }) {
   const [deleteMode, setDeleteMode] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([])
+  const [selectedProjects, setSelectedProjects] = useState([])
   const [projects, setProjects] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -77,6 +98,10 @@ function SidebarLeft({ isLoggedIn }) {
 
   if (!deleteMode && selectedFiles.length > 0) {
     setSelectedFiles([])
+  }
+
+  if (!addMember && selectedProjects.length > 0) {
+    setSelectedProjects([])
   }
 
   useEffect(() => {
@@ -112,8 +137,12 @@ function SidebarLeft({ isLoggedIn }) {
       />
       <SidebarContent
         deleteMode={deleteMode}
+        addMember={addMember}
+        setAddMember={setAddMember}
         selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
+        selectedProjects={selectedProjects}
+        setSelectedProjects={setSelectedProjects}
         projects={projects}
         isLoading={isLoading}
         error={error}
