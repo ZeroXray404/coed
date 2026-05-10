@@ -1,4 +1,4 @@
-import { AppWindow, X } from 'lucide-react'
+import { AppWindow, X, File } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
@@ -27,9 +27,9 @@ function FileListContent({
    * filter(...) = removes if ID already exists
    * [...prev, id] = adds ID if none exist
    */
-  function toggle(id) {
+  function toggle(uid) {
     setSelectedFiles((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
     )
 
     if (selectedFiles) {
@@ -59,8 +59,15 @@ function FileListContent({
   }
 
   async function handleProjectClick(uid) {
+    if (expandedProjectUid === uid) {
+      setExpandedProjectUid(null)
+      console.log('Collapsing project details for UID:', uid)
+      return
+    }
     try {
       const result = await getProjectWithFilesAndUsers(uid)
+      setExpandedProjectUid(uid)
+      setProjectDetails((prev) => ({ ...prev, [uid]: result.data }))
       console.log('Project details:', result)
     } catch (error) {
       console.error('Error fetching project details:', error)
@@ -117,6 +124,7 @@ function FileListContent({
                 <button
                   className="project-btn"
                   onClick={() => handleProjectRowClick(project.uid)}
+                  aria-label={`Open project ${project.name}`}
                 >
                   <AppWindow size={16} />
                   {project.name}
@@ -127,7 +135,18 @@ function FileListContent({
                   className={deleteMode ? 'active delete-mode' : ''}
                   checked={isSelected}
                   onChange={() => toggle(project.uid)}
+                  aria-label={`Select project ${project.name} for deletion`}
                 />
+                {expandedProjectUid === project.uid && (
+                  <ul className="nested-files">
+                    {projectDetails[project.uid]?.files?.map((file) => (
+                      <li key={file.uid}>
+                        <File size={14} />
+                        {file.filename}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             )
           })}
