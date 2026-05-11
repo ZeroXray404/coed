@@ -1,7 +1,7 @@
 import CreateFileHeader from './files/CreateFile'
 import FileListContent from './files/FileList'
 import { getAllProjects } from '../services/fileServices'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 function SidebarLeftHeader({ deleteMode, setDeleteMode }) {
   return (
@@ -62,7 +62,7 @@ function SidebarLeft({ isLoggedIn }) {
     setSelectedFiles([])
   }
 
-  async function fetchProjects() {
+  const fetchProjects = useCallback(async () => {
     if (!isLoggedIn) {
       setProjects([])
       setError('')
@@ -79,11 +79,11 @@ function SidebarLeft({ isLoggedIn }) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [isLoggedIn])
 
   useEffect(() => {
     fetchProjects()
-  }, [isLoggedIn])
+  }, [fetchProjects])
 
   return (
     <div className="sidebar-left">
