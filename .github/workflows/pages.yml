@@ -2,8 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [api-fix]
 
 permissions:
   contents: read
@@ -34,6 +33,10 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          VITE_API_KEY: ${ secrets.AUTH_API_KEY }
+          VITE_AUTH_BASE_URL: ${ vars.VITE_AUTH_BASE_URL }
+          VITE_DOCKET_BASE_URL: ${ vars.VITE_DOCKET_BASE_URL }
 
       - name: Upload build output
         uses: actions/upload-pages-artifact@v3
