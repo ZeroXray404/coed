@@ -4,12 +4,20 @@ import { getAllProjects } from '../services/fileServices'
 import { useCallback, useEffect, useState } from 'react'
 
 // === Sidopanel header komponent ===
-function SidebarLeftHeader({ deleteMode, setDeleteMode, fetchProjects }) {
+function SidebarLeftHeader({
+  deleteMode,
+  setDeleteMode,
+  fetchProjects,
+  expandedProjectUid,
+  setProjectDetails,
+}) {
   return (
     <CreateFileHeader
       deleteMode={deleteMode}
       setDeleteMode={setDeleteMode}
       fetchProjects={fetchProjects}
+      expandedProjectUid={expandedProjectUid}
+      setProjectDetails={setProjectDetails}
     />
   )
 }
@@ -78,7 +86,6 @@ function SidebarLeft({ isLoggedIn }) {
       setError('')
       return
     }
-
     try {
       setIsLoading(true)
       setError('')
@@ -102,6 +109,8 @@ function SidebarLeft({ isLoggedIn }) {
         deleteMode={deleteMode}
         setDeleteMode={setDeleteMode}
         fetchProjects={fetchProjects}
+        expandedProjectUid={expandedProjectUid}
+        setProjectDetails={setProjectDetails}
       />
       <SidebarLeftContent
         deleteMode={deleteMode}

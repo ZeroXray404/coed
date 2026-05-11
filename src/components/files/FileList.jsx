@@ -2,7 +2,7 @@ import { AppWindow, X, File } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
-  deleteFile, //används när flödet för att ta bort enskilda filer implementeras
+  //deleteFile, //används när flödet för att ta bort enskilda filer implementeras
 } from '../../services/fileServices.js'
 import { useState } from 'react'
 
@@ -58,7 +58,7 @@ function FileListContent({
     for (const uid of selectedFiles) {
       await deleteProjectWithFiles(uid)
     }
-    // Efter borttagning, hämta den uppdaterade listan av projekt och stäng modalen.
+    // Efter borttagning, hämta den uppdaterade listan av projekt och stäng modalen
     await fetchProjects()
     setShowDeleteModal(false)
     setSelectedFiles([])
@@ -70,7 +70,7 @@ function FileListContent({
   async function handleProjectClick(uid) {
     if (expandedProjectUid === uid) {
       setExpandedProjectUid(null)
-      console.log('Collapsing project details for UID:', uid)
+      console.log('Collapsing project details for uid:', uid)
       return
     }
     try {
@@ -126,10 +126,13 @@ function FileListContent({
       )}
       <ul>
         {projects
+          // Filtrerar bort projekt utan namn eller med tomt namn, och mappar sedan över projekten
           .filter((project) => project.name && project.name.trim() !== '')
           .map((project) => {
+            // Kollar om projektet är valt för borttagning, och lägger till klassen 'selected' om det är det.
             const isSelected = selectedFiles.includes(project.uid)
             return (
+              // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
               <li key={project.uid} className={isSelected ? 'selected' : ''}>
                 <button
                   className="project-btn"
@@ -140,6 +143,7 @@ function FileListContent({
                   {project.name}
                 </button>
                 <input
+                  // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
                   type="checkbox"
                   name="fileSelect"
                   className={deleteMode ? 'active delete-mode' : ''}
@@ -148,9 +152,13 @@ function FileListContent({
                   aria-label={`Select project ${project.name} for deletion`}
                 />
                 {expandedProjectUid === project.uid && (
+                  // Om projektet är expanderat, visa dess filer i en nested lista
                   <ul className="nested-files">
                     {projectDetails[project.uid]?.files?.map((file) => (
-                      <li key={file.uid}>
+                      <li
+                        key={file.uid}
+                        className={isSelected ? 'selected' : ''}
+                      >
                         <File size={14} />
                         {file.filename}
                       </li>
