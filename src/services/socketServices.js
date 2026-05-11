@@ -6,7 +6,7 @@
 import { io } from 'socket.io-client'
 import { getToken } from './authServices'
 
-const SOCKET_URL = 'https://docket.emilfolino.se'
+const SOCKET_URL = import.meta.env.VITE_DOCKET_BASE_URL
 
 export const socket = io(SOCKET_URL, {
   autoConnect: false, // Vi vill inte ansluta direkt, vi gör det manuellt efter att ha hämtat token
@@ -15,10 +15,20 @@ export const socket = io(SOCKET_URL, {
   },
 })
 
-// Testfunktion för att kontrollera socket-asnlutningen manuellt
+// Ansluter socketen med aktuell token  från localStorage.
+// Token sätts precis innan connect för att undvika gammal/null token.
 export function connectSocket() {
   socket.auth = {
     token: getToken(),
   }
-  socket.connect()
+  if (!socket.connected) {
+    socket.connect()
+  }
+}
+
+// Stänger socket-anslutningen om den är aktiv
+export function disconnectSocket() {
+  if (socket.connected) {
+    socket.disconnect()
+  }
 }

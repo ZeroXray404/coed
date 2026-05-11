@@ -1,5 +1,9 @@
 import { useEffect } from 'react'
-import { socket, connectSocket } from '../services/socketServices'
+import {
+  socket,
+  connectSocket,
+  disconnectSocket,
+} from '../services/socketServices'
 
 // Hook för att realtime-logik hopplad till en aktiv fil.
 // Just nu testar den bara anslutningen
@@ -35,7 +39,7 @@ export function useSocketFile(activeFile) {
       socket.off('connect')
       socket.off('connect_error')
       socket.off('disconnect')
-      socket.disconnect()
+      disconnectSocket()
     }
   }, [activeFile])
 }
