@@ -3,12 +3,18 @@ import FileListContent from './files/FileList'
 import { getAllProjects } from '../services/fileServices'
 import { useCallback, useEffect, useState } from 'react'
 
-function SidebarLeftHeader({ deleteMode, setDeleteMode }) {
+// === Sidopanel header komponent ===
+function SidebarLeftHeader({ deleteMode, setDeleteMode, fetchProjects }) {
   return (
-    <CreateFileHeader deleteMode={deleteMode} setDeleteMode={setDeleteMode} />
+    <CreateFileHeader
+      deleteMode={deleteMode}
+      setDeleteMode={setDeleteMode}
+      fetchProjects={fetchProjects}
+    />
   )
 }
 
+// === Sidopanel content komponent ===
 function SidebarLeftContent({
   deleteMode,
   setDeleteMode,
@@ -41,6 +47,7 @@ function SidebarLeftContent({
   )
 }
 
+// === Sidopanel footer komponent ===
 function SidebarLeftFooter() {
   return (
     <div className="sidebar-footer">
@@ -49,6 +56,7 @@ function SidebarLeftFooter() {
   )
 }
 
+// === Huvudkomponent för sidopanelen ===
 function SidebarLeft({ isLoggedIn }) {
   const [deleteMode, setDeleteMode] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([])
@@ -62,6 +70,8 @@ function SidebarLeft({ isLoggedIn }) {
     setSelectedFiles([])
   }
 
+  // === Funktion för att hämta alla projekt ===
+  // useCallback för att kunna återanvänmda fetchProjects utan att fastna i oändliga loopar i useEffect.
   const fetchProjects = useCallback(async () => {
     if (!isLoggedIn) {
       setProjects([])
@@ -81,6 +91,7 @@ function SidebarLeft({ isLoggedIn }) {
     }
   }, [isLoggedIn])
 
+  // useEffect för att hämta projekten när komponenten mountas eller när isLoggedIn ändras.
   useEffect(() => {
     fetchProjects()
   }, [fetchProjects])
@@ -90,6 +101,7 @@ function SidebarLeft({ isLoggedIn }) {
       <SidebarLeftHeader
         deleteMode={deleteMode}
         setDeleteMode={setDeleteMode}
+        fetchProjects={fetchProjects}
       />
       <SidebarLeftContent
         deleteMode={deleteMode}

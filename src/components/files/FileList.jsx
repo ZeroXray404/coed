@@ -2,9 +2,11 @@ import { AppWindow, X, File } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
+  deleteFile, //används när flödet för att ta bort enskilda filer implementeras
 } from '../../services/fileServices.js'
 import { useState } from 'react'
 
+// === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent({
   deleteMode,
   setdeleteMode,
@@ -27,6 +29,8 @@ function FileListContent({
    * filter(...) = removes if ID already exists
    * [...prev, id] = adds ID if none exist
    */
+
+  // === Funktion för att toggla val av projekt för borttagningS ===
   function toggle(uid) {
     setSelectedFiles((prev) =>
       prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
@@ -43,14 +47,18 @@ function FileListContent({
     setdeleteMode(false)
   }
 
+  // === Funktion för att bekräfta borttagning av valda projekt ===
   async function confirmDeletion() {
     if (selectedFiles.length === 0) {
       setShowDeleteModal(false)
       return
     }
+    // Loopar igenom alla valda projekt och anropar deleteProjectWithFiles för varje uid.
+    // kanske kan skapa en if sats för att hantera borttagning av enskilda filer när den funktionen är implementerad, så att deleteMode kan användas både för att ta bort projekt och enskilda filer.
     for (const uid of selectedFiles) {
       await deleteProjectWithFiles(uid)
     }
+    // Efter borttagning, hämta den uppdaterade listan av projekt och stäng modalen.
     await fetchProjects()
     setShowDeleteModal(false)
     setSelectedFiles([])
@@ -58,6 +66,7 @@ function FileListContent({
     console.log('Deletion successful')
   }
 
+  // === Funktion för att hämta filer och användare för ett projekt när det klickas på ===
   async function handleProjectClick(uid) {
     if (expandedProjectUid === uid) {
       setExpandedProjectUid(null)
@@ -74,6 +83,7 @@ function FileListContent({
     }
   }
 
+  // === Funktion för att hantera klick på projekt-rad, toggla deleteMode beroende på dess useState ===
   function handleProjectRowClick(uid) {
     if (deleteMode) {
       toggle(uid)
