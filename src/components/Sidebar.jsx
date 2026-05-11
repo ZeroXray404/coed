@@ -27,9 +27,9 @@ function SidebarContent({
   setSelectedFiles,
   projects,
   isLoading,
+  setIsLoading,
   error,
-  users,
-  selectedUser,
+  setError,
 }) {
   let content = (
     <FileListContent
@@ -67,9 +67,9 @@ function SidebarContent({
         setSelectedFiles={setSelectedFiles}
         projects={projects}
         isLoading={isLoading}
+        setIsLoading={setIsLoading}
         error={error}
-        users={users}
-        selectedUser={selectedUser}
+        setError={setError}
       />
     )
   }
@@ -93,8 +93,6 @@ function SidebarLeft({ isLoggedIn }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [addMember, setAddMember] = useState(false)
-  const [users, setUsers] = useState([])
-  const [selectedUser, setSelectedUser] = useState('')
 
   if (!deleteMode && selectedFiles.length > 0) {
     setSelectedFiles([])
@@ -145,7 +143,9 @@ function SidebarLeft({ isLoggedIn }) {
         setSelectedProjects={setSelectedProjects}
         projects={projects}
         isLoading={isLoading}
+        setIsLoading={setIsLoading}
         error={error}
+        setError={setError}
       />
       <SidebarFooter />
     </div>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AppWindow, X } from 'lucide-react'
+import { getAllUsers } from '../../services/userServices'
+import { addUserToProject } from '../../services/fileServices'
 
 function AddProjectMemberContent({
   addMember,
@@ -9,26 +11,38 @@ function AddProjectMemberContent({
   setSelectedProjects,
   projects,
   isLoading,
+  setIsLoading,
   error,
-  users,
-  selectedUser,
+  setError,
 }) {
   const [showAddUserModal, setShowAddUserModal] = useState(false)
-
-  //const [users, setUsers] = useState([])
-  //const [selectedUser, setSelectedUser] = useState('')
-
+  const [users, setUsers] = useState([])
+  const [selectedUser, setSelectedUser] = useState('')
+  const [searchUser, setSearchUser] = useState('')
   {
-    console.log('test: ' + addMember)
-    /*}
-  useEffect(() => {
-    if (showAddUserModal) {
-      async function addProjectMember() {
-        const projectMembers = await addUserToProject(uid, email)
+    useEffect(() => {
+      async function fetchUsers() {
+        if (!addMember) {
+          setUsers([])
+          setError('')
+          return
+        }
+
+        try {
+          setIsLoading(true)
+          setError('')
+          const result = await getAllUsers()
+          console.log(result)
+          setUsers(result?.data || [])
+        } catch (loadError) {
+          setError(loadError.message || 'Failed to fetch users')
+        } finally {
+          setIsLoading(false)
+        }
       }
-      addProjectMember()
-    }
-  }, [showAddUserModal])  */
+
+      fetchUsers()
+    }, [addMember])
   }
 
   function toggleProject(id) {
@@ -47,65 +61,51 @@ function AddProjectMemberContent({
     setSelectedUser('')
   }
 
-  /*
+  const filterData = users.filter((user) =>
+    user.email.toLowerCase().includes(searchUser.toLowerCase())
+  )
+
   async function confirmAddUser() {
-    if (!selectedUser) {
-       alert("Välj en användare först")
-    return
-    } else {
-      try {
-        const projectMembers = await addUserToProject(uid, email)
-      } catch {
-        
-      }
+    for (const uid of selectedProjects) {
+      console.log(uid)
+      const projectMembers = await addUserToProject(uid, selectedUser)
     }
   }
-    */
-  //async function confirmAddUser() {
-  // if (!selectedUser) {
-  //   alert("Välj en användare först")
-  // return
-  // }
-  //try {
-  //  const projectMembers = await addUserToProject(uid, email)
-  //}
-  //}
 
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
       {error && <p>{error}</p>}
       {showAddUserModal && selectedProjects.length !== 0 && (
-        <div className="delete-modal">
-          <div className="delete-modal-text">
+        <div className="add-user-modal">
+          <div className="add-user-modal-text">
             <h1>Add a user to a project</h1>
-            <p>""""</p>
-            <p>""</p>
             <p>
               User will be added to following projects:{' '}
               {selectedProjects.length}
             </p>
           </div>
-
+          <input
+            type="text"
+            placeholder="Search user"
+            value={searchUser}
+            onChange={(e) => setSearchUser(e.target.value)}
+          ></input>
           <select
+            className="user-options"
             value={selectedUser}
             onChange={(e) => setSelectedUser(e.target.value)}
           >
-            <option value="">-- Select User --</option>
-            <option value="testuser@example.com">
-              -- testuser@example.com --
-            </option>
-          </select>
-          {/*
-            {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.name}
+            {filterData.map((user) => (
+              <option key={user.user_id} value={user.email}>
+                {user.email}
               </option>
             ))}
-          
-          */}
-          <div className="delete-modal-btns">
-            {/* <button onClick={confirmAddUser}>Add user</button> */}
+
+            {/**/}
+          </select>
+          <div className="add-user-modal-btns">
+            <button onClick={confirmAddUser}>Add user</button> {/* */}
             <button onClick={cancelAddUser}>Cancel</button>
           </div>
         </div>
