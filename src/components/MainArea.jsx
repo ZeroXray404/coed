@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import CodeEditor from './editor/CodeEditor'
 import EditorToolbar from './editor/EditorToolbar'
 import EditorOptions from './editor/EditorOptions'
+import { useSocketFile } from '../hooks/useSocketFile'
 
 // Objekt som innehåller en standard utskrift för varje språk, används när man byter språk i dropdownen
 const languageTemplates = {
@@ -43,6 +44,10 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
     // Om det finns ett sparat tema, returnera det, annars default vs-dark
     return savedTheme || 'vs-dark'
   })
+
+  // Testar socket-hooken med en "testfil" då fil logiken itne är implementerad än.
+  const testActiveFile = { uid: 'socket-test-file' }
+  useSocketFile(testActiveFile)
 
   // Sparar editor-instllningar i localStorage när de ändras
   useEffect(() => {
