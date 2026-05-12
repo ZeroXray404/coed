@@ -5,8 +5,8 @@ import { addUserToProject } from '../../services/fileServices'
 
 function AddProjectMemberContent({
   addMember,
-  deleteMode,
-  setAddMember,
+  //deleteMode,
+  //setAddMember,
   selectedProjects,
   setSelectedProjects,
   projects,
@@ -69,7 +69,8 @@ function AddProjectMemberContent({
     for (const uid of selectedProjects) {
       console.log(uid)
       console.log(selectedUser)
-      const projectMembers = await addUserToProject(uid, selectedUser)
+      //const projectMembers =
+      await addUserToProject(uid, selectedUser)
     }
     cancelAddUser()
   }

@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 function FileListContent({
   deleteMode,
-  setDeleteMode,
+  // setDeleteMode,
   selectedFiles,
   setSelectedFiles,
   projects,

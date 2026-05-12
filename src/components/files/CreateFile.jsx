@@ -11,6 +11,7 @@ function CreateFileHeader({
   setDeleteMode,
   addMember,
   setAddMember,
+  setProjects,
 }) {
   return (
     <div className="sidebar-header">
