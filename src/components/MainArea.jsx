@@ -44,10 +44,8 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
     // Om det finns ett sparat tema, returnera det, annars default vs-dark
     return savedTheme || 'vs-dark'
   })
-
-  // Testar socket-hooken med en "testfil" då fil logiken itne är implementerad än.
-  const testActiveFile = { uid: 'socket-test-file' }
-  useSocketFile(testActiveFile)
+  // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
+  const { sendContent } = useSocketFile(activeFile, setCode)
 
   // Sparar editor-instllningar i localStorage när de ändras
   useEffect(() => {
@@ -125,7 +123,7 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
       <CodeEditor
         language={language}
         value={code}
-        onChange={setCode}
+        onChange={sendContent}
         options={editorOptions}
         theme={theme}
       />

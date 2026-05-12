@@ -10,6 +10,8 @@ const SOCKET_URL = import.meta.env.VITE_DOCKET_BASE_URL
 
 export const socket = io(SOCKET_URL, {
   autoConnect: false, // Vi vill inte ansluta direkt, vi gör det manuellt efter att ha hämtat token
+  transports: ['websocket'], // Tvinga WebSocket-transport
+  reconnectionAttempts: 3,
   auth: {
     token: getToken(), // Skicka med JWT-token i auth-objektet
   },
