@@ -9,7 +9,9 @@ import { useState } from 'react'
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent({
   deleteMode,
-  setdeleteMode,
+  setDeleteMode,
+  selectedProjects,
+  setSelectedProjects,
   selectedFiles,
   setSelectedFiles,
   projects,
@@ -32,37 +34,37 @@ function FileListContent({
 
   // === Funktion för att toggla val av projekt för borttagningS ===
   function toggle(uid) {
-    setSelectedFiles((prev) =>
+    setSelectedProjects((prev) =>
       prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
     )
 
-    if (selectedFiles) {
+    if (selectedProjects) {
       setShowDeleteModal(true)
     }
   }
 
   function cancelDeletion() {
     setShowDeleteModal(false)
-    setSelectedFiles([])
-    setdeleteMode(false)
+    setSelectedProjects([])
+    setDeleteMode(false)
   }
 
   // === Funktion för att bekräfta borttagning av valda projekt ===
   async function confirmDeletion() {
-    if (selectedFiles.length === 0) {
+    if (selectedProjects.length === 0) {
       setShowDeleteModal(false)
       return
     }
     // Loopar igenom alla valda projekt och anropar deleteProjectWithFiles för varje uid.
     // kanske kan skapa en if sats för att hantera borttagning av enskilda filer när den funktionen är implementerad, så att deleteMode kan användas både för att ta bort projekt och enskilda filer.
-    for (const uid of selectedFiles) {
+    for (const uid of selectedProjects) {
       await deleteProjectWithFiles(uid)
     }
     // Efter borttagning, hämta den uppdaterade listan av projekt och stäng modalen
     await fetchProjects()
     setShowDeleteModal(false)
-    setSelectedFiles([])
-    setdeleteMode(false)
+    setSelectedProjects([])
+    setDeleteMode(false)
     console.log('Deletion successful')
   }
 
@@ -96,12 +98,13 @@ function FileListContent({
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
       {error && <p>{error}</p>}
-      {showDeleteModal && selectedFiles.length !== 0 && (
+      {showDeleteModal && selectedProjects.length !== 0 && (
         <div className="delete-modal">
           <div className="delete-modal-text">
             <h1>Confirm Deletion?</h1>
             <p>Are you sure you want to delete?</p>
-            <p>Files cannot be recovered once you have confirmed deletion.</p>
+            <p>Files can´t be recovered once deleted.</p>
+            <p>Projects to be deleted: {selectedProjects.length}</p>
             <p>Files to be deleted: {selectedFiles.length}</p>
           </div>
           <div className="delete-modal-btns">
@@ -130,7 +133,7 @@ function FileListContent({
           .filter((project) => project.name && project.name.trim() !== '')
           .map((project) => {
             // Kollar om projektet är valt för borttagning, och lägger till klassen 'selected' om det är det.
-            const isSelected = selectedFiles.includes(project.uid)
+            const isSelected = selectedProjects.includes(project.uid)
             return (
               // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
               <li key={project.uid} className={isSelected ? 'selected' : ''}>
@@ -159,8 +162,22 @@ function FileListContent({
                         key={file.uid}
                         className={isSelected ? 'selected' : ''}
                       >
-                        <File size={14} />
-                        {file.filename}
+                        <button
+                          className="project-btn"
+                          onClick={() => console.log(file.filename)}
+                        >
+                          <File size={14} />
+                          {file.filename}
+                        </button>
+                        <input
+                          // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
+                          type="checkbox"
+                          name="fileSelect"
+                          className={deleteMode ? 'active delete-mode' : ''}
+                          checked={isSelected}
+                          onChange={() => toggle(file.uid)}
+                          aria-label={`Select project ${file.filename} for deletion`}
+                        />
                       </li>
                     ))}
                   </ul>

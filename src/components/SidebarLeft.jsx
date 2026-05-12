@@ -26,6 +26,8 @@ function SidebarLeftHeader({
 function SidebarLeftContent({
   deleteMode,
   setDeleteMode,
+  selectedProjects,
+  setSelectedProjects,
   selectedFiles,
   setSelectedFiles,
   projects,
@@ -40,7 +42,9 @@ function SidebarLeftContent({
   return (
     <FileListContent
       deleteMode={deleteMode}
-      setdeleteMode={setDeleteMode}
+      setDeleteMode={setDeleteMode}
+      selectedProjects={selectedProjects}
+      setSelectedProjects={setSelectedProjects}
       selectedFiles={selectedFiles}
       setSelectedFiles={setSelectedFiles}
       projects={projects}
@@ -67,6 +71,7 @@ function SidebarLeftFooter() {
 // === Huvudkomponent för sidopanelen ===
 function SidebarLeft({ isLoggedIn }) {
   const [deleteMode, setDeleteMode] = useState(false)
+  const [selectedProjects, setSelectedProjects] = useState([])
   const [selectedFiles, setSelectedFiles] = useState([])
   const [projects, setProjects] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -74,9 +79,17 @@ function SidebarLeft({ isLoggedIn }) {
   const [expandedProjectUid, setExpandedProjectUid] = useState(null)
   const [projectDetails, setProjectDetails] = useState({})
 
-  if (!deleteMode && selectedFiles.length > 0) {
-    setSelectedFiles([])
-  }
+  useEffect(() => {
+    if (!deleteMode && selectedProjects.length > 0) {
+      setSelectedProjects([])
+    }
+  }, [deleteMode, selectedProjects])
+
+  useEffect(() => {
+    if (!deleteMode && selectedFiles.length > 0) {
+      setSelectedFiles([])
+    }
+  }, [deleteMode, selectedFiles])
 
   // === Funktion för att hämta alla projekt ===
   // useCallback för att kunna återanvänmda fetchProjects utan att fastna i oändliga loopar i useEffect.
@@ -115,6 +128,8 @@ function SidebarLeft({ isLoggedIn }) {
       <SidebarLeftContent
         deleteMode={deleteMode}
         setDeleteMode={setDeleteMode}
+        selectedProjects={selectedProjects}
+        setSelectedProjects={setSelectedProjects}
         selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
         projects={projects}
