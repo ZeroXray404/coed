@@ -42,6 +42,7 @@ function CreateFileHeader({
       // validering så att filen inte skapas med tomt fält
       // Vid skapande av inputfält kan här skapas ett tootip istället för alert
       alert('File name cannot be empty')
+      return
     }
     try {
       await createFile(filename.trim(), expandedProjectUid, null)

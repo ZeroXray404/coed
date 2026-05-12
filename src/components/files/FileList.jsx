@@ -79,7 +79,7 @@ function FileListContent({
       const result = await getProjectWithFilesAndUsers(uid)
       setExpandedProjectUid(uid)
       setProjectDetails((prev) => ({ ...prev, [uid]: result.data }))
-      console.log('Project details:', result)
+      console.log('Project details:', result.data.name, result)
     } catch (error) {
       console.error('Error fetching project details:', error)
     }
@@ -137,23 +137,25 @@ function FileListContent({
             return (
               // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
               <li key={project.uid} className={isSelected ? 'selected' : ''}>
-                <button
-                  className="project-btn"
-                  onClick={() => handleProjectRowClick(project.uid)}
-                  aria-label={`Open project ${project.name}`}
-                >
-                  <AppWindow size={16} />
-                  {project.name}
-                </button>
-                <input
-                  // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
-                  type="checkbox"
-                  name="fileSelect"
-                  className={deleteMode ? 'active delete-mode' : ''}
-                  checked={isSelected}
-                  onChange={() => toggle(project.uid)}
-                  aria-label={`Select project ${project.name} for deletion`}
-                />
+                <div className="list-row">
+                  <button
+                    className="listselect-btn"
+                    onClick={() => handleProjectRowClick(project.uid)}
+                    aria-label={`Open project ${project.name}`}
+                  >
+                    <AppWindow size={16} />
+                    <span className="list-label">{project.name}</span>
+                  </button>
+                  <input
+                    // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
+                    type="checkbox"
+                    name="fileSelect"
+                    className={deleteMode ? 'active delete-mode' : ''}
+                    checked={isSelected}
+                    onChange={() => toggle(project.uid)}
+                    aria-label={`Select project ${project.name} for deletion`}
+                  />
+                </div>
                 {expandedProjectUid === project.uid && (
                   // Om projektet är expanderat, visa dess filer i en nested lista
                   <ul className="nested-files">
@@ -162,22 +164,26 @@ function FileListContent({
                         key={file.uid}
                         className={isSelected ? 'selected' : ''}
                       >
-                        <button
-                          className="project-btn"
-                          onClick={() => console.log(file.filename)}
-                        >
-                          <File size={14} />
-                          {file.filename}
-                        </button>
-                        <input
-                          // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
-                          type="checkbox"
-                          name="fileSelect"
-                          className={deleteMode ? 'active delete-mode' : ''}
-                          checked={isSelected}
-                          onChange={() => toggle(file.uid)}
-                          aria-label={`Select project ${file.filename} for deletion`}
-                        />
+                        <div className="list-row">
+                          <button
+                            className="listselect-btn"
+                            onClick={() =>
+                              console.log('File details:', file.filename)
+                            }
+                          >
+                            <File size={14} />
+                            <span className="list-label">{file.filename}</span>
+                          </button>
+                          <input
+                            // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
+                            type="checkbox"
+                            name="fileSelect"
+                            className={deleteMode ? 'active delete-mode' : ''}
+                            checked={isSelected}
+                            onChange={() => toggle(file.uid)}
+                            aria-label={`Select project ${file.filename} for deletion`}
+                          />
+                        </div>
                       </li>
                     ))}
                   </ul>
