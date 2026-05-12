@@ -13,7 +13,7 @@ function FileListContent({
   selectedProjects,
   setSelectedProjects,
   selectedFiles,
-  setSelectedFiles,
+  // setSelectedFiles, // används när flödet för att ta bort enskilda filer implementeras
   projects,
   isLoading,
   error,
