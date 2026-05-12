@@ -268,7 +268,7 @@ $list-padding: 6px;
       border-radius: $input-size * 0.25;
 
       &.confirm {
-        @include linearGradientMixin(to right, $delete-color, $delete-selected);
+        @include linearGradientMixin(to right, $add-color, $add-color);
       }
 
       &.cancel {
@@ -301,4 +301,18 @@ $list-padding: 6px;
       transform: scale(1.15);
     }
   }
+}
+
+.user-options {
+  padding: 3px;
+  background-color: grey;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+}
+
+.input-search {
+  padding: 3px;
+  background-color: darkgrey;
+  border-radius: 3px;
+  border: 2px solid #ccc;
 }

@@ -68,8 +68,10 @@ function AddProjectMemberContent({
   async function confirmAddUser() {
     for (const uid of selectedProjects) {
       console.log(uid)
+      console.log(selectedUser)
       const projectMembers = await addUserToProject(uid, selectedUser)
     }
+    cancelAddUser()
   }
 
   return (
@@ -85,7 +87,9 @@ function AddProjectMemberContent({
               {selectedProjects.length}
             </p>
           </div>
+          <p>Search for a user: </p>
           <input
+            className="input-search"
             type="text"
             placeholder="Search user"
             value={searchUser}
@@ -96,6 +100,7 @@ function AddProjectMemberContent({
             value={selectedUser}
             onChange={(e) => setSelectedUser(e.target.value)}
           >
+            <option value=""> -- choose user -- </option>
             {filterData.map((user) => (
               <option key={user.user_id} value={user.email}>
                 {user.email}
@@ -105,7 +110,9 @@ function AddProjectMemberContent({
             {/**/}
           </select>
           <div className="add-user-modal-btns">
-            <button onClick={confirmAddUser}>Add user</button> {/* */}
+            <button className="confirm" onClick={confirmAddUser}>
+              Add user
+            </button>
             <button onClick={cancelAddUser}>Cancel</button>
           </div>
         </div>

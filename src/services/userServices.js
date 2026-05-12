@@ -24,6 +24,27 @@ export async function getAllUsers() {
   return result
 }
 
+// === Hämta en specifik användare ===
+
+export async function getOneUser(user_id) {
+  const url = `${AUTH_BASE_URL}/users/${user_id}?api_key=${API_KEY}`
+
+  const response = await fetch(url, {
+    method: 'GET',
+  })
+
+  console.log('response', response)
+
+  const result = await response.json()
+  console.log('result', result)
+
+  if (!response.ok) {
+    throw new Error(result?.errors?.detail || 'Failed to get users')
+  }
+
+  return result
+}
+
 // Hämta användarprofil med ID
 
 // Updatera användarprofil

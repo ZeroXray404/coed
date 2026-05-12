@@ -74,7 +74,7 @@ function SidebarContent({
     )
   }
 
-  return <div>{content}</div>
+  return <>{content}</>
 }
 
 function SidebarFooter() {
