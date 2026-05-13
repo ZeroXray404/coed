@@ -1,10 +1,9 @@
 import { requireApiConfig } from './apiConfig.js'
 import { getToken } from './authServices.js'
 
-const { DOCKET_BASE_URL } = requireApiConfig()
-
 // === Hämta alla projekt ===
 export async function getAllProjects() {
+  const { DOCKET_BASE_URL } = requireApiConfig()
   const url = `${DOCKET_BASE_URL}/projects`
   const TOKEN = getToken()
 
@@ -24,6 +23,7 @@ export async function getAllProjects() {
 
 // === Hämta ett projekt med alla filer och användare ===
 export async function getProjectWithFilesAndUsers(uid) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
   const url = `${DOCKET_BASE_URL}/projects/${uid}`
   const TOKEN = getToken()
 
@@ -44,6 +44,7 @@ export async function getProjectWithFilesAndUsers(uid) {
 
 // === Skapa ett nytt projekt ===
 export async function createProject(name) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
   const url = `${DOCKET_BASE_URL}/projects`
   const TOKEN = getToken()
 
@@ -69,6 +70,7 @@ export async function createProject(name) {
 
 // === Lägg till en användare i ett projekt ===
 export async function addUserToProject(uid, email) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
   const url = `${DOCKET_BASE_URL}/projects/add_user`
   const TOKEN = getToken()
 
@@ -90,6 +92,7 @@ export async function addUserToProject(uid, email) {
 
 // === Ta bort ett projekt och alla dess filer ===
 export async function deleteProjectWithFiles(uid) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
   const url = `${DOCKET_BASE_URL}/projects`
   const TOKEN = getToken()
 
@@ -111,6 +114,7 @@ export async function deleteProjectWithFiles(uid) {
 
 // === Skapa en ny fil i ett projekt ===
 export async function createFile(filename, project_uid, parent_file) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
   const url = `${DOCKET_BASE_URL}/files`
   const TOKEN = getToken()
 
@@ -132,6 +136,7 @@ export async function createFile(filename, project_uid, parent_file) {
 
 // === Ta bort en fil ===
 export async function deleteFile(uid) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
   const url = `${DOCKET_BASE_URL}/files`
   const TOKEN = getToken()
 
