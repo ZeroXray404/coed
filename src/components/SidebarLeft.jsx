@@ -1,5 +1,6 @@
 import CreateFileHeader from './files/CreateFile'
 import FileListContent from './files/FileList'
+import AddProjectMemberContent from './files/AddProjectMember'
 import { getAllProjects } from '../services/fileServices'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -10,6 +11,8 @@ function SidebarLeftHeader({
   fetchProjects,
   expandedProjectUid,
   setProjectDetails,
+  addMember,
+  setAddMember,
 }) {
   return (
     <CreateFileHeader
@@ -18,6 +21,8 @@ function SidebarLeftHeader({
       fetchProjects={fetchProjects}
       expandedProjectUid={expandedProjectUid}
       setProjectDetails={setProjectDetails}
+      addMember={addMember}
+      setAddMember={setAddMember}
     />
   )
 }
@@ -32,14 +37,30 @@ function SidebarLeftContent({
   setSelectedFiles,
   projects,
   isLoading,
+  setIsLoading,
   error,
+  setError,
   fetchProjects,
   expandedProjectUid,
   setExpandedProjectUid,
   projectDetails,
   setProjectDetails,
+  addMember,
+  setAddMember,
 }) {
-  return (
+  return addMember ? (
+    <AddProjectMemberContent
+      addMember={addMember}
+      setAddMember={setAddMember}
+      selectedProjects={selectedProjects}
+      setSelectedProjects={setSelectedProjects}
+      projects={projects}
+      isLoading={isLoading}
+      setIsLoading={setIsLoading}
+      error={error}
+      setError={setError}
+    />
+  ) : (
     <FileListContent
       deleteMode={deleteMode}
       setDeleteMode={setDeleteMode}
@@ -78,6 +99,7 @@ function SidebarLeft({ isLoggedIn }) {
   const [error, setError] = useState('')
   const [expandedProjectUid, setExpandedProjectUid] = useState(null)
   const [projectDetails, setProjectDetails] = useState({})
+  const [addMember, setAddMember] = useState(false)
 
   useEffect(() => {
     if (!deleteMode && selectedProjects.length > 0) {
@@ -124,6 +146,8 @@ function SidebarLeft({ isLoggedIn }) {
         fetchProjects={fetchProjects}
         expandedProjectUid={expandedProjectUid}
         setProjectDetails={setProjectDetails}
+        addMember={addMember}
+        setAddMember={setAddMember}
       />
       <SidebarLeftContent
         deleteMode={deleteMode}
@@ -134,12 +158,16 @@ function SidebarLeft({ isLoggedIn }) {
         setSelectedFiles={setSelectedFiles}
         projects={projects}
         isLoading={isLoading}
+        setIsLoading={setIsLoading}
         error={error}
+        setError={setError}
         fetchProjects={fetchProjects}
         expandedProjectUid={expandedProjectUid}
         setExpandedProjectUid={setExpandedProjectUid}
         projectDetails={projectDetails}
         setProjectDetails={setProjectDetails}
+        addMember={addMember}
+        setAddMember={setAddMember}
       />
       <SidebarLeftFooter />
     </div>

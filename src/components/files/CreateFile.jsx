@@ -18,9 +18,9 @@ function CreateFileHeader({
   fetchProjects,
   expandedProjectUid,
   setProjectDetails,
+  setProjects,
   addMember,
   setAddMember,
-  setProjects,
 }) {
   // === Funktion för att skapa ett nytt projekt ===
   async function handleCreateProject(name) {
