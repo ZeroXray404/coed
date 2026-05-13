@@ -124,21 +124,30 @@ function AddProjectMemberContent({
         {projects
           .filter((project) => project.name && project.name.trim() !== '')
           .map((project) => {
+            // Kollar om projektet är valt för att lägga till en användare, och lägger till klassen 'selected' om det är det.
             const isSelected = selectedProjects.includes(project.uid)
             return (
               <li
                 key={project.uid}
                 className={isSelected ? 'selected-add' : ''}
               >
-                <AppWindow size={16} />
-                {project.name}
-                <input
-                  type="checkbox"
-                  name="fileSelect"
-                  className={addMember ? 'active add-member' : ''}
-                  checked={isSelected}
-                  onChange={() => toggleProject(project.uid)}
-                />
+                <div className="list-row">
+                  <button
+                    className="listselect-btn"
+                    onClick={() => toggleProject(project.uid)}
+                    aria-label={`Add user to ${project.name}`}
+                  >
+                    <AppWindow size={16} />
+                    {project.name}
+                  </button>
+                  <input
+                    type="checkbox"
+                    name="fileSelect"
+                    className={addMember ? 'active add-member' : ''}
+                    checked={isSelected}
+                    onChange={() => toggleProject(project.uid)}
+                  />
+                </div>
               </li>
             )
           })}
