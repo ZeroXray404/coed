@@ -84,7 +84,6 @@ $list-padding: 6px;
       li {
         position: relative;
         cursor: pointer;
-        padding: $list-padding;
         -webkit-user-select: none; /* Safari */
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none; /* Standard syntax */
@@ -94,21 +93,35 @@ $list-padding: 6px;
           color 0.2s ease,
           border-bottom 0.2s ease;
         border-bottom: transparent solid 1px;
-        padding-left: $list-padding * 2 + $list-icon-size; // padding + icon + padding
 
-        &:hover {
-          background-color: $color-dark-hover;
+        &.selected {
+          background-color: transparent;
+          border-bottom: transparent solid 1px;
         }
+      }
 
-        .lucide {
-          position: absolute;
-          left: $list-padding;
-        }
+      li.selected > .list-row {
+        background-color: #ff4848;
+        border-bottom: $color-text solid 1px;
+      }
+
+      li.selected > .list-row:hover {
+        background-color: #ff4848;
+      }
+
+      .list-row {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: $list-padding;
+        justify-content: space-between;
+        gap: 0.5rem;
 
         input {
-          @include centerVert(absolute);
-          right: $list-padding;
+          position: static;
           visibility: hidden;
+          flex-shrink: 0;
 
           &.active {
             visibility: unset;
@@ -134,15 +147,80 @@ $list-padding: 6px;
             }
           }
         }
-
-        &.selected {
-          background-color: #ff4848;
-          border-bottom: $color-text solid 1px;
+        &:hover {
+          background-color: $color-dark-hover;
         }
         &.selected-add {
           background-color: $add-color;
           border-bottom: $color-text solid 1px;
         }
+      }
+
+      .nested-files {
+        .list-row {
+          padding-left: $list-padding * 2 + $list-icon-size;
+        }
+
+        li {
+          margin: 0;
+          padding: 0;
+
+          input {
+            @include centerVert(absolute);
+            right: 0rem;
+            visibility: hidden;
+
+            &.active {
+              visibility: unset;
+
+              &.delete-mode {
+                outline: transparent solid 1px;
+                transition: outline 0.2s ease;
+                accent-color: $delete-color;
+
+                &:checked {
+                  outline: $color-text solid 1px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .list-label {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .listselect-btn {
+        display: flex;
+        flex-wrap: nowrap;
+        flex: 1;
+        min-width: 0;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding-right: 2rem; // plats för checkbox
+        text-align: left;
+        font-size: 12px;
+        color: $color-text;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        user-select: none;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease,
+          border-bottom 0.2s ease;
+      }
+
+      .list-row .listselect-btn {
+        flex: 1;
+        width: auto;
+        padding-right: 0;
       }
     }
   }

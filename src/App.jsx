@@ -4,7 +4,7 @@ import Header from './components/Header'
 import MainArea from './components/MainArea'
 import AuthCard from './components/authcard/AuthCard'
 import Footer from './components/Footer'
-import SidebarLeft from './components/Sidebar'
+import SidebarLeft from './components/SidebarLeft'
 
 // Importerar CodeEditor komponenten.
 function App() {

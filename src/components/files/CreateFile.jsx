@@ -5,14 +5,67 @@ import {
   FilePlus,
   UserPlus,
 } from 'lucide-react'
+import {
+  createProject,
+  createFile,
+  getProjectWithFilesAndUsers,
+} from '../../services/fileServices.js'
 
+// === Komponent för att hantera knappar och funktioner i sidopanelens header ===
 function CreateFileHeader({
   deleteMode,
   setDeleteMode,
+  fetchProjects,
+  expandedProjectUid,
+  setProjectDetails,
   addMember,
   setAddMember,
   setProjects,
 }) {
+  // === Funktion för att skapa ett nytt projekt ===
+  async function handleCreateProject(name) {
+    if (!name || name.trim() === '') {
+      // validering så att projektet inte skapas med tomt fält
+      // Vid skapande av inputfält kan här skapas ett tootip istället för alert
+      alert('Project name cannot be empty')
+      return
+    }
+    try {
+      await createProject(name.trim())
+      alert('Project created successfully')
+      await fetchProjects()
+    } catch (error) {
+      alert(`Error creating project: ${error.message}`)
+    }
+  }
+
+  // === Funktion för att skapa en ny fil i ett projekt ===
+  async function handleCreateFile(filename) {
+    if (!expandedProjectUid) {
+      // validering så att filen inte skapas utan att ett projekt är valt
+      // Använda tooltip för denna med??
+      alert('Please select a project to add the file to')
+      return
+    }
+    if (!filename || filename.trim() === '') {
+      // validering så att filen inte skapas med tomt fält
+      // Vid skapande av inputfält kan här skapas ett tootip istället för alert
+      alert('File name cannot be empty')
+      return
+    }
+    try {
+      await createFile(filename.trim(), expandedProjectUid, null)
+      const result = await getProjectWithFilesAndUsers(expandedProjectUid)
+      setProjectDetails((prev) => ({
+        ...prev,
+        [expandedProjectUid]: result.data,
+      }))
+      alert('File created successfully')
+    } catch (error) {
+      alert(`Error creating file: ${error.message}`)
+    }
+  }
+
   return (
     <div className="sidebar-header">
       <div className="sidebar-header-left">
@@ -43,13 +96,35 @@ function CreateFileHeader({
         </button>
       </div>
       <div className="sidebar-header-right">
-        <button className="sidebar-header-btn btn-projback">
+        {/* <button className="sidebar-header-btn btn-projback">
           <FolderOutput />
-        </button>
-        <button className="sidebar-header-btn btn-newproj">
+        </button> */}
+        <button
+          className="sidebar-header-btn btn-newproj"
+          onClick={() => {
+            // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya projekt.
+            const projectName = prompt('Enter project name:')
+            if (projectName === null) {
+              return
+            } else {
+              handleCreateProject(projectName)
+            }
+          }}
+        >
           <FolderPlus />
         </button>
-        <button className="sidebar-header-btn btn-newfile">
+        <button
+          className="sidebar-header-btn btn-newfile"
+          onClick={() => {
+            // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya filer.
+            const fileName = prompt('Enter file name:')
+            if (fileName === null) {
+              return
+            } else {
+              handleCreateFile(fileName, expandedProjectUid, null)
+            }
+          }}
+        >
           <FilePlus />
         </button>
       </div>
