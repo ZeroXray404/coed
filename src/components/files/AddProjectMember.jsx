@@ -5,8 +5,8 @@ import { addUserToProject } from '../../services/fileServices'
 
 function AddProjectMemberContent({
   addMember,
+  setAddMember,
   //deleteMode,
-  //setAddMember,
   selectedProjects,
   setSelectedProjects,
   projects,
@@ -45,12 +45,12 @@ function AddProjectMemberContent({
     }, [addMember])
   }
 
-  function toggleProject(id) {
+  function toggleProject(uid) {
     setSelectedProjects((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
     )
 
-    if (!showAddUserModal && !selectedProjects.includes(id)) {
+    if (!showAddUserModal && !selectedProjects.includes(uid)) {
       setShowAddUserModal(true)
     }
   }
@@ -59,6 +59,7 @@ function AddProjectMemberContent({
     setShowAddUserModal(false)
     setSelectedProjects([])
     setSelectedUser('')
+    setAddMember(false)
   }
 
   const filterData = users.filter((user) =>
