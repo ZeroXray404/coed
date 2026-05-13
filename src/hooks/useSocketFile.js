@@ -45,6 +45,22 @@ export function useSocketFile(activeFile, setCode) {
         setCode(data.content)
       }
     })
+
+    // Lyssnar på eventet "conentent" från servern
+    // Körs när en annan klient i samma room skiockar nytt editorninnehåll
+    socket.on('content', (data) => {
+      console.log('Content received:', data)
+
+      // Säkerställer att uppdateringen tilljör samma fil som användaren har öppen
+      if (data?.uid !== activeFile.uid) {
+        return
+      }
+      // Uppdaterar editorn med innehållet från servern
+      if (data?.content !== undefined) {
+        setCode(data.content)
+      }
+    })
+
     // Lyssnar på anslutningsfel från socket-servern
     socket.on('connect_error', (error) => {
       console.error('Connection error:', error.message)
@@ -62,6 +78,7 @@ export function useSocketFile(activeFile, setCode) {
       socket.off('connect_error')
       socket.off('disconnect')
       socket.off('file loaded')
+      socket.off('content')
 
       // stänger av socket-anslutningen
       disconnectSocket()
