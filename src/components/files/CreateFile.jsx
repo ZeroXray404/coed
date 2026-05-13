@@ -1,4 +1,10 @@
-import { Trash2, FolderOutput, FolderPlus, FilePlus } from 'lucide-react'
+import {
+  Trash2,
+  FolderOutput,
+  FolderPlus,
+  FilePlus,
+  UserPlus,
+} from 'lucide-react'
 import {
   createProject,
   createFile,
@@ -12,6 +18,9 @@ function CreateFileHeader({
   fetchProjects,
   expandedProjectUid,
   setProjectDetails,
+  addMember,
+  setAddMember,
+  setProjects,
 }) {
   // === Funktion för att skapa ett nytt projekt ===
   async function handleCreateProject(name) {
@@ -61,10 +70,29 @@ function CreateFileHeader({
     <div className="sidebar-header">
       <div className="sidebar-header-left">
         <button
-          onClick={() => setDeleteMode((prev) => !prev)}
           className={`sidebar-header-btn btn-delete ${deleteMode ? 'delete-mode' : ''}`}
+          onClick={() => {
+            console.log(deleteMode)
+            if (addMember === false) {
+              setDeleteMode((prev) => !prev)
+            } else {
+              setProjects(false)
+            }
+          }}
         >
           <Trash2 />
+        </button>
+
+        <button
+          className={`sidebar-header-btn btn-newprojmemb ${addMember ? 'add-member' : ''}`}
+          onClick={() => {
+            console.log(addMember)
+            if (deleteMode === false) {
+              setAddMember((prev) => !prev)
+            }
+          }}
+        >
+          <UserPlus />
         </button>
       </div>
       <div className="sidebar-header-right">

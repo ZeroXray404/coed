@@ -24,6 +24,7 @@ function FileListContent({
   setProjectDetails,
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  //const [showAddUserModal, setShowAddUserModal] = useState(false)
 
   /*
    * prev = current selected IDs
@@ -127,6 +128,7 @@ function FileListContent({
           </div>
         </div>
       )}
+
       <ul>
         {projects
           // Filtrerar bort projekt utan namn eller med tomt namn, och mappar sedan över projekten

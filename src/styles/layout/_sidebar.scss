@@ -53,6 +53,10 @@ $list-padding: 6px;
         background-color: $delete-color;
       }
 
+      &.add-member {
+        background-color: $add-color;
+      }
+
       &.disabled {
         cursor: unset;
         background-color: #222;
@@ -69,6 +73,7 @@ $list-padding: 6px;
 
     flex: 1 1 auto;
     min-height: 0;
+
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -130,10 +135,24 @@ $list-padding: 6px;
                 outline: $color-text solid 1px;
               }
             }
+
+            &.add-member {
+              outline: transparent solid 1px;
+              transition: outline 0.2s ease;
+              accent-color: $add-color;
+
+              &:checked {
+                outline: $color-text solid 1px;
+              }
+            }
           }
         }
         &:hover {
           background-color: $color-dark-hover;
+        }
+        &.selected-add {
+          background-color: $add-color;
+          border-bottom: $color-text solid 1px;
         }
       }
 
@@ -284,4 +303,94 @@ $list-padding: 6px;
       transform: scale(1.15);
     }
   }
+}
+
+.add-user-modal {
+  @include flexStyling(column);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #fff;
+  background: #333;
+  z-index: 1000;
+
+  &-input {
+    color: black;
+  }
+
+  &-text {
+    text-align: center;
+    padding: 0.75rem 0;
+
+    h1 {
+      padding-bottom: 0.75rem;
+    }
+  }
+
+  &-btns {
+    @include flexStyling($justify: space-evenly);
+
+    button {
+      color: $color-text;
+      font-size: 1.2rem;
+      width: $input-size * 4;
+      height: $input-size * 1.5;
+      border-radius: $input-size * 0.25;
+
+      &.confirm {
+        @include linearGradientMixin(to right, $add-color, $add-color);
+      }
+
+      &.cancel {
+        @include linearGradientMixin(to right, #5c60b3, #5b6cff);
+      }
+    }
+  }
+
+  &-close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: $color-text;
+    cursor: pointer;
+
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background-color: #333;
+      transform: scale(1.15);
+    }
+  }
+}
+
+.user-options {
+  padding: 3px;
+  background-color: grey;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+}
+
+.input-search {
+  padding: 3px;
+  background-color: darkgrey;
+  border-radius: 3px;
+  border: 2px solid #ccc;
 }
