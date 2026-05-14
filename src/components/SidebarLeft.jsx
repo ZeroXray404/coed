@@ -91,10 +91,10 @@ function SidebarLeftContent({
 }
 
 // === Sidopanel footer komponent ===
-function SidebarLeftFooter() {
+function SidebarLeftFooter({ activeFile }) {
   return (
     <div className="sidebar-footer">
-      <Metadata />
+      <Metadata activeFile={activeFile} />
     </div>
   )
 }
@@ -223,7 +223,7 @@ function SidebarLeft({
         setCode={setCode}
         setLanguage={setLanguage}
       />
-      <SidebarLeftFooter />
+      <SidebarLeftFooter activeFile={activeFile} />
     </div>
   )
 }

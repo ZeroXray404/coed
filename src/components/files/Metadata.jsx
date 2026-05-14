@@ -1,7 +1,8 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 
-const Metadata = () => {
+const Metadata = ({ activeFile }) => {
   const [isOpened, setIsOpened] = useState(false)
 
   const metadataRef = useRef(null)
@@ -24,6 +25,57 @@ const Metadata = () => {
     }
   }, [isOpened])
 
+  // Returnerar filnamnet utan filändelsen
+  const getFileName = () => {
+    const fileName = activeFile.filename
+
+    return fileName.split('.').shift()
+  }
+
+  // Returnerar det formatterade datum och tid
+  const getDateModified = () => {
+    const iso = activeFile.last_changed
+    const date = new Date(iso)
+
+    const datePart = date.toLocaleDateString('sv-SE')
+    const timePart = date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    })
+
+    const dateModified = `${datePart}, ${timePart}`
+
+    return dateModified
+  }
+
+  // Returnerar filskaparens namn/email utan den andra halvan efter '@'
+  const getFileCreator = () => {
+    const fileCreator = activeFile.created_by
+
+    return fileCreator.split('@').shift()
+  }
+
+  // Returnerar kodspråket kapitaliserat
+  const getFileType = () => {
+    if (getLanguageFromFileName(activeFile.filename) === 'plaintext') {
+      return 'N/A'
+    } else {
+      const fileType = getLanguageFromFileName(activeFile.filename)
+      let language = ''
+
+      if (fileType === 'javascript' || fileType === 'typescript') {
+        let firstHalf = fileType.charAt(0).toUpperCase() + fileType.slice(1, 4) // first 4 letters
+
+        language = `${firstHalf}Script`
+      } else {
+        language = fileType.charAt(0).toUpperCase() + fileType.slice(1)
+      }
+
+      return language
+    }
+  }
+
   return (
     <div className={`metadata ${isOpened ? 'opened' : ''}`} ref={metadataRef}>
       <div className="metadata-btn" onClick={toggleMetadata}>
@@ -35,19 +87,19 @@ const Metadata = () => {
       <div className={`metadata-content ${isOpened ? 'opened' : ''}`}>
         <div className="metadata-content-item">
           <span>Title:</span>
-          <p>Filename.js</p>
+          <p>{activeFile ? getFileName() : 'N/A'}</p>
         </div>
         <div className="metadata-content-item">
           <span>Last modified:</span>
-          <p>14-05-2026</p>
+          <p>{activeFile ? getDateModified() : 'N/A'}</p>
         </div>
         <div className="metadata-content-item">
           <span>Created by:</span>
-          <p>Yakowboi</p>
+          <p>{activeFile ? getFileCreator() : 'N/A'}</p>
         </div>
         <div className="metadata-content-item">
-          <span>Lang:</span>
-          <p>Javascript</p>
+          <span>Language:</span>
+          <p>{activeFile ? getFileType() : 'N/A'}</p>
         </div>
       </div>
     </div>
