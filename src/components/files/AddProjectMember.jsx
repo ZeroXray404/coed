@@ -1,49 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { AppWindow, X } from 'lucide-react'
-import { getAllUsers } from '../../services/userServices'
 import { addUserToProject } from '../../services/fileServices'
 
 function AddProjectMemberContent({
+  users,
   addMember,
   setAddMember,
-  //deleteMode,
   selectedProjects,
   setSelectedProjects,
   projects,
   isLoading,
-  setIsLoading,
   error,
-  setError,
 }) {
   const [showAddUserModal, setShowAddUserModal] = useState(false)
-  const [users, setUsers] = useState([])
   const [selectedUser, setSelectedUser] = useState('')
   const [searchUser, setSearchUser] = useState('')
-  {
-    useEffect(() => {
-      async function fetchUsers() {
-        if (!addMember) {
-          setUsers([])
-          setError('')
-          return
-        }
-
-        try {
-          setIsLoading(true)
-          setError('')
-          const result = await getAllUsers()
-          console.log(result)
-          setUsers(result?.data || [])
-        } catch (loadError) {
-          setError(loadError.message || 'Failed to fetch users')
-        } finally {
-          setIsLoading(false)
-        }
-      }
-
-      fetchUsers()
-    }, [addMember])
-  }
 
   function toggleProject(uid) {
     setSelectedProjects((prev) =>

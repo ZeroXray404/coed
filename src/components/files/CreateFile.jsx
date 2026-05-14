@@ -17,6 +17,7 @@ function CreateFileHeader({
   setDeleteMode,
   fetchProjects,
   expandedProjectUid,
+  setSelectedProjects,
   setProjectDetails,
   addMember,
   setAddMember,
@@ -72,6 +73,7 @@ function CreateFileHeader({
           className={`sidebar-header-btn btn-delete ${deleteMode ? 'delete-mode' : ''}`}
           onClick={() => {
             if (addMember) {
+              setSelectedProjects([])
               setAddMember(false)
               setDeleteMode(true)
               return
@@ -87,6 +89,7 @@ function CreateFileHeader({
           className={`sidebar-header-btn btn-newprojmemb ${addMember ? 'add-member' : ''}`}
           onClick={() => {
             if (deleteMode) {
+              setSelectedProjects([])
               setDeleteMode(false)
               setAddMember(true)
               return
