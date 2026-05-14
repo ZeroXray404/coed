@@ -26,10 +26,7 @@ const Metadata = () => {
 
   return (
     <div className={`metadata ${isOpened ? 'opened' : ''}`} ref={metadataRef}>
-      <div
-        className={`metadata-btn ${isOpened ? 'opened' : ''}`}
-        onClick={toggleMetadata}
-      >
+      <div className="metadata-btn" onClick={toggleMetadata}>
         <p className="metadata-btn-text">Metadata</p>
         <span className="metadata-btn-icon">
           {!isOpened ? <ChevronDown /> : <ChevronUp />}
