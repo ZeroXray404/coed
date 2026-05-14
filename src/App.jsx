@@ -10,6 +10,9 @@ import SidebarLeft from './components/SidebarLeft'
 function App() {
   const [showAuth, setShowAuth] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()))
+  const [activeFile, setActiveFile] = useState(null)
+  const [language, setLanguage] = useState('javascript')
+  const [code, setCode] = useState('console.log("Hello World")')
 
   function handleLoginSuccess() {
     setIsLoggedIn(true)
@@ -33,10 +36,22 @@ function App() {
         />
       </header>
       <aside className="app-sidebar">
-        <SidebarLeft isLoggedIn={isLoggedIn} />
+        <SidebarLeft
+          isLoggedIn={isLoggedIn}
+          activeFile={activeFile}
+          setActiveFile={setActiveFile}
+          setCode={setCode}
+          setLanguage={setLanguage}
+        />
       </aside>
       <section className="app-main">
-        <MainArea />
+        <MainArea
+          activeFile={activeFile}
+          language={language}
+          setLanguage={setLanguage}
+          code={code}
+          setCode={setCode}
+        />
       </section>
       <footer className="app-footer">
         <Footer />

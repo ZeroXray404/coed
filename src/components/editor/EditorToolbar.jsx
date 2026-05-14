@@ -18,9 +18,13 @@ function LanguageSelector({ language, onLanguageChange }) {
         onChange={(e) => onLanguageChange(e.target.value)}
       >
         <option value="javascript">JavaScript</option>
+        <option value="typescript">TypeScript</option>
         <option value="python">Python</option>
         <option value="html">HTML</option>
         <option value="css">CSS</option>
+        <option value="scss">SCSS</option>
+        <option value="json">JSON</option>
+        <option value="markdown">Markdown</option>
       </select>
     </div>
   )
@@ -42,14 +46,11 @@ function SettingsButton({ onClick }) {
 }
 
 // Placeholder-komponent för att spara en fil, kommer utvecklas senare med funktionalitiet för att spara kod från editorn
-function SaveButton() {
-  function handleClick() {
-    alert('Placeholder: Implementera spara-funktionalitet här!')
-  }
+function SaveButton({ onSave }) {
   return (
     <button
       type="button"
-      onClick={handleClick}
+      onClick={onSave}
       className="toolbar-button save-button"
       title="Save File"
       aria-label="Save File"
@@ -71,6 +72,7 @@ function EditorToolbar({
   isOpen,
   onToggle,
   onOptionsToggle,
+  onSave,
 }) {
   return (
     // Dynamisk klass baserat på isOpen för att styra styling av toolbaren
@@ -83,7 +85,7 @@ function EditorToolbar({
             onLanguageChange={onLanguageChange}
           />
           <SettingsButton onClick={onOptionsToggle} />
-          <SaveButton />
+          <SaveButton onSave={onSave} />
         </div>
       )}
       {/* Toggle-knapp för att öppna/stänga toolbaren */}

@@ -50,6 +50,10 @@ function SidebarLeftContent({
   users,
   addMember,
   setAddMember,
+  activeFile,
+  setActiveFile,
+  setCode,
+  setLanguage,
 }) {
   return addMember ? (
     <AddProjectMemberContent
@@ -78,6 +82,10 @@ function SidebarLeftContent({
       setExpandedProjectUid={setExpandedProjectUid}
       projectDetails={projectDetails}
       setProjectDetails={setProjectDetails}
+      activeFile={activeFile}
+      setActiveFile={setActiveFile}
+      setCode={setCode}
+      setLanguage={setLanguage}
     />
   )
 }
@@ -92,7 +100,13 @@ function SidebarLeftFooter() {
 }
 
 // === Huvudkomponent för sidopanelen ===
-function SidebarLeft({ isLoggedIn }) {
+function SidebarLeft({
+  isLoggedIn,
+  activeFile,
+  setActiveFile,
+  setCode,
+  setLanguage,
+}) {
   const [deleteMode, setDeleteMode] = useState(false)
   const [selectedProjects, setSelectedProjects] = useState([])
   const [selectedFiles, setSelectedFiles] = useState([])
@@ -204,6 +218,10 @@ function SidebarLeft({ isLoggedIn }) {
         setUsers={setUsers}
         addMember={addMember}
         setAddMember={setAddMember}
+        activeFile={activeFile}
+        setActiveFile={setActiveFile}
+        setCode={setCode}
+        setLanguage={setLanguage}
       />
       <SidebarLeftFooter />
     </div>
