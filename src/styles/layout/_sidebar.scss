@@ -3,7 +3,7 @@
 %sidebar-default-styling {
   box-sizing: border-box;
   width: 100%;
-  padding: 0rem 0rem 1rem 1rem;
+  padding: 0;
   border-bottom: 1px solid $color-border;
 }
 
@@ -402,4 +402,93 @@ $list-padding: 6px;
   background-color: darkgrey;
   border-radius: 3px;
   border: 2px solid #ccc;
+}
+
+.metadata {
+  @include flexStyling($direction: column);
+
+  position: relative;
+  width: 100%;
+  height: $input-size;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  transition: height 0.2s ease;
+
+  &-btn {
+    @include flexStyling($align: center);
+
+    position: relative;
+    height: $input-size;
+    padding: 0;
+
+    background-color: $color-bg-tertiary;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+
+    cursor: pointer;
+
+    &-text {
+      flex: 1;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    &-icon {
+      margin-left: 0.75rem;
+
+      .lucide {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &.opened {
+      // border-bottom: 1px solid $color-border;
+    }
+  }
+
+  &-content {
+    @include flexStyling($direction: column);
+    height: 0%;
+    visibility: hidden;
+
+    &-item {
+      position: relative;
+      height: $input-size;
+      border-top: 1px solid $color-border;
+
+      span {
+        position: absolute;
+        font-size: 0.6rem;
+        font-family: $font-inter;
+        padding: 2px;
+      }
+
+      p {
+        @include centerFully($position: absolute);
+        font-size: 0.95rem;
+        text-align: center;
+
+        user-select: all;
+        -webkit-user-select: all;
+        -moz-user-select: all;
+      }
+    }
+
+    &.opened {
+      height: max-content;
+      visibility: visible;
+    }
+  }
+
+  &.opened {
+    height: 200px;
+  }
 }
