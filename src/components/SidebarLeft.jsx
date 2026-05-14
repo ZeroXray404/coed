@@ -102,10 +102,10 @@ function SidebarLeft({ isLoggedIn }) {
   const [addMember, setAddMember] = useState(false)
 
   useEffect(() => {
-    if (!deleteMode && selectedProjects.length > 0) {
+    if (!deleteMode && !addMember && selectedProjects.length > 0) {
       setSelectedProjects([])
     }
-  }, [deleteMode, selectedProjects])
+  }, [deleteMode, addMember, selectedProjects])
 
   useEffect(() => {
     if (!deleteMode && selectedFiles.length > 0) {
