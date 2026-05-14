@@ -23,6 +23,11 @@ $color-text: #fff;
 // Borders
 $color-border: #555;
 
+// Aktiv fil
+$color-active-file-bg: #2d2d2d;
+$color-active-file-border: #4f8cff;
+$color-active-file-text: #ffffff;
+
 // Flex
 @mixin flexStyling(
   $direction: row,

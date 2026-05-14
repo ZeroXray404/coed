@@ -233,6 +233,15 @@ $list-padding: 6px;
       }
     }
   }
+  .active-file {
+    background-color: $color-active-file-bg;
+    border-left: 3px solid $color-active-file-border;
+  }
+
+  .active-file .listselect-btn {
+    color: $color-active-file-text;
+    font-weight: 600;
+  }
 
   .sidebar-footer {
     @extend %sidebar-default-styling;
