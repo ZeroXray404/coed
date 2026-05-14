@@ -25,13 +25,7 @@ const defaultEditorOptions = {
   scrollBeyondLastLine: false,
 }
 
-function MainArea() {
-  // State för valt programmeringsspråk
-  // Används av båda toolbarens select och editorn
-  const [language, setLanguage] = useState('javascript')
-  // State för aktuell kod i editorn
-  // intitialiseras med standardkod för JavaScript
-  const [code, setCode] = useState(languageTemplates.javascript)
+function MainArea({ activeFile, language, setLanguage, code, setCode }) {
   // State som styr om toolbaren/Options är öppen eller stängd
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
@@ -60,13 +54,15 @@ function MainArea() {
     localStorage.setItem('editorTheme', theme)
   }, [theme])
 
-  // Handler som körs när användaren byter språk i dropdownen
-  // Uppdaterar:
-  // 1. Valt språk i state
-  // 2. Kod i edtorn baserat på fördefinerad template för det valda språket
+  // Byter språk i editorn.
+  // Om ingen fil är aktiv används en standard-template för valt språk.
+  // Om en fil är aktiv behålls filens content
   function handleLanguageChange(newLanguage) {
     setLanguage(newLanguage)
-    setCode(languageTemplates[newLanguage] || '')
+
+    if (!activeFile) {
+      setCode(languageTemplates[newLanguage] || '')
+    }
   }
 
   // Funktioner som styrsynlighet för Toolbar och Options
@@ -76,6 +72,19 @@ function MainArea() {
   }
   function toggleOptions() {
     setIsOptionsOpen((prev) => !prev)
+  }
+
+  function handleSave() {
+    if (!activeFile) {
+      alert('No active file selected')
+      return
+    }
+
+    console.log('Ready to save via socket later:', {
+      uid: activeFile.uid,
+      filename: activeFile.filename,
+      content: code,
+    })
   }
 
   return (
@@ -91,6 +100,7 @@ function MainArea() {
         isOpen={isToolbarOpen}
         onToggle={toggleToolbar}
         onOptionsToggle={toggleOptions}
+        onSave={handleSave}
       />
       {isOptionsOpen && (
         <EditorOptions

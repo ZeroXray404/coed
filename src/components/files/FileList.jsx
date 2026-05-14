@@ -5,6 +5,7 @@ import {
   //deleteFile, //används när flödet för att ta bort enskilda filer implementeras
 } from '../../services/fileServices.js'
 import { useState } from 'react'
+import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent({
@@ -22,6 +23,10 @@ function FileListContent({
   setExpandedProjectUid,
   projectDetails,
   setProjectDetails,
+  activeFile,
+  setActiveFile,
+  setCode,
+  setLanguage,
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   //const [showAddUserModal, setShowAddUserModal] = useState(false)
@@ -95,6 +100,15 @@ function FileListContent({
     handleProjectClick(uid)
   }
 
+  // Körs när användaren klickar på en fil i sidopanelen
+  // Sätter filen som aktiv, läser in filens content i editorn
+  // och väljer rätt editor-språk baserat på filändelsen i filnamnet
+  function handleFileClick(file) {
+    setActiveFile(file)
+    setCode(file.content || '')
+    setLanguage(getLanguageFromFileName(file.filename || ''))
+  }
+
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
@@ -159,35 +173,38 @@ function FileListContent({
                   />
                 </div>
                 {expandedProjectUid === project.uid && (
-                  // Om projektet är expanderat, visa dess filer i en nested lista
                   <ul className="nested-files">
-                    {projectDetails[project.uid]?.files?.map((file) => (
-                      <li
-                        key={file.uid}
-                        className={isSelected ? 'selected' : ''}
-                      >
-                        <div className="list-row">
-                          <button
-                            className="listselect-btn"
-                            onClick={() =>
-                              console.log('File details:', file.filename)
-                            }
-                          >
-                            <File size={14} />
-                            <span className="list-label">{file.filename}</span>
-                          </button>
-                          <input
-                            // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
-                            type="checkbox"
-                            name="fileSelect"
-                            className={deleteMode ? 'active delete-mode' : ''}
-                            checked={isSelected}
-                            onChange={() => toggle(file.uid)}
-                            aria-label={`Select project ${file.filename} for deletion`}
-                          />
-                        </div>
-                      </li>
-                    ))}
+                    {projectDetails[project.uid]?.files?.map((file) => {
+                      const isActiveFile = activeFile?.uid === file.uid
+
+                      return (
+                        <li
+                          key={file.uid}
+                          className={isActiveFile ? 'active-file' : ''}
+                        >
+                          <div className="list-row">
+                            <button
+                              className="listselect-btn"
+                              onClick={() => handleFileClick(file)}
+                            >
+                              <File size={14} />
+                              <span className="list-label">
+                                {file.filename}
+                              </span>
+                            </button>
+
+                            <input
+                              type="checkbox"
+                              name="fileSelect"
+                              className={deleteMode ? 'active delete-mode' : ''}
+                              checked={false}
+                              onChange={() => toggle(file.uid)}
+                              aria-label={`Select file ${file.filename} for deletion`}
+                            />
+                          </div>
+                        </li>
+                      )
+                    })}
                   </ul>
                 )}
               </li>
