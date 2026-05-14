@@ -2,8 +2,6 @@
 import { getApiConfig } from './apiConfig.js'
 const { API_KEY, AUTH_BASE_URL } = getApiConfig()
 
-// Användardata
-
 // === Hämta alla användare ===
 export async function getAllUsers() {
   const url = `${AUTH_BASE_URL}/users?api_key=${API_KEY}`
@@ -25,7 +23,6 @@ export async function getAllUsers() {
 }
 
 // === Hämta en specifik användare ===
-
 export async function getOneUser(user_id) {
   const url = `${AUTH_BASE_URL}/users/${user_id}?api_key=${API_KEY}`
 
@@ -45,6 +42,6 @@ export async function getOneUser(user_id) {
   return result
 }
 
-// Hämta användarprofil med ID
+// ===Hämta användardata===
 
-// Updatera användarprofil
+// ===Updatera användardata===

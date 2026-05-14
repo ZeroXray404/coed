@@ -1,56 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { AppWindow, X } from 'lucide-react'
-import { getAllUsers } from '../../services/userServices'
 import { addUserToProject } from '../../services/fileServices'
 
 function AddProjectMemberContent({
+  users,
   addMember,
-  //deleteMode,
-  //setAddMember,
+  setAddMember,
   selectedProjects,
   setSelectedProjects,
   projects,
   isLoading,
-  setIsLoading,
   error,
-  setError,
 }) {
   const [showAddUserModal, setShowAddUserModal] = useState(false)
-  const [users, setUsers] = useState([])
   const [selectedUser, setSelectedUser] = useState('')
   const [searchUser, setSearchUser] = useState('')
-  {
-    useEffect(() => {
-      async function fetchUsers() {
-        if (!addMember) {
-          setUsers([])
-          setError('')
-          return
-        }
 
-        try {
-          setIsLoading(true)
-          setError('')
-          const result = await getAllUsers()
-          console.log(result)
-          setUsers(result?.data || [])
-        } catch (loadError) {
-          setError(loadError.message || 'Failed to fetch users')
-        } finally {
-          setIsLoading(false)
-        }
-      }
-
-      fetchUsers()
-    }, [addMember])
-  }
-
-  function toggleProject(id) {
+  function toggleProject(uid) {
     setSelectedProjects((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
     )
 
-    if (!showAddUserModal && !selectedProjects.includes(id)) {
+    if (!showAddUserModal && !selectedProjects.includes(uid)) {
       setShowAddUserModal(true)
     }
   }
@@ -59,6 +30,7 @@ function AddProjectMemberContent({
     setShowAddUserModal(false)
     setSelectedProjects([])
     setSelectedUser('')
+    setAddMember(false)
   }
 
   const filterData = users.filter((user) =>
@@ -123,21 +95,30 @@ function AddProjectMemberContent({
         {projects
           .filter((project) => project.name && project.name.trim() !== '')
           .map((project) => {
+            // Kollar om projektet är valt för att lägga till en användare, och lägger till klassen 'selected' om det är det.
             const isSelected = selectedProjects.includes(project.uid)
             return (
               <li
                 key={project.uid}
                 className={isSelected ? 'selected-add' : ''}
               >
-                <AppWindow size={16} />
-                {project.name}
-                <input
-                  type="checkbox"
-                  name="fileSelect"
-                  className={addMember ? 'active add-member' : ''}
-                  checked={isSelected}
-                  onChange={() => toggleProject(project.uid)}
-                />
+                <div className="list-row">
+                  <button
+                    className="listselect-btn"
+                    onClick={() => toggleProject(project.uid)}
+                    aria-label={`Add user to ${project.name}`}
+                  >
+                    <AppWindow size={16} />
+                    {project.name}
+                  </button>
+                  <input
+                    type="checkbox"
+                    name="fileSelect"
+                    className={addMember ? 'active add-member' : ''}
+                    checked={isSelected}
+                    onChange={() => toggleProject(project.uid)}
+                  />
+                </div>
               </li>
             )
           })}

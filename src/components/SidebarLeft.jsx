@@ -1,6 +1,8 @@
 import CreateFileHeader from './files/CreateFile'
 import FileListContent from './files/FileList'
+import AddProjectMemberContent from './files/AddProjectMember'
 import { getAllProjects } from '../services/fileServices'
+import { getAllUsers } from '../services/userServices'
 import { useCallback, useEffect, useState } from 'react'
 
 // === Sidopanel header komponent ===
@@ -9,7 +11,10 @@ function SidebarLeftHeader({
   setDeleteMode,
   fetchProjects,
   expandedProjectUid,
+  setSelectedProjects,
   setProjectDetails,
+  addMember,
+  setAddMember,
 }) {
   return (
     <CreateFileHeader
@@ -17,7 +22,10 @@ function SidebarLeftHeader({
       setDeleteMode={setDeleteMode}
       fetchProjects={fetchProjects}
       expandedProjectUid={expandedProjectUid}
+      setSelectedProjects={setSelectedProjects}
       setProjectDetails={setProjectDetails}
+      addMember={addMember}
+      setAddMember={setAddMember}
     />
   )
 }
@@ -38,8 +46,22 @@ function SidebarLeftContent({
   setExpandedProjectUid,
   projectDetails,
   setProjectDetails,
+  users,
+  addMember,
+  setAddMember,
 }) {
-  return (
+  return addMember ? (
+    <AddProjectMemberContent
+      users={users}
+      addMember={addMember}
+      setAddMember={setAddMember}
+      selectedProjects={selectedProjects}
+      setSelectedProjects={setSelectedProjects}
+      projects={projects}
+      isLoading={isLoading}
+      error={error}
+    />
+  ) : (
     <FileListContent
       deleteMode={deleteMode}
       setDeleteMode={setDeleteMode}
@@ -78,18 +100,21 @@ function SidebarLeft({ isLoggedIn }) {
   const [error, setError] = useState('')
   const [expandedProjectUid, setExpandedProjectUid] = useState(null)
   const [projectDetails, setProjectDetails] = useState({})
+  const [users, setUsers] = useState([])
+  const [usersLoaded, setUsersLoaded] = useState(false)
+  const [addMember, setAddMember] = useState(false)
 
   useEffect(() => {
-    if (!deleteMode && selectedProjects.length > 0) {
+    if (!deleteMode && !addMember && selectedProjects.length > 0) {
       setSelectedProjects([])
     }
-  }, [deleteMode, selectedProjects])
+  }, [deleteMode, addMember, selectedProjects])
 
   useEffect(() => {
-    if (!deleteMode && selectedFiles.length > 0) {
+    if (!deleteMode && !addMember && selectedFiles.length > 0) {
       setSelectedFiles([])
     }
-  }, [deleteMode, selectedFiles])
+  }, [deleteMode, addMember, selectedFiles])
 
   // === Funktion för att hämta alla projekt ===
   // useCallback för att kunna återanvänmda fetchProjects utan att fastna i oändliga loopar i useEffect.
@@ -116,6 +141,35 @@ function SidebarLeft({ isLoggedIn }) {
     fetchProjects()
   }, [fetchProjects])
 
+  // === Funktion för att hämta alla användare ===
+  const fetchUsers = useCallback(async () => {
+    if (!isLoggedIn) {
+      setUsers([])
+      setUsersLoaded(false)
+      setError('')
+      return
+    }
+
+    try {
+      setIsLoading(true)
+      setError('')
+      const result = await getAllUsers()
+      setUsers(result?.data || [])
+      setUsersLoaded(true)
+    } catch (loadError) {
+      setError(loadError.message || 'Failed to fetch users')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [isLoggedIn])
+
+  // === Lazy loading av användare när addMember är true ===q
+  useEffect(() => {
+    if (addMember && !usersLoaded) {
+      fetchUsers()
+    }
+  }, [addMember, usersLoaded, fetchUsers])
+
   return (
     <div className="sidebar-left">
       <SidebarLeftHeader
@@ -123,7 +177,10 @@ function SidebarLeft({ isLoggedIn }) {
         setDeleteMode={setDeleteMode}
         fetchProjects={fetchProjects}
         expandedProjectUid={expandedProjectUid}
+        setSelectedProjects={setSelectedProjects}
         setProjectDetails={setProjectDetails}
+        addMember={addMember}
+        setAddMember={setAddMember}
       />
       <SidebarLeftContent
         deleteMode={deleteMode}
@@ -134,12 +191,18 @@ function SidebarLeft({ isLoggedIn }) {
         setSelectedFiles={setSelectedFiles}
         projects={projects}
         isLoading={isLoading}
+        setIsLoading={setIsLoading}
         error={error}
+        setError={setError}
         fetchProjects={fetchProjects}
         expandedProjectUid={expandedProjectUid}
         setExpandedProjectUid={setExpandedProjectUid}
         projectDetails={projectDetails}
         setProjectDetails={setProjectDetails}
+        users={users}
+        setUsers={setUsers}
+        addMember={addMember}
+        setAddMember={setAddMember}
       />
       <SidebarLeftFooter />
     </div>

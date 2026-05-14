@@ -32,13 +32,13 @@ $list-padding: 6px;
     border-top: solid 1px $color-border;
     padding: 0;
 
-    &-left {
-      // background-color: blue;
-    }
+    // &-left {
+    //   // background-color: blue;
+    // }
 
-    &-right {
-      // background-color: red;
-    }
+    // &-right {
+    //   // background-color: red;
+    // }
 
     &-btn {
       position: relative;
@@ -101,12 +101,21 @@ $list-padding: 6px;
       }
 
       li.selected > .list-row {
-        background-color: #ff4848;
+        background-color: $delete-color;
         border-bottom: $color-text solid 1px;
       }
 
       li.selected > .list-row:hover {
-        background-color: #ff4848;
+        background-color: $delete-color;
+      }
+
+      li.selected-add > .list-row {
+        background-color: $add-color;
+        border-bottom: $color-text solid 1px;
+      }
+
+      li.selected-add > .list-row:hover {
+        background-color: $add-color;
       }
 
       .list-row {

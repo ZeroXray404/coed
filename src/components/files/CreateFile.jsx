@@ -17,10 +17,10 @@ function CreateFileHeader({
   setDeleteMode,
   fetchProjects,
   expandedProjectUid,
+  setSelectedProjects,
   setProjectDetails,
   addMember,
   setAddMember,
-  setProjects,
 }) {
   // === Funktion för att skapa ett nytt projekt ===
   async function handleCreateProject(name) {
@@ -72,30 +72,33 @@ function CreateFileHeader({
         <button
           className={`sidebar-header-btn btn-delete ${deleteMode ? 'delete-mode' : ''}`}
           onClick={() => {
-            console.log(deleteMode)
-            if (addMember === false) {
-              setDeleteMode((prev) => !prev)
-            } else {
-              setProjects(false)
+            if (addMember) {
+              setSelectedProjects([])
+              setAddMember(false)
+              setDeleteMode(true)
+              return
             }
+            setDeleteMode((prev) => !prev)
           }}
         >
           <Trash2 />
         </button>
-
+      </div>
+      <div className="sidebar-header-right">
         <button
           className={`sidebar-header-btn btn-newprojmemb ${addMember ? 'add-member' : ''}`}
           onClick={() => {
-            console.log(addMember)
-            if (deleteMode === false) {
-              setAddMember((prev) => !prev)
+            if (deleteMode) {
+              setSelectedProjects([])
+              setDeleteMode(false)
+              setAddMember(true)
+              return
             }
+            setAddMember((prev) => !prev)
           }}
         >
           <UserPlus />
         </button>
-      </div>
-      <div className="sidebar-header-right">
         {/* <button className="sidebar-header-btn btn-projback">
           <FolderOutput />
         </button> */}
