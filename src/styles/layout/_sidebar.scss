@@ -468,18 +468,19 @@ $list-padding: 6px;
       position: relative;
       height: $input-size;
       border-top: 1px solid $color-border;
+      padding: 4px;
 
       span {
         position: absolute;
         font-size: 0.6rem;
         font-family: $font-inter;
-        padding: 2px;
+        color: #ccc;
       }
 
       p {
-        @include centerFully($position: absolute);
-        font-size: 0.95rem;
-        text-align: center;
+        @include centerVert($position: absolute);
+        padding-top: 8px;
+        text-wrap: nowrap;
 
         user-select: all;
         -webkit-user-select: all;
