@@ -97,28 +97,29 @@ $list-padding: 6px;
         &.selected {
           background-color: transparent;
           border-bottom: transparent solid 1px;
+
+          > .list-row {
+            background-color: $delete-color;
+            border-bottom: $color-text solid 1px;
+
+            &:hover {
+              background-color: $delete-color;
+            }
+
+            li.selected-add > .list-row {
+              background-color: $add-color;
+              border-bottom: $color-text solid 1px;
+
+              :hover {
+                background-color: $add-color;
+              }
+            }
+          }
         }
       }
 
-      li.selected > .list-row {
-        background-color: $delete-color;
-        border-bottom: $color-text solid 1px;
-      }
-
-      li.selected > .list-row:hover {
-        background-color: $delete-color;
-      }
-
-      li.selected-add > .list-row {
-        background-color: $add-color;
-        border-bottom: $color-text solid 1px;
-      }
-
-      li.selected-add > .list-row:hover {
-        background-color: $add-color;
-      }
-
       .list-row {
+        background-color: unset;
         box-sizing: border-box;
         display: flex;
         align-items: center;
@@ -167,7 +168,8 @@ $list-padding: 6px;
 
       .nested-files {
         .list-row {
-          padding-left: $list-padding * 2 + $list-icon-size;
+          padding-left: $list-padding * 3;
+          background-color: unset;
         }
 
         li {
@@ -186,6 +188,7 @@ $list-padding: 6px;
                 outline: transparent solid 1px;
                 transition: outline 0.2s ease;
                 accent-color: $delete-color;
+                margin-right: 6px;
 
                 &:checked {
                   outline: $color-text solid 1px;
@@ -207,12 +210,9 @@ $list-padding: 6px;
       .listselect-btn {
         display: flex;
         flex-wrap: nowrap;
-        flex: 1;
         min-width: 0;
         align-items: center;
         gap: 0.5rem;
-        width: 100%;
-        padding-right: 2rem; // plats för checkbox
         text-align: left;
         font-size: 12px;
         color: $color-text;
@@ -430,9 +430,10 @@ $list-padding: 6px;
     @include flexStyling($align: center);
 
     position: relative;
-    height: $input-size;
+    min-height: $input-size;
     padding: 0;
 
+    color: $color-text;
     background-color: $color-bg-tertiary;
     border-bottom: 1px solid transparent;
     transition:
