@@ -121,7 +121,7 @@ function FileListContent(
           <div className="delete-modal-text">
             <h1>Confirm Deletion?</h1>
             <p>Are you sure you want to delete?</p>
-            <p>Files can´t be recovered once deleted.</p>
+            <p>Files cannot be recovered once deleted.</p>
             <p>Projects to be deleted: {selectedProjects.length}</p>
             <p>Files to be deleted: {selectedFiles.length}</p>
           </div>
@@ -155,7 +155,10 @@ function FileListContent(
             const isSelected = selectedProjects.includes(project.uid)
             return (
               // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
-              <li key={project.uid} className={isSelected ? 'selected' : ''}>
+              <li
+                key={project.uid}
+                className={`project-list-item ${isSelected ? 'selected' : ''}`}
+              >
                 <button
                   className="list-row"
                   onClick={() => handleProjectRowClick(project.uid)}
@@ -165,16 +168,16 @@ function FileListContent(
                     <AppWindow size={16} />
                     <span className="list-label">{project.name}</span>
                   </div>
-                  <input
-                    // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
-                    type="checkbox"
-                    name="fileSelect"
-                    className={deleteMode ? 'active delete-mode' : ''}
-                    checked={isSelected}
-                    onChange={() => toggle(project.uid)}
-                    aria-label={`Select project ${project.name} for deletion`}
-                  />
                 </button>
+                <input
+                  // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
+                  type="checkbox"
+                  name="fileSelect"
+                  className={deleteMode ? 'active delete-mode' : ''}
+                  checked={isSelected}
+                  onChange={() => toggle(project.uid)}
+                  aria-label={`Select project ${project.name} for deletion`}
+                />
                 {expandedProjectUid === project.uid && (
                   <ul className="nested-files">
                     {projectDetails[project.uid]?.files?.map((file) => {
@@ -195,16 +198,15 @@ function FileListContent(
                                 {file.filename}
                               </span>
                             </div>
-
-                            <input
-                              type="checkbox"
-                              name="fileSelect"
-                              className={deleteMode ? 'active delete-mode' : ''}
-                              checked={false}
-                              onChange={() => toggle(file.uid)}
-                              aria-label={`Select file ${file.filename} for deletion`}
-                            />
                           </button>
+                          <input
+                            type="checkbox"
+                            name="fileSelect"
+                            className={deleteMode ? 'active delete-mode' : ''}
+                            checked={false}
+                            onChange={() => toggle(file.uid)}
+                            aria-label={`Select file ${file.filename} for deletion`}
+                          />
                         </li>
                       )
                     })}
