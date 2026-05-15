@@ -32,14 +32,6 @@ $list-padding: 6px;
     border-top: solid 1px $color-border;
     padding: 0;
 
-    // &-left {
-    //   // background-color: blue;
-    // }
-
-    // &-right {
-    //   // background-color: red;
-    // }
-
     &-btn {
       position: relative;
       width: $input-size;
@@ -94,44 +86,11 @@ $list-padding: 6px;
           border-bottom 0.2s ease;
         border-bottom: transparent solid 1px;
 
-        &.selected {
-          background-color: transparent;
-          border-bottom: transparent solid 1px;
-
-          > .list-row {
-            background-color: $delete-color;
-            border-bottom: $color-text solid 1px;
-
-            &:hover {
-              background-color: $delete-color;
-            }
-
-            li.selected-add > .list-row {
-              background-color: $add-color;
-              border-bottom: $color-text solid 1px;
-
-              :hover {
-                background-color: $add-color;
-              }
-            }
-          }
-        }
-      }
-
-      .list-row {
-        background-color: unset;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: $list-padding;
-        justify-content: space-between;
-        gap: 0.5rem;
-
         input {
-          position: static;
+          @include centerVert(absolute);
+          right: 0rem;
           visibility: hidden;
-          flex-shrink: 0;
+          margin-right: 6px;
 
           &.active {
             visibility: unset;
@@ -157,6 +116,18 @@ $list-padding: 6px;
             }
           }
         }
+      }
+
+      .list-row {
+        background-color: unset;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: $list-padding;
+        justify-content: space-between;
+        gap: 0.5rem;
+
         &:hover {
           background-color: $color-dark-hover;
         }
@@ -166,36 +137,64 @@ $list-padding: 6px;
         }
       }
 
+      .project-list-item {
+        > input {
+          top: 14px;
+        }
+
+        &.selected {
+          background-color: transparent;
+          border-bottom: transparent solid 1px;
+
+          > .list-row {
+            background-color: $delete-color;
+            border-bottom: $color-text solid 1px;
+
+            &:hover {
+              background-color: $delete-color;
+            }
+
+            li.selected-add > .list-row {
+              background-color: $add-color;
+              border-bottom: $color-text solid 1px;
+
+              :hover {
+                background-color: $add-color;
+              }
+            }
+          }
+
+          > .nested-files > li {
+            background-color: $delete-selected;
+
+            &.active-file {
+              background-color: $delete-selected;
+              border-left: 3px solid $color-text;
+            }
+
+            > button {
+              &:hover {
+                background-color: unset;
+              }
+            }
+          }
+        }
+      }
+
       .nested-files {
         .list-row {
           padding-left: $list-padding * 3;
           background-color: unset;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: $color-dark-hover;
+          }
         }
 
         li {
           margin: 0;
           padding: 0;
-
-          input {
-            @include centerVert(absolute);
-            right: 0rem;
-            visibility: hidden;
-
-            &.active {
-              visibility: unset;
-
-              &.delete-mode {
-                outline: transparent solid 1px;
-                transition: outline 0.2s ease;
-                accent-color: $delete-color;
-                margin-right: 6px;
-
-                &:checked {
-                  outline: $color-text solid 1px;
-                }
-              }
-            }
-          }
         }
       }
 
@@ -224,12 +223,6 @@ $list-padding: 6px;
           background-color 0.2s ease,
           color 0.2s ease,
           border-bottom 0.2s ease;
-      }
-
-      .list-row .listselect-btn {
-        flex: 1;
-        width: auto;
-        padding-right: 0;
       }
     }
   }
