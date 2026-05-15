@@ -1,7 +1,7 @@
 import CreateFileHeader from './files/CreateFile'
 import FileListContent from './files/FileList'
 import AddProjectMemberContent from './files/AddProjectMember'
-import Metadata from './files/Metadata'
+import MetadataFooter from './files/Metadata'
 import { getAllProjects } from '../services/fileServices'
 import { getAllUsers } from '../services/userServices'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -96,7 +96,7 @@ function SidebarLeftContent({
 function SidebarLeftFooter({ activeFile, fileListRef }) {
   return (
     <div className="sidebar-footer">
-      <Metadata activeFile={activeFile} fileListRef={fileListRef} />
+      <MetadataFooter activeFile={activeFile} fileListRef={fileListRef} />
     </div>
   )
 }

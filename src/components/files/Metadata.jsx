@@ -2,7 +2,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 
-const Metadata = ({ activeFile, fileListRef }) => {
+const MetadataFooter = ({ activeFile, fileListRef }) => {
   const [isOpened, setIsOpened] = useState(false)
 
   const metadataRef = useRef(null)
@@ -111,4 +111,4 @@ const Metadata = ({ activeFile, fileListRef }) => {
   )
 }
 
-export default Metadata
+export default MetadataFooter
