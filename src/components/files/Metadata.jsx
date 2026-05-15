@@ -28,7 +28,7 @@ const MetadataFooter = ({ activeFile, fileListRef }) => {
     return () => {
       document.removeEventListener('mousedown', handler)
     }
-  }, [isOpened])
+  }, [metadataRef, fileListRef])
 
   // Returnerar filnamnet utan filändelsen
   const getFileName = () => {
