@@ -2,7 +2,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 
-const Metadata = ({ activeFile }) => {
+const Metadata = ({ activeFile, fileListRef }) => {
   const [isOpened, setIsOpened] = useState(false)
 
   const metadataRef = useRef(null)
@@ -13,7 +13,12 @@ const Metadata = ({ activeFile }) => {
 
   useEffect(() => {
     const handler = (e) => {
-      if (metadataRef.current && !metadataRef.current.contains(e.target)) {
+      const insideMetadata =
+        metadataRef.current && !metadataRef.current.contains(e.target)
+      const insideFileList =
+        fileListRef.current && !fileListRef.current.contains(e.target)
+
+      if (insideMetadata && insideFileList) {
         setIsOpened(false)
       }
     }

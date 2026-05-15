@@ -4,30 +4,33 @@ import {
   getProjectWithFilesAndUsers,
   //deleteFile, //används när flödet för att ta bort enskilda filer implementeras
 } from '../../services/fileServices.js'
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
-function FileListContent({
-  deleteMode,
-  setDeleteMode,
-  selectedProjects,
-  setSelectedProjects,
-  selectedFiles,
-  // setSelectedFiles, // används när flödet för att ta bort enskilda filer implementeras
-  projects,
-  isLoading,
-  error,
-  fetchProjects,
-  expandedProjectUid,
-  setExpandedProjectUid,
-  projectDetails,
-  setProjectDetails,
-  activeFile,
-  setActiveFile,
-  setCode,
-  setLanguage,
-}) {
+function FileListContent(
+  {
+    deleteMode,
+    setDeleteMode,
+    selectedProjects,
+    setSelectedProjects,
+    selectedFiles,
+    // setSelectedFiles, // används när flödet för att ta bort enskilda filer implementeras
+    projects,
+    isLoading,
+    error,
+    fetchProjects,
+    expandedProjectUid,
+    setExpandedProjectUid,
+    projectDetails,
+    setProjectDetails,
+    activeFile,
+    setActiveFile,
+    setCode,
+    setLanguage,
+  },
+  ref
+) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   //const [showAddUserModal, setShowAddUserModal] = useState(false)
 
@@ -143,7 +146,7 @@ function FileListContent({
         </div>
       )}
 
-      <ul>
+      <ul ref={ref}>
         {projects
           // Filtrerar bort projekt utan namn eller med tomt namn, och mappar sedan över projekten
           .filter((project) => project.name && project.name.trim() !== '')
@@ -215,4 +218,4 @@ function FileListContent({
   )
 }
 
-export default FileListContent
+export default forwardRef(FileListContent)

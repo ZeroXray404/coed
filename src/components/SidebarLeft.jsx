@@ -4,7 +4,7 @@ import AddProjectMemberContent from './files/AddProjectMember'
 import Metadata from './files/Metadata'
 import { getAllProjects } from '../services/fileServices'
 import { getAllUsers } from '../services/userServices'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 // === Sidopanel header komponent ===
 function SidebarLeftHeader({
@@ -54,6 +54,7 @@ function SidebarLeftContent({
   setActiveFile,
   setCode,
   setLanguage,
+  fileListRef,
 }) {
   return addMember ? (
     <AddProjectMemberContent
@@ -86,15 +87,16 @@ function SidebarLeftContent({
       setActiveFile={setActiveFile}
       setCode={setCode}
       setLanguage={setLanguage}
+      ref={fileListRef}
     />
   )
 }
 
 // === Sidopanel footer komponent ===
-function SidebarLeftFooter({ activeFile }) {
+function SidebarLeftFooter({ activeFile, fileListRef }) {
   return (
     <div className="sidebar-footer">
-      <Metadata activeFile={activeFile} />
+      <Metadata activeFile={activeFile} fileListRef={fileListRef} />
     </div>
   )
 }
@@ -118,6 +120,8 @@ function SidebarLeft({
   const [users, setUsers] = useState([])
   const [usersLoaded, setUsersLoaded] = useState(false)
   const [addMember, setAddMember] = useState(false)
+
+  const fileListRef = useRef(null)
 
   useEffect(() => {
     if (!deleteMode && !addMember && selectedProjects.length > 0) {
@@ -222,8 +226,9 @@ function SidebarLeft({
         setActiveFile={setActiveFile}
         setCode={setCode}
         setLanguage={setLanguage}
+        fileListRef={fileListRef}
       />
-      <SidebarLeftFooter activeFile={activeFile} />
+      <SidebarLeftFooter activeFile={activeFile} fileListRef={fileListRef} />
     </div>
   )
 }
