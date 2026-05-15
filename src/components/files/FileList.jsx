@@ -156,15 +156,15 @@ function FileListContent(
             return (
               // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
               <li key={project.uid} className={isSelected ? 'selected' : ''}>
-                <div className="list-row">
-                  <button
-                    className="listselect-btn"
-                    onClick={() => handleProjectRowClick(project.uid)}
-                    aria-label={`Open project ${project.name}`}
-                  >
+                <button
+                  className="list-row"
+                  onClick={() => handleProjectRowClick(project.uid)}
+                  aria-label={`Open project ${project.name}`}
+                >
+                  <div className="listselect-btn">
                     <AppWindow size={16} />
                     <span className="list-label">{project.name}</span>
-                  </button>
+                  </div>
                   <input
                     // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
                     type="checkbox"
@@ -174,7 +174,7 @@ function FileListContent(
                     onChange={() => toggle(project.uid)}
                     aria-label={`Select project ${project.name} for deletion`}
                   />
-                </div>
+                </button>
                 {expandedProjectUid === project.uid && (
                   <ul className="nested-files">
                     {projectDetails[project.uid]?.files?.map((file) => {
@@ -185,16 +185,16 @@ function FileListContent(
                           key={file.uid}
                           className={isActiveFile ? 'active-file' : ''}
                         >
-                          <div className="list-row">
-                            <button
-                              className="listselect-btn"
-                              onClick={() => handleFileClick(file)}
-                            >
+                          <button
+                            className="list-row"
+                            onClick={() => handleFileClick(file)}
+                          >
+                            <div className="listselect-btn">
                               <File size={14} />
                               <span className="list-label">
                                 {file.filename}
                               </span>
-                            </button>
+                            </div>
 
                             <input
                               type="checkbox"
@@ -204,7 +204,7 @@ function FileListContent(
                               onChange={() => toggle(file.uid)}
                               aria-label={`Select file ${file.filename} for deletion`}
                             />
-                          </div>
+                          </button>
                         </li>
                       )
                     })}

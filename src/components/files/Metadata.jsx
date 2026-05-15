@@ -82,29 +82,31 @@ const MetadataFooter = ({ activeFile, fileListRef }) => {
   }
 
   return (
-    <div className={`metadata ${isOpened ? 'opened' : ''}`} ref={metadataRef}>
-      <div className="metadata-btn" onClick={toggleMetadata}>
-        <p className="metadata-btn-text">Metadata</p>
-        <span className="metadata-btn-icon">
-          {!isOpened ? <ChevronDown /> : <ChevronUp />}
-        </span>
-      </div>
-      <div className={`metadata-content ${isOpened ? 'opened' : ''}`}>
-        <div className="metadata-content-item">
-          <span>Title:</span>
-          <p>{activeFile ? getFileName() : 'N/A'}</p>
-        </div>
-        <div className="metadata-content-item">
-          <span>Last modified:</span>
-          <p>{activeFile ? getDateModified() : 'N/A'}</p>
-        </div>
-        <div className="metadata-content-item">
-          <span>Created by:</span>
-          <p>{activeFile ? getFileCreator() : 'N/A'}</p>
-        </div>
-        <div className="metadata-content-item">
-          <span>Language:</span>
-          <p>{activeFile ? getFileType() : 'N/A'}</p>
+    <div className="sidebar-footer">
+      <div className={`metadata ${isOpened ? 'opened' : ''}`} ref={metadataRef}>
+        <button className="metadata-btn" onClick={toggleMetadata}>
+          <p className="metadata-btn-text">Metadata</p>
+          <span className="metadata-btn-icon">
+            {!isOpened ? <ChevronDown /> : <ChevronUp />}
+          </span>
+        </button>
+        <div className={`metadata-content ${isOpened ? 'opened' : ''}`}>
+          <div className="metadata-content-item">
+            <span>Title:</span>
+            <p>{activeFile ? getFileName() : 'N/A'}</p>
+          </div>
+          <div className="metadata-content-item">
+            <span>Last modified:</span>
+            <p>{activeFile ? getDateModified() : 'N/A'}</p>
+          </div>
+          <div className="metadata-content-item">
+            <span>Created by:</span>
+            <p>{activeFile ? getFileCreator() : 'N/A'}</p>
+          </div>
+          <div className="metadata-content-item">
+            <span>Language:</span>
+            <p>{activeFile ? getFileType() : 'N/A'}</p>
+          </div>
         </div>
       </div>
     </div>
