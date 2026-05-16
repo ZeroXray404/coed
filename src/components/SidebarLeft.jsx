@@ -6,102 +6,7 @@ import { getAllProjects } from '../services/fileServices'
 import { getAllUsers } from '../services/userServices'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-// === Sidopanel header komponent ===
-function SidebarLeftHeader({
-  deleteMode,
-  setDeleteMode,
-  fetchProjects,
-  expandedProjectUid,
-  setSelectedProjects,
-  setProjectDetails,
-  addMember,
-  setAddMember,
-}) {
-  return (
-    <CreateFileHeader
-      deleteMode={deleteMode}
-      setDeleteMode={setDeleteMode}
-      fetchProjects={fetchProjects}
-      expandedProjectUid={expandedProjectUid}
-      setSelectedProjects={setSelectedProjects}
-      setProjectDetails={setProjectDetails}
-      addMember={addMember}
-      setAddMember={setAddMember}
-    />
-  )
-}
-
-// === Sidopanel content komponent ===
-function SidebarLeftContent({
-  deleteMode,
-  setDeleteMode,
-  selectedProjects,
-  setSelectedProjects,
-  selectedFiles,
-  setSelectedFiles,
-  projects,
-  isLoading,
-  error,
-  fetchProjects,
-  expandedProjectUid,
-  setExpandedProjectUid,
-  projectDetails,
-  setProjectDetails,
-  users,
-  addMember,
-  setAddMember,
-  activeFile,
-  setActiveFile,
-  setCode,
-  setLanguage,
-  fileListRef,
-}) {
-  return addMember ? (
-    <AddProjectMemberContent
-      users={users}
-      addMember={addMember}
-      setAddMember={setAddMember}
-      selectedProjects={selectedProjects}
-      setSelectedProjects={setSelectedProjects}
-      projects={projects}
-      isLoading={isLoading}
-      error={error}
-    />
-  ) : (
-    <FileListContent
-      deleteMode={deleteMode}
-      setDeleteMode={setDeleteMode}
-      selectedProjects={selectedProjects}
-      setSelectedProjects={setSelectedProjects}
-      selectedFiles={selectedFiles}
-      setSelectedFiles={setSelectedFiles}
-      projects={projects}
-      isLoading={isLoading}
-      error={error}
-      fetchProjects={fetchProjects}
-      expandedProjectUid={expandedProjectUid}
-      setExpandedProjectUid={setExpandedProjectUid}
-      projectDetails={projectDetails}
-      setProjectDetails={setProjectDetails}
-      activeFile={activeFile}
-      setActiveFile={setActiveFile}
-      setCode={setCode}
-      setLanguage={setLanguage}
-      ref={fileListRef}
-    />
-  )
-}
-
-// === Sidopanel footer komponent ===
-function SidebarLeftFooter({ activeFile, fileListRef }) {
-  return (
-    <div className="sidebar-footer">
-      <MetadataFooter activeFile={activeFile} fileListRef={fileListRef} />
-    </div>
-  )
-}
-
-// === Huvudkomponent för sidopanelen ===
+// === Sidopanel komponenten ===
 function SidebarLeft({
   isLoggedIn,
   activeFile,
@@ -191,7 +96,8 @@ function SidebarLeft({
 
   return (
     <div className="sidebar-left">
-      <SidebarLeftHeader
+      {/* Header components here */}
+      <CreateFileHeader
         deleteMode={deleteMode}
         setDeleteMode={setDeleteMode}
         fetchProjects={fetchProjects}
@@ -201,34 +107,45 @@ function SidebarLeft({
         addMember={addMember}
         setAddMember={setAddMember}
       />
-      <SidebarLeftContent
-        deleteMode={deleteMode}
-        setDeleteMode={setDeleteMode}
-        selectedProjects={selectedProjects}
-        setSelectedProjects={setSelectedProjects}
-        selectedFiles={selectedFiles}
-        setSelectedFiles={setSelectedFiles}
-        projects={projects}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        error={error}
-        setError={setError}
-        fetchProjects={fetchProjects}
-        expandedProjectUid={expandedProjectUid}
-        setExpandedProjectUid={setExpandedProjectUid}
-        projectDetails={projectDetails}
-        setProjectDetails={setProjectDetails}
-        users={users}
-        setUsers={setUsers}
-        addMember={addMember}
-        setAddMember={setAddMember}
-        activeFile={activeFile}
-        setActiveFile={setActiveFile}
-        setCode={setCode}
-        setLanguage={setLanguage}
-        fileListRef={fileListRef}
-      />
-      <SidebarLeftFooter activeFile={activeFile} fileListRef={fileListRef} />
+
+      {/* Content components here */}
+      {addMember ? (
+        <AddProjectMemberContent
+          users={users}
+          addMember={addMember}
+          setAddMember={setAddMember}
+          selectedProjects={selectedProjects}
+          setSelectedProjects={setSelectedProjects}
+          projects={projects}
+          isLoading={isLoading}
+          error={error}
+        />
+      ) : (
+        <FileListContent
+          deleteMode={deleteMode}
+          setDeleteMode={setDeleteMode}
+          selectedProjects={selectedProjects}
+          setSelectedProjects={setSelectedProjects}
+          selectedFiles={selectedFiles}
+          setSelectedFiles={setSelectedFiles}
+          projects={projects}
+          isLoading={isLoading}
+          error={error}
+          fetchProjects={fetchProjects}
+          expandedProjectUid={expandedProjectUid}
+          setExpandedProjectUid={setExpandedProjectUid}
+          projectDetails={projectDetails}
+          setProjectDetails={setProjectDetails}
+          activeFile={activeFile}
+          setActiveFile={setActiveFile}
+          setCode={setCode}
+          setLanguage={setLanguage}
+          ref={fileListRef}
+        />
+      )}
+
+      {/* Footer components here */}
+      <MetadataFooter activeFile={activeFile} fileListRef={fileListRef} />
     </div>
   )
 }
