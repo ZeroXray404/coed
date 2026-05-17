@@ -5,98 +5,100 @@ import {
   disconnectSocket,
 } from '../services/socketServices'
 
-// Hook för att realtime-logik kopplad till en aktiv fil.
-//
-// acticeFile:
-// objekt som represnenterar den fil som användare arbetar i
-//
-// setCode:
-// setter funktion från MainArea som uppdaterar editorns code-state
-
+// Hanterar socket-logik för den aktiva filen i editorn.
+// Hooken öppnar rätt socket-room, lyssnar på realtime-events
+// och skickar nytt content när användaren skriver.
 export function useSocketFile(activeFile, setCode) {
-  // Körs när activeFile ändras eller när komponenten mountas
-  // Avbryter när det saknas en aktiv fil
   useEffect(() => {
-    if (!activeFile) {
+    if (!activeFile?.uid) {
       return
     }
 
-    // Startar socket-anslutningen mot servern
-    connectSocket()
-
-    // Lyssnar på socketens connect-event
-    // Körs när klitenten ansluter till socket-servern
-    socket.on('connect', () => {
-      console.log('Socket connected:', socket.id)
-
-      // Öppnar filens socket-room på servern.
-      // Alla användare i samma rum får realtime-events för denna fil
+    function openActiveFileRoom() {
       socket.emit('open file', activeFile.uid)
       console.log('Opened socket file room:', activeFile.uid)
-    })
+    }
 
-    // Lyssnar på eventet "file loaded" från servern
-    // Körs när servern skickar tillbaka filens innehåll
-    socket.on('file loaded', (data) => {
+    function handleConnect() {
+      console.log('Socket connected:', socket.id)
+      openActiveFileRoom()
+    }
+
+    function handleFileLoaded(data) {
       console.log('File loaded:', data)
 
-      // Kontrollerar att content faktiskt finns i payloaden innan vi försöker uppdatera editorn
       if (data?.content !== undefined) {
         setCode(data.content)
       }
-    })
+    }
 
-    // Lyssnar på eventet "conentent" från servern
-    // Körs när en annan klient i samma room skiockar nytt editorninnehåll
-    socket.on('content', (data) => {
+    function handleContent(data) {
       console.log('Content received:', data)
-
-      // Säkerställer att uppdateringen tilljör samma fil som användaren har öppen
+      // Ignorera content-events som gäller en annan fil.
       if (data?.uid !== activeFile.uid) {
         return
       }
-      // Uppdaterar editorn med innehållet från servern
       if (data?.content !== undefined) {
         setCode(data.content)
       }
-    })
+    }
 
-    // Lyssnar på anslutningsfel från socket-servern
-    socket.on('connect_error', (error) => {
+    function handleContentSaved(data) {
+      console.log('Content saved:', data)
+    }
+
+    function handleConnectError(error) {
       console.error('Connection error:', error.message)
-    })
-    // Lyssnar på disconnect-event från socket-servern
-    // Körs när socketen tappar anslutningen
-    socket.on('disconnect', (reason) => {
+    }
+
+    function handleDisconnect(reason) {
       console.log('Socket disconnected:', reason)
-    })
+    }
+
+    socket.on('connect', handleConnect)
+    socket.on('connect_error', handleConnectError)
+    socket.on('disconnect', handleDisconnect)
+    socket.on('file loaded', handleFileLoaded)
+    socket.on('content', handleContent)
+    socket.on('content saved', handleContentSaved)
+
+    connectSocket()
+
+    // Om socketen redan är ansluten när activeFile byts,
+    // triggas inte connect-eventet igen.
+    // Därför öppnar vi filrummet direkt också
+    if (socket.connected) {
+      openActiveFileRoom()
+    }
 
     // Rensa upp när komponenten avmonterar eller när activeFile ändras
     return () => {
       socket.emit('close file', activeFile.uid)
-      socket.off('connect')
-      socket.off('connect_error')
-      socket.off('disconnect')
-      socket.off('file loaded')
-      socket.off('content')
+      socket.off('connect', handleConnect)
+      socket.off('connect_error', handleConnectError)
+      socket.off('disconnect', handleDisconnect)
+      socket.off('file loaded', handleFileLoaded)
+      socket.off('content', handleContent)
+      socket.off('content saved', handleContentSaved)
 
       // stänger av socket-anslutningen
       disconnectSocket()
     }
-    // Kör om effekten när activeFile eller setCode ändras.
-  }, [activeFile, setCode])
+    // Kör om effekten när den aktiva filens uid ändras.
+  }, [activeFile?.uid, setCode])
 
   // Funktion som skickar editor-innehållet till servern
   // Körs när användaren skriver i Monaco-editorn
   function sendContent(newContent) {
-    if (!activeFile) {
+    if (!activeFile?.uid) {
       return
     }
-    // Uppdaterar lokal editor-state
-    // ger omdelbar feedback i edtorn utan att vänta på servern
+    // Uppdaterar lokal state direkt så editorn känns responsiv.
     setCode(newContent)
 
-    // Skickar det nya innehållet till socket-servern
+    // Skickar nytt filinnehåll till servern.
+    // Servern broadcastar content till användare i samma room
+    // och sparar content automatiskt efter en kort paus.
     socket.emit('content', {
       content: newContent,
       uid: activeFile.uid,
