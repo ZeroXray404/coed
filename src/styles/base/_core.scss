@@ -65,6 +65,7 @@ input {
   border: none;
   transition: background-color 0.2s ease;
   background-color: $color-bg-tertiary;
+  color: $color-text;
   cursor: pointer;
 
   &:hover {

@@ -15,6 +15,8 @@ function SidebarLeft({
   setLanguage,
 }) {
   const [deleteMode, setDeleteMode] = useState(false)
+  const [createMode, setCreateMode] = useState('')
+  const [pendingName, setPendingName] = useState('')
   const [selectedProjects, setSelectedProjects] = useState([])
   const [selectedFiles, setSelectedFiles] = useState([])
   const [projects, setProjects] = useState([])
@@ -100,6 +102,10 @@ function SidebarLeft({
       <CreateFileHeader
         deleteMode={deleteMode}
         setDeleteMode={setDeleteMode}
+        createMode={createMode}
+        setCreateMode={setCreateMode}
+        pendingName={pendingName}
+        setPendingName={setPendingName}
         fetchProjects={fetchProjects}
         expandedProjectUid={expandedProjectUid}
         setSelectedProjects={setSelectedProjects}
@@ -124,6 +130,9 @@ function SidebarLeft({
         <FileListContent
           deleteMode={deleteMode}
           setDeleteMode={setDeleteMode}
+          createMode={createMode}
+          setCreateMode={setCreateMode}
+          setPendingName={setPendingName}
           selectedProjects={selectedProjects}
           setSelectedProjects={setSelectedProjects}
           selectedFiles={selectedFiles}

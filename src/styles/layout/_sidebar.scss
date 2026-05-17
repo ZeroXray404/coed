@@ -10,6 +10,32 @@
 $input-size: 40px;
 $list-icon-size: 16px;
 $list-padding: 6px;
+$file-cancel-size: 28px;
+
+/* createMode default styling */
+%new {
+  input {
+    position: relative;
+    visibility: visible;
+    background-color: $color-dark-hover;
+    border: 1px solid $color-btn;
+    margin-right: 0;
+    padding: 0 $list-padding;
+
+    top: unset;
+    right: unset;
+    transform: none;
+  }
+  button {
+    min-width: $file-cancel-size;
+    min-height: $file-cancel-size;
+    background-color: $color-btn;
+
+    &:hover {
+      background-color: $color-hover;
+    }
+  }
+}
 
 .sidebar-left {
   @include flexStyling(column);
@@ -240,6 +266,28 @@ $list-padding: 6px;
           background-color 0.2s ease,
           color 0.2s ease,
           border-bottom 0.2s ease;
+      }
+
+      .create-mode {
+        @include flexStyling();
+        min-width: 220px;
+        max-width: 220px;
+        min-height: 28px;
+        max-height: 28px;
+
+        &.new-proj {
+          @extend %new;
+          input {
+            width: 220px - $file-cancel-size;
+          }
+        }
+        &.new-file {
+          @extend %new;
+          input {
+            margin-left: $list-padding * 3;
+            width: 220px - $file-cancel-size - $list-padding * 3;
+          }
+        }
       }
     }
   }
