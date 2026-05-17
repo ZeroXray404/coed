@@ -131,10 +131,6 @@ $list-padding: 6px;
         &:hover {
           background-color: $color-dark-hover;
         }
-        &.selected-add {
-          background-color: $add-color;
-          border-bottom: $color-text solid 1px;
-        }
       }
 
       .project-list-item {
@@ -153,15 +149,6 @@ $list-padding: 6px;
             &:hover {
               background-color: $delete-color;
             }
-
-            li.selected-add > .list-row {
-              background-color: $add-color;
-              border-bottom: $color-text solid 1px;
-
-              :hover {
-                background-color: $add-color;
-              }
-            }
           }
 
           > .nested-files > li {
@@ -179,6 +166,20 @@ $list-padding: 6px;
             }
           }
         }
+
+        &.selected-add {
+          background-color: transparent;
+          border-bottom: transparent solid 1px;
+
+          > .list-row {
+            background-color: $add-color;
+            border-bottom: $color-text solid 1px;
+
+            &:hover {
+              background-color: $add-color;
+            }
+          }
+        }
       }
 
       .nested-files {
@@ -190,11 +191,27 @@ $list-padding: 6px;
           &:hover {
             background-color: $color-dark-hover;
           }
+
+          &.selected {
+            background-color: $delete-selected;
+
+            &:hover {
+              background-color: $delete-selected;
+            }
+          }
         }
 
         li {
           margin: 0;
           padding: 0;
+
+          &.selected {
+            background-color: $delete-selected;
+
+            &.active-file {
+              border-left: 3px solid $color-text;
+            }
+          }
         }
       }
 
