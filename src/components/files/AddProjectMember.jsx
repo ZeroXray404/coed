@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AppWindow, X } from 'lucide-react'
+import { AppWindow, X, Users } from 'lucide-react'
 import { addUserToProject } from '../../services/fileServices'
 
 function AddProjectMemberContent({
