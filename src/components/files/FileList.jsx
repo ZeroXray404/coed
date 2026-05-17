@@ -12,6 +12,9 @@ function FileListContent(
   {
     deleteMode,
     setDeleteMode,
+    createMode,
+    setCreateMode,
+    setPendingName,
     selectedProjects,
     setSelectedProjects,
     selectedFiles,
@@ -210,11 +213,53 @@ function FileListContent(
                         </li>
                       )
                     })}
+                    {createMode === 'file' && (
+                      <div className="create-mode new-file">
+                        <input
+                          type="text"
+                          placeholder="Enter file name..."
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && e.target.value !== '') {
+                              setPendingName(e.target.value)
+                              e.target.value = ''
+                            }
+                          }}
+                        />
+                        <button
+                          onClick={() => {
+                            setCreateMode('')
+                          }}
+                        >
+                          <X size={20} />
+                        </button>
+                      </div>
+                    )}
                   </ul>
                 )}
               </li>
             )
           })}
+        {createMode === 'proj' && (
+          <div className="create-mode new-proj">
+            <input
+              type="text"
+              placeholder="Enter project name..."
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && e.target.value !== '') {
+                  setPendingName(e.target.value)
+                  e.target.value = ''
+                }
+              }}
+            />
+            <button
+              onClick={() => {
+                setCreateMode('')
+              }}
+            >
+              <X size={20} />
+            </button>
+          </div>
+        )}
       </ul>
     </div>
   )

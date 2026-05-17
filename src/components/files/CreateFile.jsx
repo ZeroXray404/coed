@@ -10,11 +10,16 @@ import {
   createFile,
   getProjectWithFilesAndUsers,
 } from '../../services/fileServices.js'
+import { useEffect } from 'react'
 
 // === Komponent för att hantera knappar och funktioner i sidopanelens header ===
 function CreateFileHeader({
   deleteMode,
   setDeleteMode,
+  createMode,
+  setCreateMode,
+  pendingName,
+  setPendingName,
   fetchProjects,
   expandedProjectUid,
   setSelectedProjects,
@@ -32,7 +37,7 @@ function CreateFileHeader({
     }
     try {
       await createProject(name.trim())
-      alert('Project created successfully')
+      console.log(`Project ${name} has been created successfully`)
       await fetchProjects()
     } catch (error) {
       alert(`Error creating project: ${error.message}`)
@@ -60,11 +65,43 @@ function CreateFileHeader({
         ...prev,
         [expandedProjectUid]: result.data,
       }))
-      alert('File created successfully')
+      console.log(`File ${filename} has been created successfully`)
     } catch (error) {
       alert(`Error creating file: ${error.message}`)
     }
   }
+
+  useEffect(() => {
+    if (pendingName === '') return
+
+    switch (createMode) {
+      case 'proj':
+        handleCreateProject(pendingName)
+        setCreateMode('')
+        setPendingName('')
+
+        break
+      case 'file':
+        handleCreateFile(pendingName, expandedProjectUid, null)
+        setCreateMode('')
+        setPendingName('')
+
+        break
+      default:
+        setCreateMode('')
+        setPendingName('')
+
+        break
+    }
+  }, [
+    createMode,
+    pendingName,
+    expandedProjectUid,
+    handleCreateFile,
+    handleCreateProject,
+    setCreateMode,
+    setPendingName,
+  ])
 
   return (
     <div className="sidebar-header">
@@ -105,13 +142,15 @@ function CreateFileHeader({
         <button
           className="sidebar-header-btn btn-newproj"
           onClick={() => {
-            // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya projekt.
-            const projectName = prompt('Enter project name:')
-            if (projectName === null) {
-              return
-            } else {
-              handleCreateProject(projectName)
-            }
+            setCreateMode('proj')
+
+            // // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya projekt.
+            // const projectName = prompt('Enter project name:')
+            // if (projectName === null) {
+            //   return
+            // } else {
+            //   handleCreateProject(projectName)
+            // }
           }}
         >
           <FolderPlus />
@@ -119,13 +158,15 @@ function CreateFileHeader({
         <button
           className="sidebar-header-btn btn-newfile"
           onClick={() => {
-            // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya filer.
-            const fileName = prompt('Enter file name:')
-            if (fileName === null) {
-              return
-            } else {
-              handleCreateFile(fileName, expandedProjectUid, null)
-            }
+            setCreateMode('file')
+
+            // // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya filer.
+            // const fileName = prompt('Enter file name:')
+            // if (fileName === null) {
+            //   return
+            // } else {
+            //   handleCreateFile(fileName, expandedProjectUid, null)
+            // }
           }}
         >
           <FilePlus />
