@@ -100,25 +100,25 @@ function AddProjectMemberContent({
             return (
               <li
                 key={project.uid}
-                className={isSelected ? 'selected-add' : ''}
+                className={`project-list-item ${isSelected ? 'selected-add' : ''}`}
               >
-                <div className="list-row">
-                  <button
-                    className="listselect-btn"
-                    onClick={() => toggleProject(project.uid)}
-                    aria-label={`Add user to ${project.name}`}
-                  >
+                <button
+                  className="list-row"
+                  onClick={() => toggleProject(project.uid)}
+                  aria-label={`Add user to ${project.name}`}
+                >
+                  <div className="listselect-btn">
                     <AppWindow size={16} />
-                    {project.name}
-                  </button>
-                  <input
-                    type="checkbox"
-                    name="fileSelect"
-                    className={addMember ? 'active add-member' : ''}
-                    checked={isSelected}
-                    onChange={() => toggleProject(project.uid)}
-                  />
-                </div>
+                    <span className="list-label">{project.name}</span>
+                  </div>
+                </button>
+                <input
+                  type="checkbox"
+                  name="fileSelect"
+                  className={addMember ? 'active add-member' : ''}
+                  checked={isSelected}
+                  onChange={() => toggleProject(project.uid)}
+                />
               </li>
             )
           })}
