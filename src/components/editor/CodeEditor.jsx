@@ -1,6 +1,6 @@
 import Editor from '@monaco-editor/react'
 
-function CodeEditor({ language, value, onChange, options, theme }) {
+function CodeEditor({ language, value, onChange, options, theme, onMount }) {
   // Tar emot props från MainArea:
   // 'language' = valt språk
   // 'value' = kodinnehåll
@@ -15,6 +15,7 @@ function CodeEditor({ language, value, onChange, options, theme }) {
         value={value}
         onChange={(newValue) => onChange(newValue || '')}
         options={options}
+        onMount={onMount}
       />
     </div>
   )
