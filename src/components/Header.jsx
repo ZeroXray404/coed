@@ -1,17 +1,8 @@
-import { Undo, Redo, Search, User } from 'lucide-react'
+import { Search, User } from 'lucide-react'
 
 function Header({ isLoggedIn, onLoginClick, onLogoutClick }) {
   return (
     <section className="header">
-      <div className="quick-actions">
-        <button onClick={() => alert('UNDO')}>
-          <Undo size={24} />
-        </button>
-        <button onClick={() => alert('REDO')}>
-          <Redo size={24} />
-        </button>
-      </div>
-
       <div className="search-bar">
         <Search size={24} />
         <input type="text" placeholder="Search..." />

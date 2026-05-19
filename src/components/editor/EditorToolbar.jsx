@@ -1,4 +1,4 @@
-import { ChevronsDown, ChevronsUp, Save, Settings } from 'lucide-react'
+import { Settings, Redo, Undo } from 'lucide-react'
 
 // Komponent för att välja programmeringsspråk
 // Tar emot:
@@ -45,17 +45,30 @@ function SettingsButton({ onClick }) {
   )
 }
 
-// Placeholder-komponent för att spara en fil, kommer utvecklas senare med funktionalitiet för att spara kod från editorn
-function SaveButton({ onSave }) {
+function UndoButton({ onUndo }) {
   return (
     <button
       type="button"
-      onClick={onSave}
-      className="toolbar-button save-button"
-      title="Save File"
-      aria-label="Save File"
+      className="toolbar-button undo-button"
+      onClick={onUndo}
+      title="Undo"
+      aria-label="Undo"
     >
-      <Save size={20} />
+      <Undo size={20} />
+    </button>
+  )
+}
+
+function RedoButton({ onRedo }) {
+  return (
+    <button
+      type="button"
+      className="toolbar-button redo-button"
+      onClick={onRedo}
+      title="Redo"
+      aria-label="Redo"
+    >
+      <Redo size={20} />
     </button>
   )
 }
@@ -69,34 +82,23 @@ function SaveButton({ onSave }) {
 function EditorToolbar({
   language,
   onLanguageChange,
-  isOpen,
-  onToggle,
   onOptionsToggle,
-  onSave,
+  onUndo,
+  onRedo,
 }) {
   return (
     // Dynamisk klass baserat på isOpen för att styra styling av toolbaren
-    <div className={`editor-toolbar ${isOpen ? 'is-open' : 'is-collapsed'}`}>
-      {/* Renderas endast om toolbaren är öppen */}
-      {isOpen && (
-        <div className="editor-toolbar-content">
-          <LanguageSelector
-            language={language}
-            onLanguageChange={onLanguageChange}
-          />
-          <SettingsButton onClick={onOptionsToggle} />
-          <SaveButton onSave={onSave} />
-        </div>
-      )}
-      {/* Toggle-knapp för att öppna/stänga toolbaren */}
-      <button
-        type="button"
-        className="editor-toolbar-toggle"
-        onClick={onToggle}
-      >
-        {/* Visar olika ikon beroende på isOpen's state */}
-        {isOpen ? <ChevronsUp size={20} /> : <ChevronsDown size={20} />}
-      </button>
+    <div className="editor-toolbar">
+      <div className="editor-toolbar-content">
+        <LanguageSelector
+          language={language}
+          onLanguageChange={onLanguageChange}
+        />
+        <SettingsButton onClick={onOptionsToggle} />
+
+        <UndoButton onUndo={onUndo} />
+        <RedoButton onRedo={onRedo} />
+      </div>
     </div>
   )
 }

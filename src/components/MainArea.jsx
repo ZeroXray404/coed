@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import CodeEditor from './editor/CodeEditor'
 import EditorToolbar from './editor/EditorToolbar'
 import EditorOptions from './editor/EditorOptions'
 import { useSocketFile } from '../hooks/useSocketFile'
 
-// Objekt som innehåller en standard utskrift för varje språk, används när man byter språk i dropdownen
+// Objekt som innehåller en standard-template för varje språk.
+// Används när användaren byter språk utan att en fil är aktiv
 const languageTemplates = {
   javascript: 'console.log("Hello World")',
   python: 'print("Hello World")',
@@ -27,8 +28,7 @@ const defaultEditorOptions = {
 }
 
 function MainArea({ activeFile, language, setLanguage, code, setCode }) {
-  // State som styr om toolbaren/Options är öppen eller stängd
-  const [isToolbarOpen, setIsToolbarOpen] = useState(false)
+  // State som styr om Options är öppen eller stängd
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   // State som håller editor-inställningar
   const [editorOptions, setEditorOptions] = useState(() => {
@@ -46,6 +46,26 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
   })
   // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
   const { sendContent } = useSocketFile(activeFile, setCode)
+
+  // Referens till Monaco-editorns instans.
+  // Används för att kunna trigga editor-kommandon som undo/redo
+  const editorRef = useRef(null)
+
+  // Körs när Monaco-editorn mountas.
+  // Sparar editor-instansen i refen
+  function handleEditorMount(editor) {
+    editorRef.current = editor
+  }
+
+  // Triggar Monaco-editorns inbyggda undo-kommando
+  function handleUndo() {
+    editorRef.current?.trigger('toolbar', 'undo')
+  }
+
+  // Triggar Monaco-editorns inbyggda redo-kommando
+  function handleRedo() {
+    editorRef.current?.trigger('toolbar', 'redo')
+  }
 
   // Sparar editor-instllningar i localStorage när de ändras
   useEffect(() => {
@@ -68,11 +88,8 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
     }
   }
 
-  // Funktioner som styrsynlighet för Toolbar och Options
+  // Funktion som styrsynlighet för Options modalen
   // Växlar mellan true/false baserat på tidigare state
-  function toggleToolbar() {
-    setIsToolbarOpen((prev) => !prev)
-  }
   function toggleOptions() {
     setIsOptionsOpen((prev) => !prev)
   }
@@ -92,18 +109,17 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
 
   return (
     <section className="main-area">
-      {/* Toolbar-komponent:
-      - Tar emot aktuellt språk (state)
-      - Tar emot callback för att ändra språk
-      - Tar emot state för om den är öppen eller stängd
-      - Tar emot funktionm för att toggla state */}
+      {/* Toolbar med editor-relaterade kontroller:
+      - språkval
+      - editor-inställningar
+      - undo/redo */}
       <EditorToolbar
         language={language}
         onLanguageChange={handleLanguageChange}
-        isOpen={isToolbarOpen}
-        onToggle={toggleToolbar}
         onOptionsToggle={toggleOptions}
         onSave={handleSave}
+        onUndo={handleUndo}
+        onRedo={handleRedo}
       />
       {isOptionsOpen && (
         <EditorOptions
@@ -115,17 +131,18 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
         />
       )}
       {/* CodeEditor-komponent:
-      - Tar emot aktuellt språk (för syntaxhighlighting)
-      - Tar emot kod (value)
-      - Tar emot setter-funktion för att uppdatera kod när användaren skriver
-      - Tar emot editor-inställningar
-      - Tar emot tema */}
+      - Visar kodinnehåll
+      - Hanterar syntaxhighlighting via language
+      - Skickar realtime-uppdateringar via onChange
+      - Tar emot editor-inställningar och tema
+      - Returnerar editor-instansen via onMount */}
       <CodeEditor
         language={language}
         value={code}
         onChange={sendContent}
         options={editorOptions}
         theme={theme}
+        onMount={handleEditorMount}
       />
     </section>
   )
