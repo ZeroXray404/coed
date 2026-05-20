@@ -11,7 +11,7 @@ function SidebarLeft({
   isLoggedIn,
   activeFile,
   setActiveFile,
-  setCode,
+  setCodeByFileUid,
   setLanguage,
 }) {
   const [deleteMode, setDeleteMode] = useState(false)
@@ -147,7 +147,7 @@ function SidebarLeft({
           setProjectDetails={setProjectDetails}
           activeFile={activeFile}
           setActiveFile={setActiveFile}
-          setCode={setCode}
+          setCodeByFileUid={setCodeByFileUid}
           setLanguage={setLanguage}
           ref={fileListRef}
         />
