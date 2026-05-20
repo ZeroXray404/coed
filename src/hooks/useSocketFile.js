@@ -9,8 +9,8 @@ import {
 // Hooken öppnar rätt socket-room, lyssnar på realtime-events
 // och skickar nytt content när användaren skriver.
 // activeFile = filen som användaren just nu har öppen
-// setCode = setter från App/MainArea som uppdaterar innehållet i editorn
-export function useSocketFile(activeFile, setCode) {
+// setActiveFileCode = setter från App/MainArea som uppdaterar innehållet i editorn
+export function useSocketFile(activeFile, setActiveFileCode) {
   useEffect(() => {
     // Om ingen fil är vald ska hooken inte ansluta till något socket-room.
     if (!activeFile?.uid) {
@@ -35,7 +35,7 @@ export function useSocketFile(activeFile, setCode) {
       console.log('File loaded:', data)
 
       if (data?.content !== undefined) {
-        setCode(data.content)
+        setActiveFileCode(data.content)
       }
     }
     // Körs när servern skickar nytt content för en fil.
@@ -48,7 +48,7 @@ export function useSocketFile(activeFile, setCode) {
       }
       // Uppdaterar editorns state med det content som kom från socket-servern.
       if (data?.content !== undefined) {
-        setCode(data.content)
+        setActiveFileCode(data.content)
       }
     }
     // Körs när servern har sparat innehållet.
@@ -100,7 +100,7 @@ export function useSocketFile(activeFile, setCode) {
       disconnectSocket()
     }
     // Kör om effekten när den aktiva filens uid ändras.
-  }, [activeFile?.uid, setCode])
+  }, [activeFile?.uid, setActiveFileCode])
 
   // Funktion som skickar editor-innehållet till servern
   // Körs när användaren skriver i Monaco-editorn
@@ -110,7 +110,7 @@ export function useSocketFile(activeFile, setCode) {
     }
     // Uppdaterar lokal React-state direkt.
     // Det gör att texten syns omedelbart i editorn utan att vänta på servern.
-    setCode(newContent)
+    setActiveFileCode(newContent)
 
     // Skickar nytt filinnehåll till servern.
     // Servern broadcastar content till användare i samma room

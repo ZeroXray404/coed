@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import CodeEditor from './editor/CodeEditor'
 import EditorToolbar from './editor/EditorToolbar'
 import EditorOptions from './editor/EditorOptions'
@@ -55,22 +55,42 @@ function MainArea({
   // Används för att kunna trigga editor-kommandon som undo/redo
   const editorRef = useRef(null)
 
+  // Hämtar uid för den aktiva filen.
+  // Om ingen fil är vald blir värdet undefiend
   const activeFileUid = activeFile?.uid
 
-  const code = activeFileUid
-    ? (codeByFileUid[activeFileUid] ?? activeFile.content ?? '')
-    : languageTemplates[language] || ''
+  // Uppdaterar content för den aktiva filen.
+  // useCallback användss för att React ska återanvända samma funktion
+  // mellan renders så öänge activeFileUid inte ändras
+  //
+  // Det behövs eftersom funktionen skicks vidare till useSocketFile
+  // Annars körts socket-effekten om vid vare render
+  let code = languageTemplates[language] || ''
 
-  function setActiveFileCode(newContent) {
-    if (!activeFileUid) {
-      return
+  if (activeFileUid) {
+    const savedCode = codeByFileUid[activeFileUid]
+
+    if (savedCode !== undefined && savedCode !== null) {
+      code = savedCode
+    } else {
+      code = activeFile.content || ''
     }
-    setCodeByFileUid((prev) => ({
-      ...prev,
-      [activeFileUid]: newContent,
-    }))
   }
 
+  const setActiveFileCode = useCallback(
+    (newContent) => {
+      if (!activeFileUid) {
+        return
+      }
+
+      // Uppdaterar state för den aktiva filens uid
+      setCodeByFileUid((prev) => ({
+        ...prev,
+        [activeFileUid]: newContent,
+      }))
+    },
+    [activeFileUid, setCodeByFileUid]
+  )
   // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
   const { sendContent } = useSocketFile(activeFile, setActiveFileCode)
 
