@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import CodeEditor from './editor/CodeEditor'
 import EditorToolbar from './editor/EditorToolbar'
 import EditorOptions from './editor/EditorOptions'
@@ -27,7 +27,13 @@ const defaultEditorOptions = {
   scrollBeyondLastLine: false,
 }
 
-function MainArea({ activeFile, language, setLanguage, code, setCode }) {
+function MainArea({
+  activeFile,
+  language,
+  setLanguage,
+  codeByFileUid,
+  setCodeByFileUid,
+}) {
   // State som styr om Options är öppen eller stängd
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   // State som håller editor-inställningar
@@ -44,12 +50,49 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
     // Om det finns ett sparat tema, returnera det, annars default vs-dark
     return savedTheme || 'vs-dark'
   })
-  // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
-  const { sendContent } = useSocketFile(activeFile, setCode)
 
   // Referens till Monaco-editorns instans.
   // Används för att kunna trigga editor-kommandon som undo/redo
   const editorRef = useRef(null)
+
+  // Hämtar uid för den aktiva filen.
+  // Om ingen fil är vald blir värdet undefiend
+  const activeFileUid = activeFile?.uid
+
+  // Uppdaterar content för den aktiva filen.
+  // useCallback användss för att React ska återanvända samma funktion
+  // mellan renders så öänge activeFileUid inte ändras
+  //
+  // Det behövs eftersom funktionen skicks vidare till useSocketFile
+  // Annars körts socket-effekten om vid vare render
+  let code = languageTemplates[language] || ''
+
+  if (activeFileUid) {
+    const savedCode = codeByFileUid[activeFileUid]
+
+    if (savedCode !== undefined && savedCode !== null) {
+      code = savedCode
+    } else {
+      code = activeFile.content || ''
+    }
+  }
+
+  const setActiveFileCode = useCallback(
+    (newContent) => {
+      if (!activeFileUid) {
+        return
+      }
+
+      // Uppdaterar state för den aktiva filens uid
+      setCodeByFileUid((prev) => ({
+        ...prev,
+        [activeFileUid]: newContent,
+      }))
+    },
+    [activeFileUid, setCodeByFileUid]
+  )
+  // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
+  const { sendContent } = useSocketFile(activeFile, setActiveFileCode)
 
   // Körs när Monaco-editorn mountas.
   // Sparar editor-instansen i refen
@@ -78,33 +121,14 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
   }, [theme])
 
   // Byter språk i editorn.
-  // Om ingen fil är aktiv används en standard-template för valt språk.
-  // Om en fil är aktiv behålls filens content
   function handleLanguageChange(newLanguage) {
     setLanguage(newLanguage)
-
-    if (!activeFile) {
-      setCode(languageTemplates[newLanguage] || '')
-    }
   }
 
   // Funktion som styrsynlighet för Options modalen
   // Växlar mellan true/false baserat på tidigare state
   function toggleOptions() {
     setIsOptionsOpen((prev) => !prev)
-  }
-
-  function handleSave() {
-    if (!activeFile) {
-      alert('No active file selected')
-      return
-    }
-
-    console.log('Ready to save via socket later:', {
-      uid: activeFile.uid,
-      filename: activeFile.filename,
-      content: code,
-    })
   }
 
   return (
@@ -117,7 +141,6 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
         language={language}
         onLanguageChange={handleLanguageChange}
         onOptionsToggle={toggleOptions}
-        onSave={handleSave}
         onUndo={handleUndo}
         onRedo={handleRedo}
       />
@@ -139,6 +162,7 @@ function MainArea({ activeFile, language, setLanguage, code, setCode }) {
       <CodeEditor
         language={language}
         value={code}
+        path={activeFile?.uid || 'default'}
         onChange={sendContent}
         options={editorOptions}
         theme={theme}

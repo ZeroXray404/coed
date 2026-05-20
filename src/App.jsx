@@ -12,7 +12,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()))
   const [activeFile, setActiveFile] = useState(null)
   const [language, setLanguage] = useState('javascript')
-  const [code, setCode] = useState('console.log("Hello World")')
+  const [codeByFileUid, setCodeByFileUid] = useState({})
 
   function handleLoginSuccess() {
     setIsLoggedIn(true)
@@ -40,7 +40,7 @@ function App() {
           isLoggedIn={isLoggedIn}
           activeFile={activeFile}
           setActiveFile={setActiveFile}
-          setCode={setCode}
+          setCodeByFileUid={setCodeByFileUid}
           setLanguage={setLanguage}
         />
       </aside>
@@ -49,8 +49,8 @@ function App() {
           activeFile={activeFile}
           language={language}
           setLanguage={setLanguage}
-          code={code}
-          setCode={setCode}
+          codeByFileUid={codeByFileUid}
+          setCodeByFileUid={setCodeByFileUid}
         />
       </section>
       <footer className="app-footer">

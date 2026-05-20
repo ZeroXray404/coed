@@ -29,7 +29,7 @@ function FileListContent(
     setProjectDetails,
     activeFile,
     setActiveFile,
-    setCode,
+    setCodeByFileUid,
     setLanguage,
   },
   ref
@@ -133,16 +133,31 @@ function FileListContent(
     handleProjectClick(uid)
   }
 
-  // Körs när användaren klickar på en fil i sidopanelen
-  // Sätter filen som aktiv, läser in filens content i editorn
-  // och väljer rätt editor-språk baserat på filändelsen i filnamnet
+  // Körs när användaren klickar på en fil i sidopanelen.
+  // Om deleteMode är aktivt markeras filen för borttagning istället.
+  // Annars sätts filen som aktiv, filens innehåll initieras i state per fil
+  // och editorns språk väljs baserat på filändelsen.
   function handleFileClick(file) {
     if (deleteMode) {
       toggleFile(file.uid)
       return
     }
     setActiveFile(file)
-    setCode(file.content || '')
+    setCodeByFileUid((prev) => {
+      // Om filen redan finns i state används det sparade innehållet
+      let content = prev[file.uid]
+
+      // Annars används content från filobjektet
+      if (content === undefined || content === null) {
+        content = file.content || ''
+      }
+
+      // Returnerar nytt state med tidigare filer + aktuell fil
+      return {
+        ...prev,
+        [file.uid]: content,
+      }
+    })
     setLanguage(getLanguageFromFileName(file.filename || ''))
     console.log('File details:', file.filename, file)
   }
