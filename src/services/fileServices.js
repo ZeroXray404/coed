@@ -107,9 +107,7 @@ export async function removeUserFromProject(uid, email) {
   // const result = await seponse.json()
 
   if (!seponse.ok) {
-    throw new Error(
-      result?.errors?.detail || 'Failed to remove user from project'
-    )
+    throw new Error('Failed to remove user from project')
   }
   // return result
 }
