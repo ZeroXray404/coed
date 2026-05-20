@@ -90,6 +90,30 @@ export async function addUserToProject(uid, email) {
   return result
 }
 
+// Ta bort en användare från ett projekt
+export async function removeUserFromProject(uid, email) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
+  const url = `${DOCKET_BASE_URL}/projects/remove_user`
+  const TOKEN = getToken()
+
+  const seponse = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      'x-access-token': [TOKEN],
+    },
+    body: JSON.stringify({ uid, email }),
+  })
+  // const result = await seponse.json()
+
+  if (!seponse.ok) {
+    throw new Error(
+      result?.errors?.detail || 'Failed to remove user from project'
+    )
+  }
+  // return result
+}
+
 // === Ta bort ett projekt och alla dess filer ===
 export async function deleteProjectWithFiles(uid) {
   const { DOCKET_BASE_URL } = requireApiConfig()
@@ -109,7 +133,7 @@ export async function deleteProjectWithFiles(uid) {
   if (!response.ok) {
     throw new Error('Failed to delete project with files')
   }
-  //   return result
+  // return result
 }
 
 // === Skapa en ny fil i ett projekt ===
