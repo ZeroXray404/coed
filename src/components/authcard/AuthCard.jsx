@@ -15,9 +15,10 @@ function AuthCard({ onClose, onLoginSuccess }) {
   // State som håller reda på vilket steg i auth-processen vi är på. Börjar på email.
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
+  const [registeredUser, setRegisteredUser] = useState(null)
 
   function handleRegisterContinue() {
-    onLoginSuccess?.()
+    onLoginSuccess?.(registeredUser)
   }
 
   return (
@@ -63,7 +64,10 @@ function AuthCard({ onClose, onLoginSuccess }) {
             email={email}
             setEmail={setEmail}
             goBack={() => setStep('email')}
-            onRegisterSuccess={() => setStep('register-success')}
+            onRegisterSuccess={(user) => {
+              setRegisteredUser(user)
+              setStep('register-success')
+            }}
           />
         )}
 

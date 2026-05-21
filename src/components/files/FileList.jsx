@@ -218,7 +218,7 @@ function FileListContent(
     try {
       await removeUserFromProject(projectUid, currentUser.email)
       await fetchProjects()
-      console.log('Removed user: ', currentUser, ' from: ', projectUid)
+      console.log('Removed user: ', currentUser.email, ' from: ', projectUid)
 
       if (expandedProjectUid === projectUid) {
         setExpandedProjectUid(null)

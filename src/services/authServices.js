@@ -62,6 +62,8 @@ export async function loginUser(email, password) {
 
 // === Nyckeln som används i localStorage för att spara användarens JWT-token ===
 const TOKEN_KEY = 'authToken'
+// === Nyckel som används för att hämta användardata från localstorage ===
+const USER_KEY = 'currentUser'
 
 // === Sparar JWT-token i localStorage ===
 // Säkerställer att en token finns innan den sparas.
@@ -90,10 +92,30 @@ export function removeToken() {
 // Tar bara bort JWT-token från localStorage
 export function logoutUser() {
   removeToken()
+  clearCurrentUser()
 }
 
 // === Kontrollerar om användaren är inloggad ===
 // Returnerar true om en JWT-token finns i localStorage, annars false.
 export function isLoggedIn() {
   return !!getToken()
+}
+
+// === Sparar aktuell användare i local Storage ===
+export function saveCurrentUser(user) {
+  if (!user) {
+    throw new Error('No user saved')
+  }
+  localStorage.setItem(USER_KEY, JSON.stringify(user))
+}
+
+// === Funktion för att hämta aktuell användare ===
+export function getCurrentUser() {
+  const raw = localStorage.getItem(USER_KEY)
+  return raw ? JSON.parse(raw) : null
+}
+
+// === Tar bort aktuell användare från local Storage ===
+export function clearCurrentUser() {
+  localStorage.removeItem(USER_KEY)
 }

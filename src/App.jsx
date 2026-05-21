@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import { logoutUser, getToken } from './services/authServices'
+import {
+  logoutUser,
+  getToken,
+  saveCurrentUser,
+  getCurrentUser,
+} from './services/authServices'
 import Header from './components/Header'
 import MainArea from './components/MainArea'
 import AuthCard from './components/authcard/AuthCard'
@@ -10,7 +15,7 @@ import SidebarLeft from './components/SidebarLeft'
 function App() {
   const [showAuth, setShowAuth] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()))
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(() => getCurrentUser())
 
   const [activeFile, setActiveFile] = useState(null)
   const [language, setLanguage] = useState('javascript')
@@ -21,6 +26,7 @@ function App() {
   function handleLoginSuccess(user) {
     setIsLoggedIn(true)
     setCurrentUser(user)
+    saveCurrentUser(user)
     setShowAuth(false)
     console.log(user)
   }
