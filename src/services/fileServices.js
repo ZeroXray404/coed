@@ -1,5 +1,6 @@
 import { requireApiConfig } from './apiConfig.js'
 import { getToken } from './authServices.js'
+import { getLanguageFromFileName } from '../utils/getLanguageFromFileName.js'
 
 // === Hämta alla projekt ===
 export async function getAllProjects() {
@@ -154,4 +155,68 @@ export async function deleteFile(uid) {
     throw new Error('Failed to delete file')
   }
   //   return result
+}
+
+// Funktioner nedan relaterade till hämtande av metadata från filer
+
+// Returnerar filnamnet utan filändelsen
+export function getFileName(file) {
+  const fileName = file.filename
+
+  return fileName.split('.').shift()
+}
+
+// Returnerar datum och tid i ISO 8601 format, men kan returneras med formattering som gör det läsbart för användaren
+export function getDateModified(file, formattedDate = false) {
+  if (!formattedDate) {
+    return file.last_changed
+  }
+
+  const iso = file.last_changed
+  const date = new Date(iso)
+
+  const datePart = date.toLocaleDateString('sv-SE')
+  const timePart = date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  })
+
+  const dateModified = `${datePart}, ${timePart}`
+
+  return dateModified
+}
+
+// Returnerar filskaparens namn/email utan den andra halvan efter '@'
+export function getFileCreator(file) {
+  const fileCreator = file.created_by
+
+  return fileCreator.split('@').shift()
+}
+
+// Returnerar kodspråket kapitaliserat
+export function getFileType(file) {
+  if (getLanguageFromFileName(file.filename) === 'plaintext') {
+    return 'N/A'
+  } else {
+    const fileType = getLanguageFromFileName(file.filename)
+    let language = ''
+
+    if (fileType === 'javascript' || fileType === 'typescript') {
+      let firstHalf = fileType.charAt(0).toUpperCase() + fileType.slice(1, 4) // first 4 letters
+
+      language = `${firstHalf}Script`
+    } else if (
+      fileType === 'html' ||
+      fileType === 'css' ||
+      fileType === 'scss' ||
+      fileType === 'json'
+    ) {
+      language = fileType.toUpperCase()
+    } else {
+      language = fileType.charAt(0).toUpperCase() + fileType.slice(1)
+    }
+
+    return language
+  }
 }
