@@ -149,29 +149,6 @@ function FileListContent(
     console.log('File details:', file.filename, file)
   }
 
-  // // === Funktion för att visa delade projekt och dess filer i projektlistan ===
-  // async function getAllProjDetails(projs) {
-  //   try {
-  //     //laddar ner alla projektdetaljer till getDetails
-  //     const getDetails = await Promise.all(
-  //       projs.map(async (project) => {
-  //         const result = await getProjectWithFilesAndUsers(project.uid)
-  //         return { uid: project.uid, ...result.data }
-  //       })
-  //     )
-  //     // Filtrera alla projekten med detaljer och behåll uid för de project där users-arrayen är större än 1, alltså fler än en användare
-  //     const shared = getDetails
-  //       .filter(
-  //         (project) => Array.isArray(project.users) && project.users.length > 1
-  //       )
-  //       .map((project) => project.uid)
-
-  //     //Spara delade projekt i sharedProjects
-  //     setSharedProjects(shared)
-  //   } catch (err) {
-  //     console.log('No project details are loaded', err)
-  //   }
-  // }
   useEffect(() => {
     // Hämta alla detaljer för alla projekt
     getAllProjDetails(projects)
