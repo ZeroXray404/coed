@@ -65,18 +65,18 @@
 
 .status-connected,
 .status-saved {
-  color: #7ee787;
+  color: $color-status-success;
 }
 
 .status-disconnected,
 .status-error {
-  color: #ff7b72;
+  color: $color-status-error;
 }
 
 .status-reconnecting,
 .status-saving,
 .status-unsaved {
-  color: #d29922;
+  color: $color-status-warning;
 }
 
 .editor-toolbar-content .toolbar-button {
