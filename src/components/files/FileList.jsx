@@ -1,10 +1,10 @@
-import { AppWindow, X, File } from 'lucide-react'
+import { AppWindow, X, File, Users } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
   deleteFile,
 } from '../../services/fileServices.js'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
@@ -31,6 +31,8 @@ function FileListContent(
     setActiveFile,
     setCode,
     setLanguage,
+    sharedProjects,
+    setSharedProjects,
   },
   ref
 ) {
@@ -106,7 +108,7 @@ function FileListContent(
       const result = await getProjectWithFilesAndUsers(uid)
       setExpandedProjectUid(uid)
       setProjectDetails((prev) => ({ ...prev, [uid]: result.data }))
-      console.log('Project details:', result.data.name, result)
+      console.log('Number of project members:', result.data.users.length)
     } catch (error) {
       console.error('Error fetching project details:', error)
     }
@@ -146,6 +148,59 @@ function FileListContent(
     setLanguage(getLanguageFromFileName(file.filename || ''))
     console.log('File details:', file.filename, file)
   }
+
+  // // === Funktion för att visa delade projekt och dess filer i projektlistan ===
+  // async function getAllProjDetails(projs) {
+  //   try {
+  //     //laddar ner alla projektdetaljer till getDetails
+  //     const getDetails = await Promise.all(
+  //       projs.map(async (project) => {
+  //         const result = await getProjectWithFilesAndUsers(project.uid)
+  //         return { uid: project.uid, ...result.data }
+  //       })
+  //     )
+  //     // Filtrera alla projekten med detaljer och behåll uid för de project där users-arrayen är större än 1, alltså fler än en användare
+  //     const shared = getDetails
+  //       .filter(
+  //         (project) => Array.isArray(project.users) && project.users.length > 1
+  //       )
+  //       .map((project) => project.uid)
+
+  //     //Spara delade projekt i sharedProjects
+  //     setSharedProjects(shared)
+  //   } catch (err) {
+  //     console.log('No project details are loaded', err)
+  //   }
+  // }
+  useEffect(() => {
+    // Hämta alla detaljer för alla projekt
+    getAllProjDetails(projects)
+
+    // === Funktion för att visa delade projekt och dess filer i projektlistan ===
+    async function getAllProjDetails(projs) {
+      try {
+        //laddar ner alla projektdetaljer till getDetails
+        const getDetails = await Promise.all(
+          projs.map(async (project) => {
+            const result = await getProjectWithFilesAndUsers(project.uid)
+            return { uid: project.uid, ...result.data }
+          })
+        )
+        // Filtrera alla projekten med detaljer och behåll uid för de project där users-arrayen är större än 1, alltså fler än en användare
+        const shared = getDetails
+          .filter(
+            (project) =>
+              Array.isArray(project.users) && project.users.length > 1
+          )
+          .map((project) => project.uid)
+
+        //Spara delade projekt i sharedProjects
+        setSharedProjects(shared)
+      } catch (err) {
+        console.log('No project details are loaded', err)
+      }
+    }
+  }, [projects, setSharedProjects])
 
   return (
     <div className="sidebar-content">
@@ -189,6 +244,9 @@ function FileListContent(
           .map((project) => {
             // Kollar om projektet är valt för borttagning, och lägger till klassen 'selected' om det är det.
             const isSelected = selectedProjects.includes(project.uid)
+            // kontrollerar om projektet är med i projektlistan för deladeprojekt
+            const isShared = sharedProjects.includes(project.uid)
+
             return (
               // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
               <li
@@ -203,8 +261,21 @@ function FileListContent(
                   <div className="listselect-btn">
                     <AppWindow size={16} />
                     <span className="list-label">{project.name}</span>
+                    <span></span>
                   </div>
                 </button>
+                {isShared && (
+                  <button
+                    type="button"
+                    //Knappen får klassen shared-users, men också klassen disabled om deleteMode är aktivt.
+                    //Det gör att knappen för att visa delade projekt inte visas om man har deleteMode aktivt.
+                    className={`shared-users ${deleteMode ? 'disabled' : ''}`}
+                    aria-label="Confirm Deletion"
+                  >
+                    <Users size={16} />
+                  </button>
+                )}
+
                 <input
                   // Om deleteMode är aktiverad, visa checkbox för att markera projektet för borttagning
                   type="checkbox"

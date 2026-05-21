@@ -27,6 +27,7 @@ function SidebarLeft({
   const [users, setUsers] = useState([])
   const [usersLoaded, setUsersLoaded] = useState(false)
   const [addMember, setAddMember] = useState(false)
+  const [sharedProjects, setSharedProjects] = useState([])
 
   const fileListRef = useRef(null)
 
@@ -149,6 +150,8 @@ function SidebarLeft({
           setActiveFile={setActiveFile}
           setCode={setCode}
           setLanguage={setLanguage}
+          sharedProjects={sharedProjects}
+          setSharedProjects={setSharedProjects}
           ref={fileListRef}
         />
       )}

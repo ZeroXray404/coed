@@ -206,6 +206,23 @@ $file-cancel-size: 28px;
             }
           }
         }
+
+        .shared-users {
+          width: 28px;
+          height: 28px;
+          position: absolute;
+          right: 0;
+          top: 0;
+          background-color: transparent;
+
+          &.disabled {
+            visibility: hidden;
+          }
+
+          &:hover {
+            background-color: $color-dark-hover;
+          }
+        }
       }
 
       .nested-files {
