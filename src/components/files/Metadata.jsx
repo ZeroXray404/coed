@@ -51,7 +51,7 @@ const MetadataFooter = ({ activeFile, fileListRef }) => {
           </div>
           <div className="metadata-content-item">
             <span>Last modified:</span>
-            <p>{activeFile ? getDateModified(activeFile) : 'N/A'}</p>
+            <p>{activeFile ? getDateModified(activeFile, true) : 'N/A'}</p>
           </div>
           <div className="metadata-content-item">
             <span>Created by:</span>
