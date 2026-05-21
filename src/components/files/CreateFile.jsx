@@ -27,51 +27,51 @@ function CreateFileHeader({
   addMember,
   setAddMember,
 }) {
-  // === Funktion för att skapa ett nytt projekt ===
-  async function handleCreateProject(name) {
-    if (!name || name.trim() === '') {
-      // validering så att projektet inte skapas med tomt fält
-      // Vid skapande av inputfält kan här skapas ett tootip istället för alert
-      alert('Project name cannot be empty')
-      return
-    }
-    try {
-      await createProject(name.trim())
-      console.log(`Project ${name} has been created successfully`)
-      await fetchProjects()
-    } catch (error) {
-      alert(`Error creating project: ${error.message}`)
-    }
-  }
-
-  // === Funktion för att skapa en ny fil i ett projekt ===
-  async function handleCreateFile(filename) {
-    if (!expandedProjectUid) {
-      // validering så att filen inte skapas utan att ett projekt är valt
-      // Använda tooltip för denna med??
-      alert('Please select a project to add the file to')
-      return
-    }
-    if (!filename || filename.trim() === '') {
-      // validering så att filen inte skapas med tomt fält
-      // Vid skapande av inputfält kan här skapas ett tootip istället för alert
-      alert('File name cannot be empty')
-      return
-    }
-    try {
-      await createFile(filename.trim(), expandedProjectUid, null)
-      const result = await getProjectWithFilesAndUsers(expandedProjectUid)
-      setProjectDetails((prev) => ({
-        ...prev,
-        [expandedProjectUid]: result.data,
-      }))
-      console.log(`File ${filename} has been created successfully`)
-    } catch (error) {
-      alert(`Error creating file: ${error.message}`)
-    }
-  }
-
   useEffect(() => {
+    // === Funktion för att skapa ett nytt projekt ===
+    async function handleCreateProject(name) {
+      if (!name || name.trim() === '') {
+        // validering så att projektet inte skapas med tomt fält
+        // Vid skapande av inputfält kan här skapas ett tootip istället för alert
+        alert('Project name cannot be empty')
+        return
+      }
+      try {
+        await createProject(name.trim())
+        console.log(`Project ${name} has been created successfully`)
+        await fetchProjects()
+      } catch (error) {
+        alert(`Error creating project: ${error.message}`)
+      }
+    }
+
+    // === Funktion för att skapa en ny fil i ett projekt ===
+    async function handleCreateFile(filename) {
+      if (!expandedProjectUid) {
+        // validering så att filen inte skapas utan att ett projekt är valt
+        // Använda tooltip för denna med??
+        alert('Please select a project to add the file to')
+        return
+      }
+      if (!filename || filename.trim() === '') {
+        // validering så att filen inte skapas med tomt fält
+        // Vid skapande av inputfält kan här skapas ett tootip istället för alert
+        alert('File name cannot be empty')
+        return
+      }
+      try {
+        await createFile(filename.trim(), expandedProjectUid, null)
+        const result = await getProjectWithFilesAndUsers(expandedProjectUid)
+        setProjectDetails((prev) => ({
+          ...prev,
+          [expandedProjectUid]: result.data,
+        }))
+        console.log(`File ${filename} has been created successfully`)
+      } catch (error) {
+        alert(`Error creating file: ${error.message}`)
+      }
+    }
+
     if (pendingName === '') return
 
     switch (createMode) {
@@ -97,8 +97,8 @@ function CreateFileHeader({
     createMode,
     pendingName,
     expandedProjectUid,
-    handleCreateFile,
-    handleCreateProject,
+    fetchProjects,
+    setProjectDetails,
     setCreateMode,
     setPendingName,
   ])
