@@ -27,7 +27,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
     try {
       const result = await loginUser(email, password)
       console.log('Login successful:', result)
-      onLoginSuccess?.()
+      onLoginSuccess?.({ email })
     } catch (error) {
       console.error('', error)
     }

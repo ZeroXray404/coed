@@ -10,19 +10,24 @@ import SidebarLeft from './components/SidebarLeft'
 function App() {
   const [showAuth, setShowAuth] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()))
+  const [currentUser, setCurrentUser] = useState(null)
+
   const [activeFile, setActiveFile] = useState(null)
   const [language, setLanguage] = useState('javascript')
   const [codeByFileUid, setCodeByFileUid] = useState({})
   const [realtimeStatus, setRealtimeStatus] = useState('disconnected')
   const [saveStatus, setSaveStatus] = useState('idle')
 
-  function handleLoginSuccess() {
+  function handleLoginSuccess(user) {
     setIsLoggedIn(true)
+    setCurrentUser(user)
     setShowAuth(false)
+    console.log(user)
   }
 
   function handleLogout() {
     setIsLoggedIn(false)
+    setCurrentUser(null)
     logoutUser()
     console.log('Logout successful')
   }
@@ -40,6 +45,7 @@ function App() {
       <aside className="app-sidebar">
         <SidebarLeft
           isLoggedIn={isLoggedIn}
+          currentUser={currentUser}
           activeFile={activeFile}
           setActiveFile={setActiveFile}
           setCodeByFileUid={setCodeByFileUid}
