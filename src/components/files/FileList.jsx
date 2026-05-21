@@ -3,6 +3,7 @@ import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
   deleteFile,
+  removeUserFromProject,
 } from '../../services/fileServices.js'
 import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
@@ -10,6 +11,7 @@ import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
   {
+    currentUser,
     deleteMode,
     setDeleteMode,
     createMode,
@@ -203,6 +205,29 @@ function FileListContent(
     }
   }, [projects, setSharedProjects])
 
+  async function handleRemoveUser(projectUid) {
+    if (deleteMode) {
+      return
+    }
+
+    if (!currentUser?.email) {
+      console.error('No logged in user availabel')
+      return
+    }
+
+    try {
+      await removeUserFromProject(projectUid, currentUser.email)
+      await fetchProjects()
+      console.log('Removed user: ', currentUser, ' from: ', projectUid)
+
+      if (expandedProjectUid === projectUid) {
+        setExpandedProjectUid(null)
+      }
+    } catch (error) {
+      console.error('Failed to remove current user from project:', error)
+    }
+  }
+
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
@@ -271,7 +296,9 @@ function FileListContent(
                     //Knappen får klassen shared-users, men också klassen disabled om deleteMode är aktivt.
                     //Det gör att knappen för att visa delade projekt inte visas om man har deleteMode aktivt.
                     className={`shared-users ${deleteMode ? 'disabled' : ''}`}
-                    aria-label="Confirm Deletion"
+                    onClick={() => handleRemoveUser(project.uid)}
+                    disabled={deleteMode}
+                    aria-label={`Remove myself from ${project.name}`}
                   >
                     <Users size={16} />
                   </button>
