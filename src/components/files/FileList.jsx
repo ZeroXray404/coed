@@ -142,12 +142,22 @@ function FileListContent(
       toggleFile(file.uid)
       return
     }
+    // Om användaren klickar på den redan aktiva filen
+    // avmarkeras filen och editorn återgår till default-läge
+    if (activeFile?.uid === file.uid) {
+      setActiveFile(null)
+      setLanguage('javascript')
+      return
+    }
+
     setActiveFile(file)
+    setLanguage(getLanguageFromFileName(file.filename || ''))
     setCodeByFileUid((prev) => {
-      // Om filen redan finns i state används det sparade innehållet
+      // Om filen redan finns i state används det sparade innehållet.
+      // Det gör att osparade ändringar kan behållas mellan filbyten.
       let content = prev[file.uid]
 
-      // Annars används content från filobjektet
+      // Om filen inte redan finns i state används innehållet från filobjektet
       if (content === undefined || content === null) {
         content = file.content || ''
       }
@@ -158,7 +168,6 @@ function FileListContent(
         [file.uid]: content,
       }
     })
-    setLanguage(getLanguageFromFileName(file.filename || ''))
     console.log('File details:', file.filename, file)
   }
 

@@ -19,6 +19,9 @@ export function useSocketFile(
   useEffect(() => {
     // Om ingen fil är vald ska hooken inte ansluta till något socket-room.
     if (!activeFile?.uid) {
+      setRealtimeStatus('disconnected')
+      setSaveStatus('idle')
+      disconnectSocket()
       return
     }
 
@@ -58,7 +61,7 @@ export function useSocketFile(
       }
     }
     // Körs när servern har sparat innehållet.
-    // Kan senare användas för att visa exempelvis "Sparad" i UI:t vid vidareutveckling.
+    // Uppdaterar UI:t så användaren ser att innehållet är sparat.
     function handleContentSaved(data) {
       console.log('Content saved:', data)
       setSaveStatus('saved')
@@ -106,6 +109,7 @@ export function useSocketFile(
     // Rensa upp när komponenten avmonterar eller när activeFile ändras
     // Det behövs för att lämna gamla socket-room och undvika dubbla listeners.
     return () => {
+      console.log('Closing socket file room:', activeFile.uid)
       socket.emit('close file', activeFile.uid)
       socket.off('connect', handleConnect)
       socket.off('connect_error', handleConnectError)
@@ -114,6 +118,9 @@ export function useSocketFile(
       socket.off('content', handleContent)
       socket.off('content saved', handleContentSaved)
       socket.io.off('reconnect_attempt', handleReconnectAttempt)
+
+      setRealtimeStatus('disconnected')
+      setSaveStatus('idle')
 
       // Stänger socket-anslutningen när hooken inte längre behöver den.
       disconnectSocket()
