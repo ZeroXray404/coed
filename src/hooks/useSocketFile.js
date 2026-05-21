@@ -10,10 +10,18 @@ import {
 // och skickar nytt content när användaren skriver.
 // activeFile = filen som användaren just nu har öppen
 // setActiveFileCode = setter från App/MainArea som uppdaterar innehållet i editorn
-export function useSocketFile(activeFile, setActiveFileCode) {
+export function useSocketFile(
+  activeFile,
+  setActiveFileCode,
+  setRealtimeStatus,
+  setSaveStatus
+) {
   useEffect(() => {
     // Om ingen fil är vald ska hooken inte ansluta till något socket-room.
     if (!activeFile?.uid) {
+      setRealtimeStatus('disconnected')
+      setSaveStatus('idle')
+      disconnectSocket()
       return
     }
 
@@ -27,6 +35,7 @@ export function useSocketFile(activeFile, setActiveFileCode) {
     // När anslutningen är klar öppnar vi room för aktiv fil.
     function handleConnect() {
       console.log('Socket connected:', socket.id)
+      setRealtimeStatus('connected')
       openActiveFileRoom()
     }
     // Körs när servern bekräftar att filen har öppnats.
@@ -52,19 +61,30 @@ export function useSocketFile(activeFile, setActiveFileCode) {
       }
     }
     // Körs när servern har sparat innehållet.
-    // Kan senare användas för att visa exempelvis "Sparad" i UI:t vid vidareutveckling.
+    // Uppdaterar UI:t så användaren ser att innehållet är sparat.
     function handleContentSaved(data) {
       console.log('Content saved:', data)
+      setSaveStatus('saved')
+
+      setTimeout(() => {
+        setSaveStatus('idle')
+      }, 2000)
     }
     // Körs om socketen inte lyckas ansluta.
     function handleConnectError(error) {
       console.error('Connection error:', error.message)
+      setRealtimeStatus('error')
     }
     // Körs när socketen kopplas från.
     function handleDisconnect(reason) {
       console.log('Socket disconnected:', reason)
+      setRealtimeStatus('disconnected')
     }
 
+    function handleReconnectAttempt() {
+      console.log('Socket reconnecting...')
+      setRealtimeStatus('reconnecting')
+    }
     // Registrerar event-listeners.
     // Dessa säger vilka funktioner som ska köras när socket-servern skickar olika events.
     socket.on('connect', handleConnect)
@@ -73,6 +93,7 @@ export function useSocketFile(activeFile, setActiveFileCode) {
     socket.on('file loaded', handleFileLoaded)
     socket.on('content', handleContent)
     socket.on('content saved', handleContentSaved)
+    socket.io.on('reconnect_attempt', handleReconnectAttempt)
 
     // Startar socket-anslutningen.
     // connectSocket ser till att aktuell token skickas med innan anslutning.
@@ -88,6 +109,7 @@ export function useSocketFile(activeFile, setActiveFileCode) {
     // Rensa upp när komponenten avmonterar eller när activeFile ändras
     // Det behövs för att lämna gamla socket-room och undvika dubbla listeners.
     return () => {
+      console.log('Closing socket file room:', activeFile.uid)
       socket.emit('close file', activeFile.uid)
       socket.off('connect', handleConnect)
       socket.off('connect_error', handleConnectError)
@@ -95,12 +117,16 @@ export function useSocketFile(activeFile, setActiveFileCode) {
       socket.off('file loaded', handleFileLoaded)
       socket.off('content', handleContent)
       socket.off('content saved', handleContentSaved)
+      socket.io.off('reconnect_attempt', handleReconnectAttempt)
+
+      setRealtimeStatus('disconnected')
+      setSaveStatus('idle')
 
       // Stänger socket-anslutningen när hooken inte längre behöver den.
       disconnectSocket()
     }
     // Kör om effekten när den aktiva filens uid ändras.
-  }, [activeFile?.uid, setActiveFileCode])
+  }, [activeFile?.uid, setActiveFileCode, setRealtimeStatus, setSaveStatus])
 
   // Funktion som skickar editor-innehållet till servern
   // Körs när användaren skriver i Monaco-editorn
@@ -111,6 +137,7 @@ export function useSocketFile(activeFile, setActiveFileCode) {
     // Uppdaterar lokal React-state direkt.
     // Det gör att texten syns omedelbart i editorn utan att vänta på servern.
     setActiveFileCode(newContent)
+    setSaveStatus('saving')
 
     // Skickar nytt filinnehåll till servern.
     // Servern broadcastar content till användare i samma room

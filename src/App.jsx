@@ -13,6 +13,8 @@ function App() {
   const [activeFile, setActiveFile] = useState(null)
   const [language, setLanguage] = useState('javascript')
   const [codeByFileUid, setCodeByFileUid] = useState({})
+  const [realtimeStatus, setRealtimeStatus] = useState('disconnected')
+  const [saveStatus, setSaveStatus] = useState('idle')
 
   function handleLoginSuccess() {
     setIsLoggedIn(true)
@@ -51,6 +53,10 @@ function App() {
           setLanguage={setLanguage}
           codeByFileUid={codeByFileUid}
           setCodeByFileUid={setCodeByFileUid}
+          realtimeStatus={realtimeStatus}
+          setRealtimeStatus={setRealtimeStatus}
+          saveStatus={saveStatus}
+          setSaveStatus={setSaveStatus}
         />
       </section>
       <footer className="app-footer">

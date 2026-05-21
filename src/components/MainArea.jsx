@@ -33,6 +33,10 @@ function MainArea({
   setLanguage,
   codeByFileUid,
   setCodeByFileUid,
+  realtimeStatus,
+  setRealtimeStatus,
+  saveStatus,
+  setSaveStatus,
 }) {
   // State som styr om Options är öppen eller stängd
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
@@ -92,7 +96,12 @@ function MainArea({
     [activeFileUid, setCodeByFileUid]
   )
   // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
-  const { sendContent } = useSocketFile(activeFile, setActiveFileCode)
+  const { sendContent } = useSocketFile(
+    activeFile,
+    setActiveFileCode,
+    setRealtimeStatus,
+    setSaveStatus
+  )
 
   // Körs när Monaco-editorn mountas.
   // Sparar editor-instansen i refen
@@ -143,6 +152,8 @@ function MainArea({
         onOptionsToggle={toggleOptions}
         onUndo={handleUndo}
         onRedo={handleRedo}
+        realtimeStatus={realtimeStatus}
+        saveStatus={saveStatus}
       />
       {isOptionsOpen && (
         <EditorOptions
