@@ -7,7 +7,7 @@ import {
   getFileType,
 } from '../../services/fileServices.js'
 
-const MetadataFooter = ({ activeFile, fileListRef }) => {
+function MetadataFooter({ activeFile, fileListRef }) {
   const [isOpened, setIsOpened] = useState(false)
 
   const metadataRef = useRef(null)
