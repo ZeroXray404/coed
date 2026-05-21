@@ -6,6 +6,7 @@ import {
 } from '../../services/fileServices.js'
 import { forwardRef, useState } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
+import InputField from './FileList/InputField.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
@@ -263,25 +264,11 @@ function FileListContent(
                       )
                     })}
                     {createMode === 'file' && (
-                      <div className="create-mode new-file">
-                        <input
-                          type="text"
-                          placeholder="Enter file name..."
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && e.target.value !== '') {
-                              setPendingName(e.target.value)
-                              e.target.value = ''
-                            }
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            setCreateMode('')
-                          }}
-                        >
-                          <X size={20} />
-                        </button>
-                      </div>
+                      <InputField
+                        createMode={createMode}
+                        setPendingName={setPendingName}
+                        setCreateMode={setCreateMode}
+                      />
                     )}
                   </ul>
                 )}
@@ -289,25 +276,11 @@ function FileListContent(
             )
           })}
         {createMode === 'proj' && (
-          <div className="create-mode new-proj">
-            <input
-              type="text"
-              placeholder="Enter project name..."
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && e.target.value !== '') {
-                  setPendingName(e.target.value)
-                  e.target.value = ''
-                }
-              }}
-            />
-            <button
-              onClick={() => {
-                setCreateMode('')
-              }}
-            >
-              <X size={20} />
-            </button>
-          </div>
+          <InputField
+            createMode={createMode}
+            setPendingName={setPendingName}
+            setCreateMode={setCreateMode}
+          />
         )}
       </ul>
     </div>
