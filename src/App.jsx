@@ -15,14 +15,23 @@ function App() {
   const [codeByFileUid, setCodeByFileUid] = useState({})
   const [realtimeStatus, setRealtimeStatus] = useState('disconnected')
   const [saveStatus, setSaveStatus] = useState('idle')
+  const [activeUsers, setActiveUsers] = useState([])
 
   function handleLoginSuccess() {
     setIsLoggedIn(true)
     setShowAuth(false)
   }
 
+  function resetEditorState() {
+    setActiveFile(null)
+    setLanguage('javascript')
+  }
+
   function handleLogout() {
     setIsLoggedIn(false)
+    resetEditorState()
+    setCodeByFileUid({})
+    setActiveUsers([])
     logoutUser()
     console.log('Logout successful')
   }
@@ -57,6 +66,8 @@ function App() {
           setRealtimeStatus={setRealtimeStatus}
           saveStatus={saveStatus}
           setSaveStatus={setSaveStatus}
+          activeUsers={activeUsers}
+          setActiveUsers={setActiveUsers}
         />
       </section>
       <footer className="app-footer">
