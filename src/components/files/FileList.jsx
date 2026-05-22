@@ -1,4 +1,4 @@
-import { AppWindow, X, File, Users } from 'lucide-react'
+import { AppWindow, X, File, Users, UserMinus } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
@@ -39,6 +39,7 @@ function FileListContent(
   ref
 ) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [hoveredProjectUid, setHoveredProjectUid] = useState(null)
 
   /*
    * prev = current selected IDs
@@ -295,12 +296,18 @@ function FileListContent(
                     type="button"
                     //Knappen får klassen shared-users, men också klassen disabled om deleteMode är aktivt.
                     //Det gör att knappen för att visa delade projekt inte visas om man har deleteMode aktivt.
+                    onMouseEnter={() => setHoveredProjectUid(project.uid)}
+                    onMouseLeave={() => setHoveredProjectUid(null)}
                     className={`shared-users ${deleteMode ? 'disabled' : ''}`}
                     onClick={() => handleRemoveUser(project.uid)}
                     disabled={deleteMode}
                     aria-label={`Remove myself from ${project.name}`}
                   >
-                    <Users size={16} />
+                    {hoveredProjectUid === project.uid ? (
+                      <UserMinus size={16} />
+                    ) : (
+                      <Users size={16} />
+                    )}
                   </button>
                 )}
 
