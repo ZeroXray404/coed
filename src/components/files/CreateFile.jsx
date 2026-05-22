@@ -136,21 +136,10 @@ function CreateFileHeader({
         >
           <UserPlus />
         </button>
-        {/* <button className="sidebar-header-btn btn-projback">
-          <FolderOutput />
-        </button> */}
         <button
           className="sidebar-header-btn btn-newproj"
           onClick={() => {
             setCreateMode('proj')
-
-            // // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya projekt.
-            // const projectName = prompt('Enter project name:')
-            // if (projectName === null) {
-            //   return
-            // } else {
-            //   handleCreateProject(projectName)
-            // }
           }}
         >
           <FolderPlus />
@@ -159,14 +148,6 @@ function CreateFileHeader({
           className="sidebar-header-btn btn-newfile"
           onClick={() => {
             setCreateMode('file')
-
-            // // Prompten kan bytas ut mot formulär input i sidopanelen för att skapa nya filer.
-            // const fileName = prompt('Enter file name:')
-            // if (fileName === null) {
-            //   return
-            // } else {
-            //   handleCreateFile(fileName, expandedProjectUid, null)
-            // }
           }}
         >
           <FilePlus />
