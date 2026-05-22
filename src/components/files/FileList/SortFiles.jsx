@@ -1,12 +1,20 @@
 import { ListFilter } from 'lucide-react'
 import Dropdown from '../../Dropdown'
 
-function SortFiles({ uid, details, setSortBy }) {
-  //   if (!uid) {
-  //     console.log('no uid')
-  //   } else {
-  //     console.log(details[uid])
-  //   }
+function SortFiles({ uid, details, setSortBy, setSortedUid }) {
+  if (details[uid].files.length < 2) {
+    return
+  }
+
+  // const projectFiles = details[uid].files
+
+  // for (let i = 0; i < projectFiles.length; i++) {
+  //   console.log(projectFiles[i].filename)
+
+  //   console.log(getFileType(projectFiles[i]))
+  // }
+
+  // console.log(getFileName(projectFiles.filename))
 
   const choices = {
     data: [
@@ -31,21 +39,11 @@ function SortFiles({ uid, details, setSortBy }) {
 
   function getSortId(choiceId) {
     setSortBy(choiceId)
+    setSortedUid(uid)
   }
 
   return (
     <li className="sort-files">
-      {/* <button
-        className="list-row filter-files"
-        onClick={() => console.log('TEST')}
-        aria-label={`Filter files`}
-      >
-        <div className="listselect-btn">
-          <ListFilter size={14} />
-          <span className="list-label">Filter by...</span>
-        </div>
-      </button> */}
-
       <div className="sort-files-icon">
         <ListFilter size={14} />
       </div>
