@@ -220,6 +220,11 @@
               background-color: $delete-selected;
             }
           }
+
+          &.filter-files {
+            padding-left: $list-padding;
+            background-color: $color-bg-primary;
+          }
         }
 
         li {

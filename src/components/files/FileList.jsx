@@ -7,6 +7,7 @@ import {
 import { forwardRef, useState } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
+import FilterFiles from './FileList/FilterFiles.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
@@ -32,6 +33,8 @@ function FileListContent(
     setActiveFile,
     setCodeByFileUid,
     setLanguage,
+    filterBy,
+    setFilterBy,
   },
   ref
 ) {
@@ -232,6 +235,12 @@ function FileListContent(
                 />
                 {expandedProjectUid === project.uid && (
                   <ul className="nested-files">
+                    <div>{filterBy}</div>
+                    <FilterFiles
+                      uid={project.uid}
+                      details={projectDetails}
+                      setFilterBy={setFilterBy}
+                    />
                     {projectDetails[project.uid]?.files?.map((file) => {
                       const isActiveFile = activeFile?.uid === file.uid
                       const isSelectedFile = selectedFiles.includes(file.uid)
