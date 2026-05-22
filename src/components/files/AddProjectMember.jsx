@@ -41,7 +41,6 @@ function AddProjectMemberContent({
     for (const uid of selectedProjects) {
       console.log(uid)
       console.log(selectedUser)
-      //const projectMembers =
       await addUserToProject(uid, selectedUser)
     }
     cancelAddUser()
