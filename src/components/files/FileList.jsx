@@ -7,7 +7,7 @@ import {
 import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
-import FilterFiles from './FileList/FilterFiles.jsx'
+import SortFiles from './FileList/FilterFiles.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
@@ -33,8 +33,8 @@ function FileListContent(
     setActiveFile,
     setCodeByFileUid,
     setLanguage,
-    filterBy,
-    setFilterBy,
+    sortBy,
+    setSortBy,
     sharedProjects,
     setSharedProjects,
   },
@@ -292,11 +292,11 @@ function FileListContent(
                 />
                 {expandedProjectUid === project.uid && (
                   <ul className="nested-files">
-                    <div>{filterBy}</div>
-                    <FilterFiles
+                    {/* <div>{sortBy}</div> */}
+                    <SortFiles
                       uid={project.uid}
                       details={projectDetails}
-                      setFilterBy={setFilterBy}
+                      setSortBy={setSortBy}
                     />
                     {projectDetails[project.uid]?.files?.map((file) => {
                       const isActiveFile = activeFile?.uid === file.uid

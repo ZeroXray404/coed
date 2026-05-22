@@ -1,7 +1,7 @@
 import { ListFilter } from 'lucide-react'
 import Dropdown from '../../Dropdown'
 
-function FilterFiles({ uid, details, setFilterBy }) {
+function SortFiles({ uid, details, setSortBy }) {
   //   if (!uid) {
   //     console.log('no uid')
   //   } else {
@@ -29,12 +29,12 @@ function FilterFiles({ uid, details, setFilterBy }) {
     ],
   }
 
-  function getFilterId(choiceId) {
-    setFilterBy(choiceId)
+  function getSortId(choiceId) {
+    setSortBy(choiceId)
   }
 
   return (
-    <div className="filter-files">
+    <li className="sort-files">
       {/* <button
         className="list-row filter-files"
         onClick={() => console.log('TEST')}
@@ -46,14 +46,18 @@ function FilterFiles({ uid, details, setFilterBy }) {
         </div>
       </button> */}
 
+      <div className="sort-files-icon">
+        <ListFilter size={14} />
+      </div>
+
       <Dropdown
-        buttonText="Filter by..."
+        buttonText="Sort by..."
         dataObj={choices.data}
         hasDefaultOption={false}
-        getIdHandler={getFilterId}
+        getIdHandler={getSortId}
       />
-    </div>
+    </li>
   )
 }
 
-export default FilterFiles
+export default SortFiles
