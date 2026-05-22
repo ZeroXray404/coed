@@ -45,6 +45,40 @@
     }
   }
 }
+
+.toolbar-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-label {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid $color-border;
+  border-radius: 999px;
+  font-size: $font-size-s;
+  font-weight: 600;
+  white-space: nowrap;
+  color: $color-text;
+  background-color: $color-bg-secondary;
+}
+
+.status-connected,
+.status-saved {
+  color: $color-status-success;
+}
+
+.status-disconnected,
+.status-error {
+  color: $color-status-error;
+}
+
+.status-reconnecting,
+.status-saving,
+.status-unsaved {
+  color: $color-status-warning;
+}
+
 .editor-toolbar-content .toolbar-button {
   border-radius: 50%;
 }
@@ -60,7 +94,7 @@
   }
 }
 
-.undo-button {
+.language-selector {
   margin-left: auto; /* Trycker knappen till höger */
 }
 

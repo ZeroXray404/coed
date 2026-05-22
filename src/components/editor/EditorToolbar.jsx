@@ -73,6 +73,41 @@ function RedoButton({ onRedo }) {
   )
 }
 
+// Komponent som visar realtime- och sparstatus i toolbaren
+// Tar emot:
+// -realtimeStatus: status för socket anslutning
+// -saveStatus: status för sprande/sync av innehåll
+
+function StatusIndicator({ realtimeStatus, saveStatus }) {
+  const realtimeLabels = {
+    connected: 'Connected',
+    disconnected: 'Not Connected',
+    reconnecting: 'Reconnecting...',
+    error: 'Error',
+  }
+  const saveLabels = {
+    idle: '',
+    unsaved: 'Unsaved changes',
+    saving: 'Saving...',
+    saved: 'Saved',
+    error: 'Save failed',
+  }
+  // Visar save-status bara om status inte är "idle"
+  return (
+    <div className="toolbar-status">
+      <span className={`status-label status-${realtimeStatus}`}>
+        {realtimeLabels[realtimeStatus] || ''}
+      </span>
+
+      {saveStatus !== 'idle' && (
+        <span className={`status-label status-${saveStatus}`}>
+          {saveLabels[saveStatus] || ''}
+        </span>
+      )}
+    </div>
+  )
+}
+
 // Toolbar-komponent som grupperar editor-relaterade kontroller
 // Tar emot:
 // - language: aktuellt språk
@@ -85,19 +120,25 @@ function EditorToolbar({
   onOptionsToggle,
   onUndo,
   onRedo,
+  realtimeStatus,
+  saveStatus,
 }) {
   return (
     // Dynamisk klass baserat på isOpen för att styra styling av toolbaren
     <div className="editor-toolbar">
       <div className="editor-toolbar-content">
+        <UndoButton onUndo={onUndo} />
+        <RedoButton onRedo={onRedo} />
+
+        <StatusIndicator
+          realtimeStatus={realtimeStatus}
+          saveStatus={saveStatus}
+        />
         <LanguageSelector
           language={language}
           onLanguageChange={onLanguageChange}
         />
         <SettingsButton onClick={onOptionsToggle} />
-
-        <UndoButton onUndo={onUndo} />
-        <RedoButton onRedo={onRedo} />
       </div>
     </div>
   )
