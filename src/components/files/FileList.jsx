@@ -3,8 +3,12 @@ import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
   deleteFile,
+  getFileName,
+  getDateModified,
+  getFileCreator,
+  getFileType,
 } from '../../services/fileServices.js'
-import { forwardRef, useState, useEffect } from 'react'
+import { forwardRef, useState, useEffect, useMemo } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
 import SortFiles from './FileList/SortFiles.jsx'
@@ -41,6 +45,7 @@ function FileListContent(
   ref
 ) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [sortedUid, setSortedUid] = useState('')
 
   /*
    * prev = current selected IDs
@@ -137,6 +142,7 @@ function FileListContent(
       return
     }
     handleProjectClick(uid)
+    setSortBy('')
   }
 
   // Körs när användaren klickar på en fil i sidopanelen.
@@ -207,6 +213,45 @@ function FileListContent(
     }
   }, [projects, setSharedProjects])
 
+  useEffect(() => {
+    if (sortBy !== '') {
+      // projectDetails[project.uid].files
+
+      console.log(projectDetails[sortedUid].files)
+      // console.log(sortedFiles)
+    }
+  }, [sortBy])
+
+  // Sorterar projekten i bokstavsordning
+  const sortedProjects = [...projects].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
+
+  const sortedFiles = useMemo(() => {
+    const files = [...(projectDetails?.[sortedUid]?.files || [])]
+
+    files.sort((a, b) => {
+      switch (sortBy) {
+        case 'filename':
+          return a.filename.localeCompare(b.filename)
+
+        case 'last_changed':
+          return new Date(b.last_changed) - new Date(a.last_changed)
+
+        case 'created_by':
+          return a.created_by.localeCompare(b.created_by)
+
+        case 'language':
+          return
+
+        default:
+          return 0
+      }
+    })
+
+    return files
+  }, [projectDetails, sortedUid, sortBy])
+
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
@@ -243,7 +288,7 @@ function FileListContent(
         )}
 
       <ul ref={ref}>
-        {projects
+        {sortedProjects
           // Filtrerar bort projekt utan namn eller med tomt namn, och mappar sedan över projekten
           .filter((project) => project.name && project.name.trim() !== '')
           .map((project) => {
@@ -292,11 +337,12 @@ function FileListContent(
                 />
                 {expandedProjectUid === project.uid && (
                   <ul className="nested-files">
-                    {/* <div>{sortBy}</div> */}
+                    {/* {sortBy !== '' && <div>{sortBy}</div>} */}
                     <SortFiles
                       uid={project.uid}
                       details={projectDetails}
                       setSortBy={setSortBy}
+                      setSortedUid={setSortedUid}
                     />
                     {projectDetails[project.uid]?.files?.map((file) => {
                       const isActiveFile = activeFile?.uid === file.uid
