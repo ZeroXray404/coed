@@ -7,7 +7,7 @@ import {
 import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
-import SortFiles from './FileList/FilterFiles.jsx'
+import SortFiles from './FileList/SortFiles.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
