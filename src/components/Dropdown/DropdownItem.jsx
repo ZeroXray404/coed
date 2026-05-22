@@ -1,12 +1,12 @@
 function DropdownItem({ children, itemId, itemName, onItemSelect }) {
   return (
-    <div
+    <button
       id={itemId}
       className="dropdown-content-item"
       onClick={() => onItemSelect(itemName, itemId)}
     >
       <p>{children}</p>
-    </div>
+    </button>
   )
 }
 
