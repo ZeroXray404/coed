@@ -159,14 +159,15 @@ export async function deleteFile(uid) {
 
 // Funktioner nedan relaterade till hämtande av metadata från filer
 
-// Returnerar filnamnet utan filändelsen
+// === Returnerar filnamnet utan filändelsen ===
 export function getFileName(file) {
   const fileName = file.filename
 
   return fileName.split('.').shift()
 }
 
-// Returnerar datum och tid i ISO 8601 format, men kan returneras med formattering som gör det läsbart för användaren
+// === Returnerar datum och tid i ISO 8601 format ===
+// (men kan returneras med formattering som gör det läsbart för användaren)
 export function getDateModified(file, formattedDate = false) {
   if (!formattedDate) {
     return file.last_changed
@@ -187,25 +188,25 @@ export function getDateModified(file, formattedDate = false) {
   return dateModified
 }
 
-// Returnerar filskaparens namn/email utan den andra halvan efter '@'
+// === Returnerar filskaparens namn från email ===
 export function getFileCreator(file) {
   const fileCreator = file.created_by
 
   return fileCreator.split('@').shift()
 }
 
-// Returnerar språket baserat på filändelse
+// === Returnerar språket baserat på filändelse ===
 export function getFileType(file) {
   const language = getLanguageFromFileName(file.filename)
 
   if (language === 'plaintext') {
-    return 'z' // for unknown file types
+    return 'z' // för okända filtyper
   }
 
   return language
 }
 
-// Returnerar språket kapitaliserat
+// === Formatterar och returnerar språket kapitaliserat ===
 export function formatLanguage(language) {
   if (language === 'z') {
     return 'N/A'
