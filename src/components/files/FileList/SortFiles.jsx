@@ -1,7 +1,7 @@
 import { ListFilter } from 'lucide-react'
 import Dropdown from '../../Dropdown'
 
-function SortFiles({ uid, details, setSortBy, setSortedUid }) {
+function SortFiles({ uid, details, setSortBy }) {
   if (details[uid].files.length < 2) {
     return
   }
@@ -39,7 +39,6 @@ function SortFiles({ uid, details, setSortBy, setSortedUid }) {
 
   function getSortId(choiceId) {
     setSortBy(choiceId)
-    setSortedUid(uid)
   }
 
   return (
