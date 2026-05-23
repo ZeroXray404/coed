@@ -5,6 +5,7 @@ import {
   getDateModified,
   getFileCreator,
   getFileType,
+  formatLanguage,
 } from '../../services/fileServices.js'
 
 function MetadataFooter({ activeFile, fileListRef }) {
@@ -59,7 +60,9 @@ function MetadataFooter({ activeFile, fileListRef }) {
           </div>
           <div className="metadata-content-item">
             <span>Language:</span>
-            <p>{activeFile ? getFileType(activeFile) : 'N/A'}</p>
+            <p>
+              {activeFile ? formatLanguage(getFileType(activeFile)) : 'N/A'}
+            </p>
           </div>
         </div>
       </div>

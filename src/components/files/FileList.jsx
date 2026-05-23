@@ -1,14 +1,11 @@
-import { AppWindow, X, File, Users } from 'lucide-react'
+import { AppWindow, File, Users } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
   deleteFile,
-  getFileName,
-  getDateModified,
-  getFileCreator,
   getFileType,
 } from '../../services/fileServices.js'
-import { forwardRef, useState, useEffect, useMemo } from 'react'
+import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
 import SortFiles from './FileList/SortFiles.jsx'
@@ -45,7 +42,6 @@ function FileListContent(
   ref
 ) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [sortedUid, setSortedUid] = useState('')
 
   /*
    * prev = current selected IDs
@@ -142,7 +138,7 @@ function FileListContent(
       return
     }
     handleProjectClick(uid)
-    setSortBy('')
+    setSortBy('filename')
   }
 
   // Körs när användaren klickar på en fil i sidopanelen.
@@ -213,44 +209,54 @@ function FileListContent(
     }
   }, [projects, setSharedProjects])
 
-  useEffect(() => {
-    if (sortBy !== '') {
-      // projectDetails[project.uid].files
-
-      console.log(projectDetails[sortedUid].files)
-      // console.log(sortedFiles)
-    }
-  }, [sortBy])
-
   // Sorterar projekten i bokstavsordning
   const sortedProjects = [...projects].sort((a, b) =>
     a.name.localeCompare(b.name)
   )
 
-  const sortedFiles = useMemo(() => {
-    const files = [...(projectDetails?.[sortedUid]?.files || [])]
+  // Funktion som används av sortedFiles för att sortera filerna i ett projekt efter vald sortering
+  function getSortedFiles(files, sortBy) {
+    const sorted = [...files]
 
-    files.sort((a, b) => {
+    sorted.sort((a, b) => {
+      let comparison = 0
+
+      // Sorterar först efter valda metod
       switch (sortBy) {
         case 'filename':
-          return a.filename.localeCompare(b.filename)
+          comparison = a.filename.localeCompare(b.filename)
+
+          break
 
         case 'last_changed':
-          return new Date(b.last_changed) - new Date(a.last_changed)
+          comparison = new Date(b.last_changed) - new Date(a.last_changed)
+
+          break
 
         case 'created_by':
-          return a.created_by.localeCompare(b.created_by)
+          comparison = a.created_by.localeCompare(b.created_by)
+
+          break
 
         case 'language':
-          return
+          comparison = getFileType(a).localeCompare(getFileType(b))
+
+          break
 
         default:
           return 0
       }
+
+      // Sortera återigen i bokstavsordning efter switch-satsen
+      if (comparison === 0) {
+        comparison = a.filename.localeCompare(b.filename)
+      }
+
+      return comparison
     })
 
-    return files
-  }, [projectDetails, sortedUid, sortBy])
+    return sorted
+  }
 
   return (
     <div className="sidebar-content">
@@ -297,6 +303,11 @@ function FileListContent(
             // kontrollerar om projektet är med i projektlistan för deladeprojekt
             const isShared = sharedProjects.includes(project.uid)
 
+            const sortedFiles = getSortedFiles(
+              projectDetails?.[project.uid]?.files || [],
+              sortBy
+            )
+
             return (
               // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
               <li
@@ -338,13 +349,14 @@ function FileListContent(
                 {expandedProjectUid === project.uid && (
                   <ul className="nested-files">
                     {/* {sortBy !== '' && <div>{sortBy}</div>} */}
-                    <SortFiles
-                      uid={project.uid}
-                      details={projectDetails}
-                      setSortBy={setSortBy}
-                      setSortedUid={setSortedUid}
-                    />
-                    {projectDetails[project.uid]?.files?.map((file) => {
+                    {!deleteMode && (
+                      <SortFiles
+                        uid={project.uid}
+                        details={projectDetails}
+                        setSortBy={setSortBy}
+                      />
+                    )}
+                    {sortedFiles.map((file) => {
                       const isActiveFile = activeFile?.uid === file.uid
                       const isSelectedFile = selectedFiles.includes(file.uid)
 

@@ -194,29 +194,37 @@ export function getFileCreator(file) {
   return fileCreator.split('@').shift()
 }
 
-// Returnerar kodspråket kapitaliserat
+// Returnerar språket baserat på filändelse
 export function getFileType(file) {
-  if (getLanguageFromFileName(file.filename) === 'plaintext') {
-    return 'N/A'
-  } else {
-    const fileType = getLanguageFromFileName(file.filename)
-    let language = ''
+  const language = getLanguageFromFileName(file.filename)
 
-    if (fileType === 'javascript' || fileType === 'typescript') {
-      let firstHalf = fileType.charAt(0).toUpperCase() + fileType.slice(1, 4) // first 4 letters
-
-      language = `${firstHalf}Script`
-    } else if (
-      fileType === 'html' ||
-      fileType === 'css' ||
-      fileType === 'scss' ||
-      fileType === 'json'
-    ) {
-      language = fileType.toUpperCase()
-    } else {
-      language = fileType.charAt(0).toUpperCase() + fileType.slice(1)
-    }
-
-    return language
+  if (language === 'plaintext') {
+    return 'z' // for unknown file types
   }
+
+  return language
+}
+
+// Returnerar språket kapitaliserat
+export function formatLanguage(language) {
+  if (language === 'z') {
+    return 'N/A'
+  }
+
+  if (language === 'javascript' || language === 'typescript') {
+    const firstHalf = language.charAt(0).toUpperCase() + language.slice(1, 4)
+
+    return `${firstHalf}Script`
+  }
+
+  if (
+    language === 'html' ||
+    language === 'css' ||
+    language === 'scss' ||
+    language === 'json'
+  ) {
+    return language.toUpperCase()
+  }
+
+  return language.charAt(0).toUpperCase() + language.slice(1)
 }
