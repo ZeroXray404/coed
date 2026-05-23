@@ -27,7 +27,7 @@ function SidebarLeft({
   const [users, setUsers] = useState([])
   const [usersLoaded, setUsersLoaded] = useState(false)
   const [addMember, setAddMember] = useState(false)
-  const [sortBy, setSortBy] = useState('')
+  const [sortBy, setSortBy] = useState('filename')
   const [sharedProjects, setSharedProjects] = useState([])
 
   const fileListRef = useRef(null)
