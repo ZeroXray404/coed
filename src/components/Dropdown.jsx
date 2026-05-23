@@ -62,7 +62,7 @@ function Dropdown({
                 itemName=""
                 onItemSelect={handleItemSelect}
               >
-                {defaultOption}
+                None
               </DropdownItem>
             )}
 
