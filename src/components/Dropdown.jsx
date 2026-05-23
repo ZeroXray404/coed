@@ -41,7 +41,7 @@ function Dropdown({
     setIsOpen(false)
 
     getIdHandler(valueFromItemId)
-    console.log(`previous id: ${selectedItemId}`)
+    // console.log(`previous id: ${selectedItemId}`)
   }
 
   if (!dataObj) {
