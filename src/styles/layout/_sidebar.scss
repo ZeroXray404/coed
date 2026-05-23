@@ -273,6 +273,9 @@
         }
 
         .dropdown {
+          $dd-btn-color: #252525;
+          $dd-item-color: #2f2f2f;
+
           width: unset;
           margin: 0;
           min-height: 28px;
@@ -280,7 +283,7 @@
 
           &-btn {
             padding: 0 0 0 28px;
-            background-color: transparent;
+            background-color: $dd-btn-color;
             border-radius: 0;
             border: 0;
             height: 100%;
@@ -291,21 +294,25 @@
               font-size: 12px;
             }
 
+            &-icon {
+              visibility: hidden;
+            }
+
             &:hover {
               background-color: $color-dark-hover;
             }
           }
 
           &-content {
-            min-width: 100%;
+            min-width: 50%;
             margin-top: 0;
             border-radius: 0;
-            background-color: $color-bg-tertiary;
+            background-color: $dd-item-color;
             border: none;
 
             &-item {
-              padding: 6.5px 0 6.5px 28px;
-              background-color: $color-bg-tertiary;
+              padding: 6.5px 28px;
+              background-color: $dd-item-color;
 
               p {
                 font-size: 12px;
