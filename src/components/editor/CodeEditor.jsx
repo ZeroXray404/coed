@@ -19,7 +19,7 @@ function CodeEditor({
       <Editor
         language={language}
         theme={theme}
-        height="90%"
+        height="100%"
         path={path}
         value={value}
         onChange={(newValue) => onChange(newValue || '')}

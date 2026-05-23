@@ -29,6 +29,22 @@ function LanguageSelector({ language, onLanguageChange }) {
     </div>
   )
 }
+// Komponent som visar aktiva users i filen.
+// Färgen på namn (och framtida cursor) mappax via index.
+function ActiveUsers({ users }) {
+  if (!users?.length) {
+    return null
+  }
+  return (
+    <div className="active-users">
+      {users.map((email, index) => (
+        <span key={email} className={`active-user active-user-${index}`}>
+          {email}
+        </span>
+      ))}
+    </div>
+  )
+}
 
 // Settings knapp för att öppna editorinställningar i ett modal fönster
 function SettingsButton({ onClick }) {
@@ -122,6 +138,7 @@ function EditorToolbar({
   onRedo,
   realtimeStatus,
   saveStatus,
+  activeUsers,
 }) {
   return (
     // Dynamisk klass baserat på isOpen för att styra styling av toolbaren
@@ -134,6 +151,9 @@ function EditorToolbar({
           realtimeStatus={realtimeStatus}
           saveStatus={saveStatus}
         />
+
+        <ActiveUsers users={activeUsers} />
+
         <LanguageSelector
           language={language}
           onLanguageChange={onLanguageChange}
