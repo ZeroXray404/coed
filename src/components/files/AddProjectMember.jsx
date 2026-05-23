@@ -46,6 +46,11 @@ function AddProjectMemberContent({
     cancelAddUser()
   }
 
+  // Sorterar projekten i bokstavsordning
+  const sortedProjects = [...projects].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
+
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
@@ -91,7 +96,7 @@ function AddProjectMemberContent({
       )}
 
       <ul>
-        {projects
+        {sortedProjects
           .filter((project) => project.name && project.name.trim() !== '')
           .map((project) => {
             // Kollar om projektet är valt för att lägga till en användare, och lägger till klassen 'selected' om det är det.
