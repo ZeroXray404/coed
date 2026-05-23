@@ -29,7 +29,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         'Login successful:',
         loginResult
       )
-      onRegisterSuccess?.()
+      onRegisterSuccess?.({ email })
     } catch (error) {
       setMessage('User account already exist')
       console.error('User account already exist:', error)
