@@ -318,7 +318,7 @@ function FileListContent(
                 className={`project-list-item ${isSelected ? 'selected' : ''}`}
               >
                 <button
-                  className="list-row"
+                  className={`list-row ${expandedProjectUid === project.uid ? 'active-proj' : ''}`}
                   onClick={() => handleProjectRowClick(project.uid)}
                   aria-label={`Open project ${project.name}`}
                 >
