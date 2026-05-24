@@ -266,6 +266,7 @@
           width: 28px;
           height: 28px;
           z-index: 10;
+          pointer-events: none;
 
           .lucide {
             @include centerFully();
@@ -323,6 +324,20 @@
                 background-color: $color-dark-hover;
               }
             }
+          }
+        }
+
+        &-order {
+          @include flexStyling($justify: center, $align: center);
+
+          min-width: 28px;
+          min-height: 28px;
+          position: absolute;
+          right: 0;
+          background-color: unset;
+
+          &:hover {
+            background-color: $color-dark-hover;
           }
         }
       }
