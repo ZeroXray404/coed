@@ -141,6 +141,7 @@ function FileListContent(
     }
     handleProjectClick(uid)
     setSortBy('filename')
+    setSortDir('Desc')
   }
 
   // Körs när användaren klickar på en fil i sidopanelen.
