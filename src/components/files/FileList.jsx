@@ -11,7 +11,7 @@ import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
 import SortFiles from './FileList/SortFiles.jsx'
 import DeleteModal from './FileList/DeleteModal.jsx'
-import RemoveUserModal from './RemoveUserModal.jsx'
+import RemoveUserModal from './FileList/RemoveUserModal.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
