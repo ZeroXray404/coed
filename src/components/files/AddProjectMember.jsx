@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { AppWindow, X } from 'lucide-react'
+import { AppWindow } from 'lucide-react'
 import { addUserToProject } from '../../services/fileServices'
+import Dropdown from '../Dropdown'
 
 function AddProjectMemberContent({
   users,
@@ -39,8 +40,8 @@ function AddProjectMemberContent({
 
   async function confirmAddUser() {
     for (const uid of selectedProjects) {
-      console.log(uid)
-      console.log(selectedUser)
+      console.log('The uid of project user will be added to:', uid)
+      console.log('The selected user:', selectedUser)
       await addUserToProject(uid, selectedUser)
     }
     cancelAddUser()
@@ -51,6 +52,10 @@ function AddProjectMemberContent({
     a.name.localeCompare(b.name)
   )
 
+  function getChosenUserId(choiceId) {
+    setSelectedUser(choiceId)
+  }
+
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
@@ -58,39 +63,38 @@ function AddProjectMemberContent({
       {showAddUserModal && selectedProjects.length !== 0 && (
         <div className="add-user-modal">
           <div className="add-user-modal-text">
-            <h1>Add a user to a project</h1>
+            <h1>Add a user to project</h1>
             <p>
-              User will be added to following projects:{' '}
-              {selectedProjects.length}
+              User will be added to {selectedProjects.length} project
+              {selectedProjects.length > 1 ? 's' : ''}
             </p>
           </div>
-          <p>Search for a user: </p>
+
           <input
+            name="user-search"
             className="input-search"
             type="text"
-            placeholder="Search user"
+            placeholder="Search for a user"
             value={searchUser}
             onChange={(e) => setSearchUser(e.target.value)}
-          ></input>
-          <select
-            className="user-options"
-            value={selectedUser}
-            onChange={(e) => setSelectedUser(e.target.value)}
-          >
-            <option value=""> -- choose user -- </option>
-            {filterData.map((user) => (
-              <option key={user.user_id} value={user.email}>
-                {user.email}
-              </option>
-            ))}
+          />
 
-            {/**/}
-          </select>
+          <Dropdown
+            buttonText="Choose user"
+            dataObj={filterData}
+            dataName="email"
+            dataId="email"
+            hasDefaultOption={false}
+            getIdHandler={getChosenUserId}
+          />
+
           <div className="add-user-modal-btns">
             <button className="confirm" onClick={confirmAddUser}>
               Add user
             </button>
-            <button onClick={cancelAddUser}>Cancel</button>
+            <button className="cancel" onClick={cancelAddUser}>
+              Cancel
+            </button>
           </div>
         </div>
       )}
