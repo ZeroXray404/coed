@@ -9,6 +9,7 @@ import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
 import SortFiles from './FileList/SortFiles.jsx'
+import DeleteModal from './FileList/DeleteModal.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
@@ -265,36 +266,14 @@ function FileListContent(
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
       {error && <p>{error}</p>}
-      {showDeleteModal &&
-        (selectedProjects.length !== 0 || selectedFiles.length !== 0) && (
-          <div className="delete-modal">
-            <div className="delete-modal-text">
-              <h1>Confirm Deletion?</h1>
-              <p>Are you sure you want to delete?</p>
-              <p>Files cannot be recovered once deleted.</p>
-              <p>Projects to be deleted: {selectedProjects.length}</p>
-              <p>Files to be deleted: {selectedFiles.length}</p>
-            </div>
-            <div className="delete-modal-btns">
-              <button
-                type="button"
-                className="confirm"
-                onClick={confirmDeletion}
-                aria-label="Confirm Deletion"
-              >
-                Delete
-              </button>
-              <button
-                type="button"
-                className="cancel"
-                onClick={cancelDeletion}
-                aria-label="Cancel Deletion"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+      {showDeleteModal && (
+        <DeleteModal
+          selectedProjects={selectedProjects}
+          selectedFiles={selectedFiles}
+          confirmDeletion={confirmDeletion}
+          cancelDeletion={cancelDeletion}
+        />
+      )}
 
       <ul ref={ref}>
         {sortedProjects
