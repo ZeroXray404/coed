@@ -460,10 +460,22 @@
 
       &.confirm {
         @include linearGradientMixin(to right, $delete-color, $delete-selected);
+
+        &:hover {
+          @include linearGradientMixin(to right, #ff6e6e, #ff8e8e);
+        }
       }
 
       &.cancel {
-        @include linearGradientMixin(to right, #5c60b3, #5b6cff);
+        @include linearGradientMixin(
+          to right,
+          $cancel-color,
+          $cancel-color-gradient-right
+        );
+
+        &:hover {
+          @include linearGradientMixin(to right, #869fff, #96a1ff);
+        }
       }
     }
   }
@@ -511,16 +523,60 @@
   background: #333;
   z-index: 1000;
 
-  &-input {
-    color: black;
+  input {
+    background-color: $color-bg-tertiary;
+    caret-color: $color-text;
+    color: $color-text;
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: none;
   }
 
   &-text {
     text-align: center;
-    padding: 0.75rem 0;
+    padding-top: 0.75rem;
 
     h1 {
       padding-bottom: 0.75rem;
+    }
+  }
+
+  .dropdown {
+    width: 100%;
+
+    &-btn {
+      width: 100%;
+      height: 40px;
+      background-color: $color-bg-tertiary;
+
+      &-text p {
+        text-align: left;
+      }
+
+      &.opened {
+        background-color: $color-dark-hover;
+        border-color: transparent;
+      }
+    }
+
+    &-content {
+      min-width: 100%;
+      max-height: 30vh;
+      background-color: $color-bg-tertiary;
+      border: none;
+
+      &-item {
+        background-color: $color-bg-tertiary;
+
+        p {
+          text-align: left;
+          padding-left: 0.75rem;
+        }
+
+        &:hover {
+          background-color: $color-dark-hover;
+        }
+      }
     }
   }
 
@@ -535,11 +591,27 @@
       border-radius: $input-size * 0.25;
 
       &.confirm {
-        @include linearGradientMixin(to right, $add-color, $add-color);
+        @include linearGradientMixin(
+          to right,
+          $add-color,
+          $add-color-gradient-right
+        );
+
+        &:hover {
+          @include linearGradientMixin(to right, #5fff5f, #6fff6f);
+        }
       }
 
       &.cancel {
-        @include linearGradientMixin(to right, #5c60b3, #5b6cff);
+        @include linearGradientMixin(
+          to right,
+          $cancel-color,
+          $cancel-color-gradient-right
+        );
+
+        &:hover {
+          @include linearGradientMixin(to right, #869fff, #96a1ff);
+        }
       }
     }
   }
