@@ -9,6 +9,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 // === Sidopanel komponenten ===
 function SidebarLeft({
   isLoggedIn,
+  currentUser,
   activeFile,
   setActiveFile,
   setCodeByFileUid,
@@ -131,6 +132,7 @@ function SidebarLeft({
         />
       ) : (
         <FileListContent
+          currentUser={currentUser}
           deleteMode={deleteMode}
           setDeleteMode={setDeleteMode}
           createMode={createMode}

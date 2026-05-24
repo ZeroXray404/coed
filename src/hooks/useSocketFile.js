@@ -14,7 +14,8 @@ export function useSocketFile(
   activeFile,
   setActiveFileCode,
   setRealtimeStatus,
-  setSaveStatus
+  setSaveStatus,
+  setActiveUsers
 ) {
   useEffect(() => {
     // Om ingen fil är vald ska hooken inte ansluta till något socket-room.
@@ -85,6 +86,11 @@ export function useSocketFile(
       console.log('Socket reconnecting...')
       setRealtimeStatus('reconnecting')
     }
+    function handleUsers(users) {
+      console.log('Active users:', users)
+      setActiveUsers(users)
+    }
+
     // Registrerar event-listeners.
     // Dessa säger vilka funktioner som ska köras när socket-servern skickar olika events.
     socket.on('connect', handleConnect)
@@ -94,6 +100,7 @@ export function useSocketFile(
     socket.on('content', handleContent)
     socket.on('content saved', handleContentSaved)
     socket.io.on('reconnect_attempt', handleReconnectAttempt)
+    socket.on('users', handleUsers)
 
     // Startar socket-anslutningen.
     // connectSocket ser till att aktuell token skickas med innan anslutning.
@@ -118,7 +125,9 @@ export function useSocketFile(
       socket.off('content', handleContent)
       socket.off('content saved', handleContentSaved)
       socket.io.off('reconnect_attempt', handleReconnectAttempt)
+      socket.off('users', handleUsers)
 
+      setActiveUsers([])
       setRealtimeStatus('disconnected')
       setSaveStatus('idle')
 
@@ -126,7 +135,13 @@ export function useSocketFile(
       disconnectSocket()
     }
     // Kör om effekten när den aktiva filens uid ändras.
-  }, [activeFile?.uid, setActiveFileCode, setRealtimeStatus, setSaveStatus])
+  }, [
+    activeFile?.uid,
+    setActiveFileCode,
+    setRealtimeStatus,
+    setSaveStatus,
+    setActiveUsers,
+  ])
 
   // Funktion som skickar editor-innehållet till servern
   // Körs när användaren skriver i Monaco-editorn

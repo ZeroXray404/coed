@@ -1,19 +1,22 @@
-import { AppWindow, File, Users } from 'lucide-react'
+import { AppWindow, File, Users, UserMinus } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
   deleteFile,
   getFileType,
+  removeUserFromProject,
 } from '../../services/fileServices.js'
 import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
 import InputField from './FileList/InputField.jsx'
 import SortFiles from './FileList/SortFiles.jsx'
 import DeleteModal from './FileList/DeleteModal.jsx'
+import RemoveUserModal from './RemoveUserModal.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
   {
+    currentUser,
     deleteMode,
     setDeleteMode,
     createMode,
@@ -45,6 +48,9 @@ function FileListContent(
   ref
 ) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [hoveredProjectUid, setHoveredProjectUid] = useState(null)
+  const [showRemoveUserModal, setShowRemoveUserModal] = useState(false)
+  const [projectToLeave, setProjectToLeave] = useState(null)
 
   /*
    * prev = current selected IDs
@@ -85,11 +91,10 @@ function FileListContent(
       return
     }
     // Loopar igenom alla valda projekt och anropar deleteProjectWithFiles för varje uid.
-    // kanske kan skapa en if sats för att hantera borttagning av enskilda filer när den funktionen är implementerad, så att deleteMode kan användas både för att ta bort projekt och enskilda filer.
     for (const uid of selectedProjects) {
       await deleteProjectWithFiles(uid)
     }
-
+    // Loopar igenom alla valda filer och anropar deleteFile för varje uid.
     for (const uid of selectedFiles) {
       await deleteFile(uid)
     }
@@ -213,6 +218,46 @@ function FileListContent(
     }
   }, [projects, setSharedProjects])
 
+  async function handleRemoveUser(projectUid) {
+    if (deleteMode) {
+      return
+    }
+
+    if (!currentUser?.email) {
+      console.error('No logged in user availabel')
+      return
+    }
+
+    try {
+      await removeUserFromProject(projectUid, currentUser.email)
+      await fetchProjects()
+      console.log('Removed user: ', currentUser.email, ' from: ', projectUid)
+
+      if (expandedProjectUid === projectUid) {
+        setExpandedProjectUid(null)
+      }
+
+      setShowRemoveUserModal(false)
+      setProjectToLeave(null)
+    } catch (error) {
+      console.error('Failed to remove current user from project:', error)
+    }
+  }
+
+  function openRemoveUserModal(project) {
+    if (deleteMode) {
+      return
+    }
+
+    setProjectToLeave(project)
+    setShowRemoveUserModal(true)
+  }
+
+  function cancelRemoveUser() {
+    setShowRemoveUserModal(false)
+    setProjectToLeave(null)
+  }
+
   // Sorterar projekten i bokstavsordning
   const sortedProjects = [...projects].sort((a, b) =>
     a.name.localeCompare(b.name)
@@ -274,6 +319,12 @@ function FileListContent(
           cancelDeletion={cancelDeletion}
         />
       )}
+      <RemoveUserModal
+        project={projectToLeave}
+        isOpen={showRemoveUserModal}
+        onConfirm={() => projectToLeave && handleRemoveUser(projectToLeave.uid)}
+        onCancel={cancelRemoveUser}
+      />
 
       <ul ref={ref}>
         {sortedProjects
@@ -312,10 +363,18 @@ function FileListContent(
                     type="button"
                     //Knappen får klassen shared-users, men också klassen disabled om deleteMode är aktivt.
                     //Det gör att knappen för att visa delade projekt inte visas om man har deleteMode aktivt.
+                    onMouseEnter={() => setHoveredProjectUid(project.uid)}
+                    onMouseLeave={() => setHoveredProjectUid(null)}
                     className={`shared-users ${deleteMode ? 'disabled' : ''}`}
-                    aria-label="Confirm Deletion"
+                    onClick={() => openRemoveUserModal(project)}
+                    disabled={deleteMode}
+                    aria-label={`Remove myself from ${project.name}`}
                   >
-                    <Users size={16} />
+                    {hoveredProjectUid === project.uid ? (
+                      <UserMinus size={16} />
+                    ) : (
+                      <Users size={16} />
+                    )}
                   </button>
                 )}
 

@@ -91,6 +91,26 @@ export async function addUserToProject(uid, email) {
   return result
 }
 
+// Ta bort en användare från ett projekt
+export async function removeUserFromProject(uid, email) {
+  const { DOCKET_BASE_URL } = requireApiConfig()
+  const url = `${DOCKET_BASE_URL}/projects/remove_user`
+  const TOKEN = getToken()
+
+  const seponse = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      'x-access-token': [TOKEN],
+    },
+    body: JSON.stringify({ uid, email }),
+  })
+
+  if (!seponse.ok) {
+    throw new Error('Failed to remove user from project')
+  }
+}
+
 // === Ta bort ett projekt och alla dess filer ===
 export async function deleteProjectWithFiles(uid) {
   const { DOCKET_BASE_URL } = requireApiConfig()
@@ -105,12 +125,10 @@ export async function deleteProjectWithFiles(uid) {
     },
     body: JSON.stringify({ uid }),
   })
-  //   const result = await response.json()
 
   if (!response.ok) {
     throw new Error('Failed to delete project with files')
   }
-  //   return result
 }
 
 // === Skapa en ny fil i ett projekt ===
@@ -149,12 +167,10 @@ export async function deleteFile(uid) {
     },
     body: JSON.stringify({ uid }),
   })
-  //   const result = await response.json()
 
   if (!response.ok) {
     throw new Error('Failed to delete file')
   }
-  //   return result
 }
 
 // Funktioner nedan relaterade till hämtande av metadata från filer

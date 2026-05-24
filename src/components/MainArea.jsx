@@ -37,6 +37,8 @@ function MainArea({
   setRealtimeStatus,
   saveStatus,
   setSaveStatus,
+  activeUsers,
+  setActiveUsers,
 }) {
   // State som styr om Options är öppen eller stängd
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
@@ -100,7 +102,8 @@ function MainArea({
     activeFile,
     setActiveFileCode,
     setRealtimeStatus,
-    setSaveStatus
+    setSaveStatus,
+    setActiveUsers
   )
 
   // Körs när Monaco-editorn mountas.
@@ -154,6 +157,7 @@ function MainArea({
         onRedo={handleRedo}
         realtimeStatus={realtimeStatus}
         saveStatus={saveStatus}
+        activeUsers={activeUsers}
       />
       {isOptionsOpen && (
         <EditorOptions
