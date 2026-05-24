@@ -64,9 +64,14 @@ function FileListContent(
     setSelectedProjects((prev) =>
       prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
     )
-    console.log('Selected Project to be deleted:', selectedProjects)
     setShowDeleteModal(true)
   }
+
+  useEffect(() => {
+    if (deleteMode) {
+      console.log('Selected Project to be deleted:', selectedProjects)
+    }
+  }, [deleteMode, selectedProjects])
 
   // === Funktion för att toggla val av fil för borttagning ===
   function toggleFile(uid) {
