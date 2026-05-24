@@ -112,6 +112,7 @@
           right: 0rem;
           visibility: hidden;
           margin-right: 6px;
+          outline: transparent solid 1px;
 
           &.active {
             visibility: unset;
