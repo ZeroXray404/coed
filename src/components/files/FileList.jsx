@@ -36,6 +36,8 @@ function FileListContent(
     setLanguage,
     sortBy,
     setSortBy,
+    sortDir,
+    setSortDir,
     sharedProjects,
     setSharedProjects,
   },
@@ -252,7 +254,7 @@ function FileListContent(
         comparison = a.filename.localeCompare(b.filename)
       }
 
-      return comparison
+      return sortDir === 'Desc' ? comparison : -comparison
     })
 
     return sorted
@@ -353,7 +355,10 @@ function FileListContent(
                       <SortFiles
                         uid={project.uid}
                         details={projectDetails}
+                        sortBy={sortBy}
                         setSortBy={setSortBy}
+                        sortDir={sortDir}
+                        setSortDir={setSortDir}
                       />
                     )}
                     {sortedFiles.map((file) => {

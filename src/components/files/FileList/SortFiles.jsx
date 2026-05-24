@@ -1,20 +1,10 @@
-import { ListFilter } from 'lucide-react'
+import { ListFilter, ArrowUp01, ArrowDown10 } from 'lucide-react'
 import Dropdown from '../../Dropdown'
 
-function SortFiles({ uid, details, setSortBy }) {
+function SortFiles({ uid, details, sortBy, setSortBy, sortDir, setSortDir }) {
   if (details[uid].files.length < 2) {
     return
   }
-
-  // const projectFiles = details[uid].files
-
-  // for (let i = 0; i < projectFiles.length; i++) {
-  //   console.log(projectFiles[i].filename)
-
-  //   console.log(getFileType(projectFiles[i]))
-  // }
-
-  // console.log(getFileName(projectFiles.filename))
 
   const choices = {
     data: [
@@ -37,8 +27,21 @@ function SortFiles({ uid, details, setSortBy }) {
     ],
   }
 
+  function handleSort(newSortBy) {
+    if (sortBy === newSortBy) {
+      handleOrder()
+    } else {
+      setSortBy(newSortBy)
+      // setSortDir('Desc')
+    }
+  }
+
+  function handleOrder() {
+    setSortDir((prev) => (prev === 'Asc' ? 'Desc' : 'Asc'))
+  }
+
   function getSortId(choiceId) {
-    setSortBy(choiceId)
+    handleSort(choiceId)
   }
 
   return (
@@ -53,6 +56,18 @@ function SortFiles({ uid, details, setSortBy }) {
         hasDefaultOption={false}
         getIdHandler={getSortId}
       />
+
+      <button
+        className="sort-files-order"
+        onClick={handleOrder}
+        aria-label={`Changes order of files (${sortDir})`}
+      >
+        {sortDir === 'Asc' ? (
+          <ArrowUp01 size={16} />
+        ) : (
+          <ArrowDown10 size={16} />
+        )}
+      </button>
     </li>
   )
 }
