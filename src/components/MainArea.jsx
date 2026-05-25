@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import CodeEditor from './MainArea/CodeEditor'
 import EditorToolbar from './MainArea/EditorToolbar'
-import EditorOptions from './MainArea/EditorOptions'
 import { useSocketFile } from '../hooks/useSocketFile'
 
 // Objekt som innehåller en standard-template för varje språk.
@@ -40,8 +39,6 @@ function MainArea({
   activeUsers,
   setActiveUsers,
 }) {
-  // State som styr om Options är öppen eller stängd
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   // State som håller editor-inställningar
   const [editorOptions, setEditorOptions] = useState(() => {
     // Försöker hämta sparade inställningar från localStorage
@@ -137,12 +134,6 @@ function MainArea({
     setLanguage(newLanguage)
   }
 
-  // Funktion som styrsynlighet för Options modalen
-  // Växlar mellan true/false baserat på tidigare state
-  function toggleOptions() {
-    setIsOptionsOpen((prev) => !prev)
-  }
-
   return (
     <section className="main-area">
       {/* Toolbar med editor-relaterade kontroller:
@@ -152,22 +143,16 @@ function MainArea({
       <EditorToolbar
         language={language}
         onLanguageChange={handleLanguageChange}
-        onOptionsToggle={toggleOptions}
         onUndo={handleUndo}
         onRedo={handleRedo}
         realtimeStatus={realtimeStatus}
         saveStatus={saveStatus}
         activeUsers={activeUsers}
+        editorOptions={editorOptions}
+        setEditorOptions={setEditorOptions}
+        theme={theme}
+        setTheme={setTheme}
       />
-      {isOptionsOpen && (
-        <EditorOptions
-          onClose={toggleOptions}
-          options={editorOptions}
-          setOptions={setEditorOptions}
-          theme={theme}
-          setTheme={setTheme}
-        />
-      )}
       {/* CodeEditor-komponent:
       - Visar kodinnehåll
       - Hanterar syntaxhighlighting via language
