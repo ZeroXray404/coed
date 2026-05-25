@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { loginUser, registerUser } from '../../services/authServices'
+import { loginUser, registerUser } from '../../../services/authServices'
 
 function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   const [password, setPassword] = useState('')
