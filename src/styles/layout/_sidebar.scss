@@ -49,7 +49,7 @@
 
     background-color: $color-bg-tertiary;
     gap: 10px;
-    height: $input-size;
+    min-height: $input-size;
     border-top: solid 1px $color-border;
     padding: 0;
 
