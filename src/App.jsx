@@ -9,7 +9,7 @@ import Header from './components/Header'
 import MainArea from './components/MainArea'
 import AuthCard from './components/authcard/AuthCard'
 import Footer from './components/Footer'
-import SidebarLeft from './components/SidebarLeft'
+import Sidebar from './components/Sidebar'
 
 // Importerar CodeEditor komponenten.
 function App() {
@@ -58,7 +58,7 @@ function App() {
         />
       </header>
       <aside className="app-sidebar">
-        <SidebarLeft
+        <Sidebar
           isLoggedIn={isLoggedIn}
           currentUser={currentUser}
           activeFile={activeFile}

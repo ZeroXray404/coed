@@ -32,7 +32,7 @@
   }
 }
 
-.sidebar-left {
+.sidebar {
   @include flexStyling(column);
 
   display: flex;
