@@ -1,13 +1,17 @@
-import { AppWindow, X, File, Users, UserMinus } from 'lucide-react'
+import { AppWindow, File, Users, UserMinus } from 'lucide-react'
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
   deleteFile,
+  getFileType,
   removeUserFromProject,
 } from '../../services/fileServices.js'
 import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
-import RemoveUserModal from './RemoveUserModal.jsx'
+import InputField from './FileList/InputField.jsx'
+import SortFiles from './FileList/SortFiles.jsx'
+import DeleteModal from './FileList/DeleteModal.jsx'
+import RemoveUserModal from './FileList/RemoveUserModal.jsx'
 
 // === Komponent för att visa och hantera listan av projekt och filer i sidopanelen ===
 function FileListContent(
@@ -34,6 +38,10 @@ function FileListContent(
     setActiveFile,
     setCodeByFileUid,
     setLanguage,
+    sortBy,
+    setSortBy,
+    sortDir,
+    setSortDir,
     sharedProjects,
     setSharedProjects,
   },
@@ -56,9 +64,14 @@ function FileListContent(
     setSelectedProjects((prev) =>
       prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
     )
-    console.log('Selected Project to be deleted:', selectedProjects)
     setShowDeleteModal(true)
   }
+
+  useEffect(() => {
+    if (deleteMode) {
+      console.log('Selected Project to be deleted:', selectedProjects)
+    }
+  }, [deleteMode, selectedProjects])
 
   // === Funktion för att toggla val av fil för borttagning ===
   function toggleFile(uid) {
@@ -138,6 +151,8 @@ function FileListContent(
       return
     }
     handleProjectClick(uid)
+    setSortBy('filename')
+    setSortDir('Desc')
   }
 
   // Körs när användaren klickar på en fil i sidopanelen.
@@ -248,40 +263,67 @@ function FileListContent(
     setProjectToLeave(null)
   }
 
+  // Sorterar projekten i bokstavsordning
+  const sortedProjects = [...projects].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
+
+  // Funktion som används av sortedFiles för att sortera filerna i ett projekt efter vald sortering
+  function getSortedFiles(files, sortBy) {
+    const sorted = [...files]
+
+    sorted.sort((a, b) => {
+      let comparison = 0
+
+      // Sorterar först efter valda metod
+      switch (sortBy) {
+        case 'filename':
+          comparison = a.filename.localeCompare(b.filename)
+
+          break
+
+        case 'last_changed':
+          comparison = new Date(b.last_changed) - new Date(a.last_changed)
+
+          break
+
+        case 'created_by':
+          comparison = a.created_by.localeCompare(b.created_by)
+
+          break
+
+        case 'language':
+          comparison = getFileType(a).localeCompare(getFileType(b))
+
+          break
+
+        default:
+          return 0
+      }
+
+      // Sortera återigen i bokstavsordning efter switch-satsen
+      if (comparison === 0) {
+        comparison = a.filename.localeCompare(b.filename)
+      }
+
+      return sortDir === 'Desc' ? comparison : -comparison
+    })
+
+    return sorted
+  }
+
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
       {error && <p>{error}</p>}
-      {showDeleteModal &&
-        (selectedProjects.length !== 0 || selectedFiles.length !== 0) && (
-          <div className="delete-modal">
-            <div className="delete-modal-text">
-              <h1>Confirm Deletion?</h1>
-              <p>Are you sure you want to delete?</p>
-              <p>Files cannot be recovered once deleted.</p>
-              <p>Projects to be deleted: {selectedProjects.length}</p>
-              <p>Files to be deleted: {selectedFiles.length}</p>
-            </div>
-            <div className="delete-modal-btns">
-              <button
-                type="button"
-                className="confirm"
-                onClick={confirmDeletion}
-                aria-label="Confirm Deletion"
-              >
-                Delete
-              </button>
-              <button
-                type="button"
-                className="cancel"
-                onClick={cancelDeletion}
-                aria-label="Cancel Deletion"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+      {showDeleteModal && (
+        <DeleteModal
+          selectedProjects={selectedProjects}
+          selectedFiles={selectedFiles}
+          confirmDeletion={confirmDeletion}
+          cancelDeletion={cancelDeletion}
+        />
+      )}
       <RemoveUserModal
         project={projectToLeave}
         isOpen={showRemoveUserModal}
@@ -290,7 +332,7 @@ function FileListContent(
       />
 
       <ul ref={ref}>
-        {projects
+        {sortedProjects
           // Filtrerar bort projekt utan namn eller med tomt namn, och mappar sedan över projekten
           .filter((project) => project.name && project.name.trim() !== '')
           .map((project) => {
@@ -299,6 +341,11 @@ function FileListContent(
             // kontrollerar om projektet är med i projektlistan för deladeprojekt
             const isShared = sharedProjects.includes(project.uid)
 
+            const sortedFiles = getSortedFiles(
+              projectDetails?.[project.uid]?.files || [],
+              sortBy
+            )
+
             return (
               // Skapar en list-item för varje projekt, knapp för att öppna/stänga projektet eller gå in i deleteMode
               <li
@@ -306,7 +353,7 @@ function FileListContent(
                 className={`project-list-item ${isSelected ? 'selected' : ''}`}
               >
                 <button
-                  className="list-row"
+                  className={`list-row ${expandedProjectUid === project.uid ? 'active-proj' : ''}`}
                   onClick={() => handleProjectRowClick(project.uid)}
                   aria-label={`Open project ${project.name}`}
                 >
@@ -347,7 +394,18 @@ function FileListContent(
                 />
                 {expandedProjectUid === project.uid && (
                   <ul className="nested-files">
-                    {projectDetails[project.uid]?.files?.map((file) => {
+                    {/* {sortBy !== '' && <div>{sortBy}</div>} */}
+                    {!deleteMode && (
+                      <SortFiles
+                        uid={project.uid}
+                        details={projectDetails}
+                        sortBy={sortBy}
+                        setSortBy={setSortBy}
+                        sortDir={sortDir}
+                        setSortDir={setSortDir}
+                      />
+                    )}
+                    {sortedFiles.map((file) => {
                       const isActiveFile = activeFile?.uid === file.uid
                       const isSelectedFile = selectedFiles.includes(file.uid)
 
@@ -379,25 +437,11 @@ function FileListContent(
                       )
                     })}
                     {createMode === 'file' && (
-                      <div className="create-mode new-file">
-                        <input
-                          type="text"
-                          placeholder="Enter file name..."
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && e.target.value !== '') {
-                              setPendingName(e.target.value)
-                              e.target.value = ''
-                            }
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            setCreateMode('')
-                          }}
-                        >
-                          <X size={20} />
-                        </button>
-                      </div>
+                      <InputField
+                        createMode={createMode}
+                        setPendingName={setPendingName}
+                        setCreateMode={setCreateMode}
+                      />
                     )}
                   </ul>
                 )}
@@ -405,25 +449,11 @@ function FileListContent(
             )
           })}
         {createMode === 'proj' && (
-          <div className="create-mode new-proj">
-            <input
-              type="text"
-              placeholder="Enter project name..."
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && e.target.value !== '') {
-                  setPendingName(e.target.value)
-                  e.target.value = ''
-                }
-              }}
-            />
-            <button
-              onClick={() => {
-                setCreateMode('')
-              }}
-            >
-              <X size={20} />
-            </button>
-          </div>
+          <InputField
+            createMode={createMode}
+            setPendingName={setPendingName}
+            setCreateMode={setCreateMode}
+          />
         )}
       </ul>
     </div>

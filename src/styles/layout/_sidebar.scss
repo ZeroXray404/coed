@@ -49,7 +49,7 @@
 
     background-color: $color-bg-tertiary;
     gap: 10px;
-    height: $input-size;
+    min-height: $input-size;
     border-top: solid 1px $color-border;
     padding: 0;
 
@@ -112,6 +112,7 @@
           right: 0rem;
           visibility: hidden;
           margin-right: 6px;
+          outline: transparent solid 1px;
 
           &.active {
             visibility: unset;
@@ -151,6 +152,15 @@
 
         &:hover {
           background-color: $color-dark-hover;
+        }
+
+        &.active-proj {
+          background-color: $color-active-proj-bg;
+          font-weight: 600;
+
+          &:hover {
+            background-color: $color-active-proj-hover;
+          }
         }
       }
 
@@ -253,6 +263,96 @@
         }
       }
 
+      .sort-files {
+        @include flexStyling();
+        padding-left: $list-padding;
+        background-color: $color-bg-primary;
+        min-height: 28px;
+        max-height: 28px;
+
+        &-icon {
+          position: absolute;
+          left: 0;
+          width: 28px;
+          height: 28px;
+          z-index: 10;
+          pointer-events: none;
+
+          .lucide {
+            @include centerFully();
+          }
+        }
+
+        .dropdown {
+          $dd-btn-color: #252525;
+          $dd-item-color: #2f2f2f;
+
+          width: unset;
+          margin: 0;
+          min-height: 28px;
+          width: 100%;
+
+          &-btn {
+            padding: 0 0 0 28px;
+            background-color: $dd-btn-color;
+            border-radius: 0;
+            border: 0;
+            height: 100%;
+            width: 100%;
+
+            &-text p {
+              text-align: left;
+              font-size: 12px;
+            }
+
+            &-icon {
+              visibility: hidden;
+            }
+
+            &:hover {
+              background-color: $color-dark-hover;
+            }
+          }
+
+          &-content {
+            min-width: 50%;
+            margin-top: 0;
+            border-radius: 0;
+            background-color: $dd-item-color;
+            border: none;
+            box-shadow: 2px 2px 2px rgba(20 20 20 / 20%);
+
+            &-item {
+              padding: 6.5px 28px;
+              background-color: $dd-item-color;
+
+              p {
+                font-size: 12px;
+                text-align: left;
+              }
+
+              &:hover {
+                background-color: $color-dark-hover;
+              }
+            }
+          }
+        }
+
+        &-order {
+          @include flexStyling($justify: center, $align: center);
+
+          min-width: 28px;
+          min-height: 28px;
+          position: absolute;
+          right: 0;
+          background-color: unset;
+
+          &:hover {
+            background-color: $color-dark-hover;
+          }
+        }
+      }
+
       .list-label {
         flex: 1;
         min-width: 0;
@@ -303,14 +403,15 @@
       }
     }
   }
+
   .active-file {
     background-color: $color-active-file-bg;
     border-left: 3px solid $color-active-file-border;
-  }
 
-  .active-file .listselect-btn {
-    color: $color-active-file-text;
-    font-weight: 600;
+    .listselect-btn {
+      color: $color-active-file-text;
+      font-weight: 600;
+    }
   }
 
   .sidebar-footer {
@@ -328,7 +429,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 420px;
+  max-width: 460px;
   padding: 2rem;
   border-radius: 20px;
   display: flex;
@@ -353,16 +454,28 @@
     button {
       color: $color-text;
       font-size: 1.2rem;
-      width: $input-size * 4;
+      width: $input-size * 4.5;
       height: $input-size * 1.5;
       border-radius: $input-size * 0.25;
 
       &.confirm {
         @include linearGradientMixin(to right, $delete-color, $delete-selected);
+
+        &:hover {
+          @include linearGradientMixin(to right, #ff6e6e, #ff8e8e);
+        }
       }
 
       &.cancel {
-        @include linearGradientMixin(to right, #5c60b3, #5b6cff);
+        @include linearGradientMixin(
+          to right,
+          $cancel-color,
+          $cancel-color-gradient-right
+        );
+
+        &:hover {
+          @include linearGradientMixin(to right, #869fff, #96a1ff);
+        }
       }
     }
   }
@@ -400,7 +513,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 420px;
+  max-width: 460px;
   padding: 2rem;
   border-radius: 20px;
   display: flex;
@@ -410,16 +523,60 @@
   background: #333;
   z-index: 1000;
 
-  &-input {
-    color: black;
+  input {
+    background-color: $color-bg-tertiary;
+    caret-color: $color-text;
+    color: $color-text;
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: none;
   }
 
   &-text {
     text-align: center;
-    padding: 0.75rem 0;
+    padding-top: 0.75rem;
 
     h1 {
       padding-bottom: 0.75rem;
+    }
+  }
+
+  .dropdown {
+    width: 100%;
+
+    &-btn {
+      width: 100%;
+      height: 40px;
+      background-color: $color-bg-tertiary;
+
+      &-text p {
+        text-align: left;
+      }
+
+      &.opened {
+        background-color: $color-dark-hover;
+        border-color: transparent;
+      }
+    }
+
+    &-content {
+      min-width: 100%;
+      max-height: 30vh;
+      background-color: $color-bg-tertiary;
+      border: none;
+
+      &-item {
+        background-color: $color-bg-tertiary;
+
+        p {
+          text-align: left;
+          padding-left: 0.75rem;
+        }
+
+        &:hover {
+          background-color: $color-dark-hover;
+        }
+      }
     }
   }
 
@@ -429,16 +586,32 @@
     button {
       color: $color-text;
       font-size: 1.2rem;
-      width: $input-size * 4;
+      width: $input-size * 4.5;
       height: $input-size * 1.5;
       border-radius: $input-size * 0.25;
 
       &.confirm {
-        @include linearGradientMixin(to right, $add-color, $add-color);
+        @include linearGradientMixin(
+          to right,
+          $add-color,
+          $add-color-gradient-right
+        );
+
+        &:hover {
+          @include linearGradientMixin(to right, #5fff5f, #6fff6f);
+        }
       }
 
       &.cancel {
-        @include linearGradientMixin(to right, #5c60b3, #5b6cff);
+        @include linearGradientMixin(
+          to right,
+          $cancel-color,
+          $cancel-color-gradient-right
+        );
+
+        &:hover {
+          @include linearGradientMixin(to right, #869fff, #96a1ff);
+        }
       }
     }
   }

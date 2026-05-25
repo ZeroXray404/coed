@@ -28,6 +28,8 @@ function SidebarLeft({
   const [users, setUsers] = useState([])
   const [usersLoaded, setUsersLoaded] = useState(false)
   const [addMember, setAddMember] = useState(false)
+  const [sortBy, setSortBy] = useState('filename')
+  const [sortDir, setSortDir] = useState('Desc')
   const [sharedProjects, setSharedProjects] = useState([])
 
   const fileListRef = useRef(null)
@@ -152,6 +154,10 @@ function SidebarLeft({
           setActiveFile={setActiveFile}
           setCodeByFileUid={setCodeByFileUid}
           setLanguage={setLanguage}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          sortDir={sortDir}
+          setSortDir={setSortDir}
           sharedProjects={sharedProjects}
           setSharedProjects={setSharedProjects}
           ref={fileListRef}

@@ -23,8 +23,12 @@ $color-text: #fff;
 // Borders
 $color-border: #555;
 
+// Aktiv projekt
+$color-active-proj-bg: #202020;
+$color-active-proj-hover: #3f3f3f;
+
 // Aktiv fil
-$color-active-file-bg: #2d2d2d;
+$color-active-file-bg: #2a2a2a;
 $color-active-file-border: #4f8cff;
 $color-active-file-text: #ffffff;
 
@@ -87,6 +91,9 @@ $color-dark-hover: #4e4e4e;
 
 $delete-selected: #ff4848;
 $delete-color: #ff2626;
-$add-color: rgba(21, 196, 21, 0.925);
+$add-color: #15c415;
+$add-color-gradient-right: #37e437;
+$cancel-color: #5c60b3;
+$cancel-color-gradient-right: #5b6cff;
 
 // linear-gradient(to right, #5c60b3, #5b6cff)

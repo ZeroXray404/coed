@@ -1,5 +1,6 @@
 import { requireApiConfig } from './apiConfig.js'
 import { getToken } from './authServices.js'
+import { getLanguageFromFileName } from '../utils/getLanguageFromFileName.js'
 
 // === Hämta alla projekt ===
 export async function getAllProjects() {
@@ -170,4 +171,77 @@ export async function deleteFile(uid) {
   if (!response.ok) {
     throw new Error('Failed to delete file')
   }
+}
+
+// Funktioner nedan relaterade till hämtande av metadata från filer
+
+// === Returnerar filnamnet utan filändelsen ===
+export function getFileName(file) {
+  const fileName = file.filename
+
+  return fileName.split('.').shift()
+}
+
+// === Returnerar datum och tid i ISO 8601 format ===
+// (men kan returneras med formattering som gör det läsbart för användaren)
+export function getDateModified(file, formattedDate = false) {
+  if (!formattedDate) {
+    return file.last_changed
+  }
+
+  const iso = file.last_changed
+  const date = new Date(iso)
+
+  const datePart = date.toLocaleDateString('sv-SE')
+  const timePart = date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  })
+
+  const dateModified = `${datePart}, ${timePart}`
+
+  return dateModified
+}
+
+// === Returnerar filskaparens namn från email ===
+export function getFileCreator(file) {
+  const fileCreator = file.created_by
+
+  return fileCreator.split('@').shift()
+}
+
+// === Returnerar språket baserat på filändelse ===
+export function getFileType(file) {
+  const language = getLanguageFromFileName(file.filename)
+
+  if (language === 'plaintext') {
+    return 'z' // för okända filtyper
+  }
+
+  return language
+}
+
+// === Formatterar och returnerar språket kapitaliserat ===
+export function formatLanguage(language) {
+  if (language === 'z') {
+    return 'N/A'
+  }
+
+  if (language === 'javascript' || language === 'typescript') {
+    const firstHalf = language.charAt(0).toUpperCase() + language.slice(1, 4)
+
+    return `${firstHalf}Script`
+  }
+
+  if (
+    language === 'html' ||
+    language === 'css' ||
+    language === 'scss' ||
+    language === 'json'
+  ) {
+    return language.toUpperCase()
+  }
+
+  return language.charAt(0).toUpperCase() + language.slice(1)
 }
