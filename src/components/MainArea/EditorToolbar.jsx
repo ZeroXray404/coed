@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Settings, Redo, Undo } from 'lucide-react'
+import EditorOptions from './EditorToolbar/EditorOptions'
 
 // Komponent för att välja programmeringsspråk
 // Tar emot:
@@ -133,13 +135,24 @@ function StatusIndicator({ realtimeStatus, saveStatus }) {
 function EditorToolbar({
   language,
   onLanguageChange,
-  onOptionsToggle,
   onUndo,
   onRedo,
   realtimeStatus,
   saveStatus,
   activeUsers,
+  editorOptions,
+  setEditorOptions,
+  theme,
+  setTheme,
 }) {
+  // State som styr om Options är öppen eller stängd
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
+
+  // Funktion som styrsynlighet för Options modalen
+  // Växlar mellan true/false baserat på tidigare state
+  function toggleOptions() {
+    setIsOptionsOpen((prev) => !prev)
+  }
   return (
     // Dynamisk klass baserat på isOpen för att styra styling av toolbaren
     <div className="editor-toolbar">
@@ -158,7 +171,16 @@ function EditorToolbar({
           language={language}
           onLanguageChange={onLanguageChange}
         />
-        <SettingsButton onClick={onOptionsToggle} />
+        <SettingsButton onClick={toggleOptions} />
+        {isOptionsOpen && (
+          <EditorOptions
+            onClose={toggleOptions}
+            options={editorOptions}
+            setOptions={setEditorOptions}
+            theme={theme}
+            setTheme={setTheme}
+          />
+        )}
       </div>
     </div>
   )

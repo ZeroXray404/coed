@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import { useEscapeKey } from '../../hooks/useEscapeKey'
+import { useEscapeKey } from '../../../hooks/useEscapeKey'
 
 // Modal-komponent för editor-inställningar
 // Tar emot:

@@ -2,11 +2,10 @@
 import { useState } from 'react'
 import { X } from 'lucide-react'
 import { useEscapeKey } from '../../hooks/useEscapeKey'
-import EmailStep from './EmailStep'
-import LoginStep from './LoginStep'
-import RegisterStep from './RegisterStep'
-import RegisterSuccessStep from './RegisterSuccessStep'
-import './__auth-card.scss'
+import EmailStep from './AuthCard/EmailStep'
+import LoginStep from './AuthCard/LoginStep'
+import RegisterStep from './AuthCard/RegisterStep'
+import RegisterSuccessStep from './AuthCard/RegisterSuccessStep'
 
 function AuthCard({ onClose, onLoginSuccess }) {
   // Stänger modalen när man klickar på escape-knappen

@@ -7,13 +7,11 @@ import {
 } from './services/authServices'
 import Header from './components/Header'
 import MainArea from './components/MainArea'
-import AuthCard from './components/authcard/AuthCard'
 import Footer from './components/Footer'
 import Sidebar from './components/Sidebar'
 
 // Importerar CodeEditor komponenten.
 function App() {
-  const [showAuth, setShowAuth] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()))
   const [currentUser, setCurrentUser] = useState(() => getCurrentUser())
 
@@ -28,7 +26,6 @@ function App() {
     setIsLoggedIn(true)
     setCurrentUser(user)
     saveCurrentUser(user)
-    setShowAuth(false)
     console.log(user)
   }
 
@@ -53,8 +50,8 @@ function App() {
         {/* Skickar isLoggedIn, onLoginClick och onLogoutClick som props till Header-komponenten */}
         <Header
           isLoggedIn={isLoggedIn}
-          onLoginClick={() => setShowAuth(true)}
           onLogoutClick={handleLogout}
+          onLoginSuccess={handleLoginSuccess}
         />
       </header>
       <aside className="app-sidebar">
@@ -85,14 +82,6 @@ function App() {
       <footer className="app-footer">
         <Footer />
       </footer>
-
-      {/* Visar AuthCard bara om showAuth är true och skickar en onClose-funktion till AuthCard */}
-      {showAuth && (
-        <AuthCard
-          onClose={() => setShowAuth(false)}
-          onLoginSuccess={handleLoginSuccess}
-        />
-      )}
     </main>
   )
 }

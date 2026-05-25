@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { loginUser } from '../../services/authServices'
+import { loginUser } from '../../../services/authServices'
 
 function LoginStep({ email, goBack, onLoginSuccess }) {
   const [password, setPassword] = useState('')
