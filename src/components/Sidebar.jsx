@@ -1,13 +1,13 @@
-import CreateFileHeader from './files/CreateFile'
-import FileListContent from './files/FileList'
-import AddProjectMemberContent from './files/AddProjectMember'
-import MetadataFooter from './files/Metadata'
+import CreateFileHeader from './Sidebar/CreateFile'
+import FileListContent from './Sidebar/FileList'
+import AddProjectMemberContent from './Sidebar/AddProjectMember'
+import MetadataFooter from './Sidebar/Metadata'
 import { getAllProjects } from '../services/fileServices'
 import { getAllUsers } from '../services/userServices'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 // === Sidopanel komponenten ===
-function SidebarLeft({
+function Sidebar({
   isLoggedIn,
   currentUser,
   activeFile,
@@ -101,7 +101,7 @@ function SidebarLeft({
   }, [addMember, usersLoaded, fetchUsers])
 
   return (
-    <div className="sidebar-left">
+    <div className="sidebar">
       {/* Header components here */}
       <CreateFileHeader
         deleteMode={deleteMode}
@@ -170,4 +170,4 @@ function SidebarLeft({
   )
 }
 
-export default SidebarLeft
+export default Sidebar

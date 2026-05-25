@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
-import CodeEditor from './editor/CodeEditor'
-import EditorToolbar from './editor/EditorToolbar'
-import EditorOptions from './editor/EditorOptions'
+import CodeEditor from './MainArea/CodeEditor'
+import EditorToolbar from './MainArea/EditorToolbar'
+import EditorOptions from './MainArea/EditorOptions'
 import { useSocketFile } from '../hooks/useSocketFile'
 
 // Objekt som innehåller en standard-template för varje språk.
