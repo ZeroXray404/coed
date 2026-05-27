@@ -441,6 +441,7 @@ function FileListContent(
                         createMode={createMode}
                         setPendingName={setPendingName}
                         setCreateMode={setCreateMode}
+                        onClose={() => setCreateMode('')}
                       />
                     )}
                   </ul>
@@ -453,6 +454,7 @@ function FileListContent(
             createMode={createMode}
             setPendingName={setPendingName}
             setCreateMode={setCreateMode}
+            onClose={() => setCreateMode('')}
           />
         )}
       </ul>

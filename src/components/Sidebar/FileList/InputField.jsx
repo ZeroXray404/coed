@@ -1,8 +1,9 @@
 import { X } from 'lucide-react'
 import { useEffect, useRef } from 'react'
+import { useEscapeKey } from '../../../hooks/useEscapeKey'
 import { getLanguageFromFileName } from '../../../utils/getLanguageFromFileName'
 
-function InputField({ createMode, setPendingName, setCreateMode }) {
+function InputField({ createMode, setPendingName, setCreateMode, onClose }) {
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -26,6 +27,8 @@ function InputField({ createMode, setPendingName, setCreateMode }) {
       input.target.value = ''
     }
   }
+
+  useEscapeKey(onClose)
 
   if (createMode === 'proj') {
     return (
