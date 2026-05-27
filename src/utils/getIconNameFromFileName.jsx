@@ -8,7 +8,6 @@ import MarkDown from '../assets/markdown.svg'
 import Python from '../assets/python.svg'
 import Scss from '../assets/scss.svg'
 import TypeScript from '../assets/typescript.svg'
-import Tsx from '../assets/tsx.svg'
 import Json from '../assets/json.svg'
 
 export function getIconNameFromFileName(filename = '') {
