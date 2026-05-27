@@ -1,6 +1,6 @@
-import { Form } from 'lucide-react'
+import { forwardRef } from 'react'
 
-function EmailStep({ email, setEmail, goToLogin, goToRegister }) {
+function EmailStep({ email, setEmail, goToLogin, goToRegister }, ref) {
   const recognizeSubmitButton = (e) => {
     e.preventDefault()
     const submitButton = e.nativeEvent.submitter
@@ -22,6 +22,7 @@ function EmailStep({ email, setEmail, goToLogin, goToRegister }) {
         placeholder="name@email.com"
         pattern="^[^@\s]+@[a-z0-9-]+\.[a-z]$"
         required
+        ref={ref}
       />
       <button type="submit" value="login" className="btn-primary">
         Continue
@@ -33,4 +34,4 @@ function EmailStep({ email, setEmail, goToLogin, goToRegister }) {
   )
 }
 
-export default EmailStep
+export default forwardRef(EmailStep)

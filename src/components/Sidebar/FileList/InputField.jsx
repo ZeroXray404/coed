@@ -1,6 +1,15 @@
 import { X } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 
 function InputField({ createMode, setPendingName, setCreateMode }) {
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (createMode) {
+      inputRef.current?.focus()
+    }
+  }, [createMode])
+
   if (createMode === 'proj') {
     return (
       <div className="create-mode new-proj">
@@ -13,6 +22,7 @@ function InputField({ createMode, setPendingName, setCreateMode }) {
               e.target.value = ''
             }
           }}
+          ref={inputRef}
         />
         <button
           onClick={() => {
@@ -35,6 +45,7 @@ function InputField({ createMode, setPendingName, setCreateMode }) {
               e.target.value = ''
             }
           }}
+          ref={inputRef}
         />
         <button
           onClick={() => {

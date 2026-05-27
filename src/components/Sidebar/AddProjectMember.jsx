@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AppWindow } from 'lucide-react'
 import { addUserToProject } from '../../services/fileServices'
 import Dropdown from '../Dropdown'
@@ -16,6 +16,8 @@ function AddProjectMemberContent({
   const [showAddUserModal, setShowAddUserModal] = useState(false)
   const [selectedUser, setSelectedUser] = useState('')
   const [searchUser, setSearchUser] = useState('')
+
+  const inputRef = useRef(null)
 
   function toggleProject(uid) {
     setSelectedProjects((prev) =>
@@ -56,6 +58,12 @@ function AddProjectMemberContent({
     setSelectedUser(choiceId)
   }
 
+  useEffect(() => {
+    if (showAddUserModal && selectedProjects.length !== 0) {
+      inputRef.current?.focus()
+    }
+  }, [showAddUserModal, selectedProjects])
+
   return (
     <div className="sidebar-content">
       {isLoading && <p>Loading projects...</p>}
@@ -77,6 +85,7 @@ function AddProjectMemberContent({
             placeholder="Search for a user"
             value={searchUser}
             onChange={(e) => setSearchUser(e.target.value)}
+            ref={inputRef}
           />
 
           <Dropdown

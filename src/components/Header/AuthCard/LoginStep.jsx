@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { loginUser } from '../../../services/authServices'
 
-function LoginStep({ email, goBack, onLoginSuccess }) {
+function LoginStep({ email, goBack, onLoginSuccess }, ref) {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([])
 
@@ -43,6 +43,7 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
+        ref={ref}
       />
       <div className="error-message">
         {errors.map((error, i) => (
@@ -59,4 +60,4 @@ function LoginStep({ email, goBack, onLoginSuccess }) {
   )
 }
 
-export default LoginStep
+export default forwardRef(LoginStep)

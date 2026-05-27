@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { loginUser, registerUser } from '../../../services/authServices'
 
-function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
+function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }, ref) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState('')
@@ -61,6 +61,7 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
         placeholder="Password"
         required
         pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$"
+        ref={ref}
       />
       <input
         type="password"
@@ -80,4 +81,4 @@ function RegisterStep({ email, setEmail, goBack, onRegisterSuccess }) {
   )
 }
 
-export default RegisterStep
+export default forwardRef(RegisterStep)
