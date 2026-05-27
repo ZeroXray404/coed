@@ -1,4 +1,5 @@
 import { AppWindow, File, Users, UserMinus } from 'lucide-react'
+
 import {
   deleteProjectWithFiles,
   getProjectWithFilesAndUsers,
@@ -8,6 +9,7 @@ import {
 } from '../../services/fileServices.js'
 import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
+import { getIconNameFromFileName } from '../../utils/getIconNameFromFileName.jsx'
 import InputField from './FileList/InputField.jsx'
 import SortFiles from './FileList/SortFiles.jsx'
 import DeleteModal from './FileList/DeleteModal.jsx'
@@ -419,7 +421,8 @@ function FileListContent(
                             onClick={() => handleFileClick(file)}
                           >
                             <div className="listselect-btn">
-                              <File size={14} />
+                              {getIconNameFromFileName(file.filename)}
+                              {/*Returnerar ikon-komponent baserat på filnamnets ändelse*/}
                               <span className="list-label">
                                 {file.filename}
                               </span>
