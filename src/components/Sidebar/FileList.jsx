@@ -421,9 +421,8 @@ function FileListContent(
                             onClick={() => handleFileClick(file)}
                           >
                             <div className="listselect-btn">
-                              {getIconNameFromFileName(file.filename)}{' '}
+                              {getIconNameFromFileName(file.filename)}
                               {/*Returnerar ikon-komponent baserat på filnamnets ändelse*/}
-                              {/*<File size={14} /> Byter bort denna som alltid visade samma ikon för filerna */}
                               <span className="list-label">
                                 {file.filename}
                               </span>
