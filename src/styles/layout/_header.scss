@@ -39,6 +39,7 @@ $radius-size: 10px;
   @extend %max-height;
   width: 20vw;
   position: relative;
+  margin: 0 0.5rem;
 
   .lucide-search {
     position: absolute;

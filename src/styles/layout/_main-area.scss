@@ -59,25 +59,26 @@
   flex-shrink: 0;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
+  font-family: $font-inter;
   font-size: $font-size-s;
   border: 1px solid currentColor;
   white-space: nowrap;
-}
 
-.active-user-0 {
-  color: #58a6ff;
-}
+  &-0 {
+    color: #58a6ff;
+  }
 
-.active-user-1 {
-  color: #32e241;
-}
+  &-1 {
+    color: #32e241;
+  }
 
-.active-user-2 {
-  color: #e6a10e;
-}
+  &-2 {
+    color: #e6a10e;
+  }
 
-.active-user-3 {
-  color: #ec554a;
+  &-3 {
+    color: #ec554a;
+  }
 }
 
 .toolbar-status {
@@ -90,6 +91,7 @@
   padding: 0.25rem 0.6rem;
   border: 1px solid $color-border;
   border-radius: 999px;
+  font-family: $font-inter;
   font-size: $font-size-s;
   font-weight: 600;
   white-space: nowrap;
@@ -115,6 +117,8 @@
 
 .editor-toolbar-content .toolbar-button {
   border-radius: 50%;
+  width: 36px;
+  height: 36px;
 }
 
 /* Language Selector */
@@ -166,30 +170,30 @@
   color: #fff;
   background: #333;
   z-index: 1000;
-}
 
-.editor-options-close-btn {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 50%;
-  background-color: transparent;
-  color: $color-text;
-  cursor: pointer;
+  .editor-options-close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: $color-text;
+    cursor: pointer;
 
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
 
-  &:hover {
-    background-color: #333;
-    transform: scale(1.15);
+    &:hover {
+      background-color: #333;
+      transform: scale(1.15);
+    }
   }
 }
 
@@ -218,6 +222,7 @@
     border-radius: 6px;
     background-color: #2d2d2d;
     color: $color-text;
+    font-family: $font-inter;
     font-size: $font-size-m;
     cursor: pointer;
 
