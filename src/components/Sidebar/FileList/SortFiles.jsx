@@ -1,4 +1,4 @@
-import { ListFilter, ArrowUp01, ArrowDown10 } from 'lucide-react'
+import { ListFilter, ArrowUpZA, ArrowDownAZ } from 'lucide-react'
 import Dropdown from '../../Dropdown'
 
 function SortFiles({ uid, details, sortBy, setSortBy, sortDir, setSortDir }) {
@@ -63,9 +63,9 @@ function SortFiles({ uid, details, sortBy, setSortBy, sortDir, setSortDir }) {
         aria-label={`Changes order of files (${sortDir})`}
       >
         {sortDir === 'Asc' ? (
-          <ArrowUp01 size={16} />
+          <ArrowUpZA size={16} />
         ) : (
-          <ArrowDown10 size={16} />
+          <ArrowDownAZ size={16} />
         )}
       </button>
     </li>
