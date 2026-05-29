@@ -45,11 +45,15 @@ function LoginStep({ email, goBack, onLoginSuccess }, ref) {
         required
         ref={ref}
       />
-      <div className="error-message">
-        {errors.map((error, i) => (
-          <div key={i}>{error.slice(7)}</div>
-        ))}
-      </div>
+
+      {errors.length > 0 && (
+        <div className="error-message">
+          {errors.map((error, i) => (
+            <div key={i}>{error.slice(7)}</div>
+          ))}
+        </div>
+      )}
+
       <button type="submit" value="login" className="btn-primary" required>
         Log in
       </button>
