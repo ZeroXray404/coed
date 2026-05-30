@@ -1,5 +1,5 @@
 // Wrapper för inloggings/registeringskortens olika steg.
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 import { useEscapeKey } from '../../hooks/useEscapeKey'
 import EmailStep from './AuthCard/EmailStep'
@@ -16,9 +16,17 @@ function AuthCard({ onClose, onLoginSuccess }) {
   const [email, setEmail] = useState('')
   const [registeredUser, setRegisteredUser] = useState(null)
 
+  const inputRef = useRef(null)
+
   function handleRegisterContinue() {
     onLoginSuccess?.(registeredUser)
   }
+
+  useEffect(() => {
+    if (step) {
+      inputRef.current?.focus()
+    }
+  }, [step])
 
   return (
     // Overlay som täcker hela skärmen och ger en skugga när modalen är öppen, klick på den stänger modalen
@@ -45,6 +53,7 @@ function AuthCard({ onClose, onLoginSuccess }) {
             setEmail={setEmail}
             goToLogin={() => setStep('login')}
             goToRegister={() => setStep('register')}
+            ref={inputRef}
           />
         )}
 
@@ -54,6 +63,7 @@ function AuthCard({ onClose, onLoginSuccess }) {
             email={email}
             goBack={() => setStep('email')}
             onLoginSuccess={onLoginSuccess}
+            ref={inputRef}
           />
         )}
 
@@ -67,6 +77,7 @@ function AuthCard({ onClose, onLoginSuccess }) {
               setRegisteredUser(user)
               setStep('register-success')
             }}
+            ref={inputRef}
           />
         )}
 

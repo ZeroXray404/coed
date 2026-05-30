@@ -57,9 +57,13 @@
       position: relative;
       width: $input-size;
       height: 100%;
+      transition: width 0.2s ease;
 
       .lucide {
         @include centerFully(absolute);
+        transition:
+          color 0.2s ease,
+          opacity 0.2s ease;
       }
 
       &.delete-mode {
@@ -72,10 +76,11 @@
 
       &.disabled {
         cursor: unset;
-        background-color: #222;
+        width: 0;
 
         .lucide {
           color: $color-bg-secondary;
+          opacity: 0;
         }
       }
     }

@@ -148,13 +148,18 @@ function FileListContent(
 
   // === Funktion för att hantera klick på projekt-rad, toggla deleteMode beroende på dess useState ===
   function handleProjectRowClick(uid) {
-    if (deleteMode) {
+    if (deleteMode && expandedProjectUid === uid) {
       toggleProject(uid)
       return
     }
+
     handleProjectClick(uid)
     setSortBy('filename')
     setSortDir('Desc')
+
+    if (createMode === 'file') {
+      setCreateMode('')
+    }
   }
 
   // Körs när användaren klickar på en fil i sidopanelen.
@@ -444,6 +449,7 @@ function FileListContent(
                         createMode={createMode}
                         setPendingName={setPendingName}
                         setCreateMode={setCreateMode}
+                        onClose={() => setCreateMode('')}
                       />
                     )}
                   </ul>
@@ -456,6 +462,7 @@ function FileListContent(
             createMode={createMode}
             setPendingName={setPendingName}
             setCreateMode={setCreateMode}
+            onClose={() => setCreateMode('')}
           />
         )}
       </ul>

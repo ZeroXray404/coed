@@ -116,6 +116,7 @@ function CreateFileHeader({
               return
             }
             setDeleteMode((prev) => !prev)
+            setCreateMode('')
           }}
         >
           <Trash2 />
@@ -132,6 +133,7 @@ function CreateFileHeader({
               return
             }
             setAddMember((prev) => !prev)
+            setCreateMode('')
           }}
         >
           <UserPlus />
@@ -139,15 +141,27 @@ function CreateFileHeader({
         <button
           className="sidebar-header-btn btn-newproj"
           onClick={() => {
-            setCreateMode('proj')
+            if (createMode !== 'proj') {
+              setAddMember(false)
+              setDeleteMode(false)
+              setCreateMode('proj')
+            } else {
+              setCreateMode('')
+            }
           }}
         >
           <FolderPlus />
         </button>
         <button
-          className="sidebar-header-btn btn-newfile"
+          className={`sidebar-header-btn btn-newfile ${expandedProjectUid ? '' : 'disabled'}`}
           onClick={() => {
-            setCreateMode('file')
+            if (createMode !== 'file' && expandedProjectUid) {
+              setAddMember(false)
+              setDeleteMode(false)
+              setCreateMode('file')
+            } else {
+              setCreateMode('')
+            }
           }}
         >
           <FilePlus />
