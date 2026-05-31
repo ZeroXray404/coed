@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { socket, connectSocket } from '../services/socketServices'
+// import { socket, connectSocket } from '../services/socketServices'
 
 // Ansvarar för att läsa användars cursor position och markering i koden
 // - läsa selection/cursor-position från Monaco

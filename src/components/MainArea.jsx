@@ -53,7 +53,8 @@ function MainArea({
   })
 
   // State för användarens cursor
-  const [localCursor, setLocalCursor] = useState(null)
+  // localCursor placeras i hakparentesen senare när den skall användas
+  const [setLocalCursor] = useState(null)
 
   // State för Monaco-editorns instans
   const [editorInstance, setEditorInstance] = useState(null)
