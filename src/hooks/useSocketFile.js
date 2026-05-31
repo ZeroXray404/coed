@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import {
   socket,
   connectSocket,
@@ -17,6 +17,11 @@ export function useSocketFile(
   setSaveStatus,
   setActiveUsers
 ) {
+  const clientIdRef = useRef(crypto.randomUUID())
+  const lastChangeAtRef = useRef(0) // Tidspunkt för senaste lokal ändring
+  const savingTimerRef = useRef(null) // Timer för att växla från "unsaved" till "saving"
+  const savedTimerRef = useRef(null) // Timder för att dölja "saved"-status
+
   useEffect(() => {
     // Om ingen fil är vald ska hooken inte ansluta till något socket-room.
     if (!activeFile?.uid) {
@@ -56,20 +61,44 @@ export function useSocketFile(
       if (data?.uid !== activeFile.uid) {
         return
       }
+
+      if (data?.clientId === clientIdRef.current) {
+        return
+      }
+
       // Uppdaterar editorns state med det content som kom från socket-servern.
       if (data?.content !== undefined) {
         setActiveFileCode(data.content)
       }
     }
     // Körs när servern har sparat innehållet.
-    // Uppdaterar UI:t så användaren ser att innehållet är sparat.
+
+    // Visar "saved" endast om användaren inte har skrivit vidare
+    // sedan save-processen startade
     function handleContentSaved() {
       // console.log('Content saved:', data)
+
+      if (data?.uid !== activeFile.uid) {
+        return
+      }
+      // Beräkmar hur lång tid det har gått sedan senaste lokala ädringen.
+      const timeSinceLastChange = Date.now() - lastChangeAtRef.current
+
+      // Om användaren har skrivit något nytt inom 500ms efter att save-processen startade
+      // så visar vi inte "saved" eftersom det inte längre är sant.
+      if (timeSinceLastChange < 500) {
+        setSaveStatus('unsaved')
+        return
+      }
+
       setSaveStatus('saved')
 
-      setTimeout(() => {
+      clearTimeout(savedTimerRef.current)
+
+      // Sätter saved-statusen till "idle" efter 1.2s så att "saved"-indikatorn försvinner.
+      savedTimerRef.current = setTimeout(() => {
         setSaveStatus('idle')
-      }, 2000)
+      }, 1200)
     }
     // Körs om socketen inte lyckas ansluta.
     function handleConnectError(error) {
@@ -127,6 +156,10 @@ export function useSocketFile(
       socket.io.off('reconnect_attempt', handleReconnectAttempt)
       socket.off('users', handleUsers)
 
+      // Rensar timers
+      clearTimeout(savingTimerRef.current)
+      clearTimeout(savedTimerRef.current)
+
       setActiveUsers([])
       setRealtimeStatus('disconnected')
       setSaveStatus('idle')
@@ -151,8 +184,17 @@ export function useSocketFile(
     }
     // Uppdaterar lokal React-state direkt.
     // Det gör att texten syns omedelbart i editorn utan att vänta på servern.
+    lastChangeAtRef.current = Date.now()
+
+    clearTimeout(savingTimerRef.current)
+    clearTimeout(savedTimerRef.current)
     setActiveFileCode(newContent)
-    setSaveStatus('saving')
+    setSaveStatus('unsaved')
+
+    // Startar en timer som växlar från "unsaved" till "saving" efter 500ms.
+    savingTimerRef.current = setTimeout(() => {
+      setSaveStatus('saving')
+    }, 500)
 
     // Skickar nytt filinnehåll till servern.
     // Servern broadcastar content till användare i samma room
@@ -160,6 +202,7 @@ export function useSocketFile(
     socket.emit('content', {
       content: newContent,
       uid: activeFile.uid,
+      clientId: clientIdRef.current,
     })
 
     // console.log('content emitted:', {
