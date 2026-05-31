@@ -88,37 +88,55 @@
 }
 
 .status-label {
-  padding: 0.25rem 0.6rem;
-  border: 1px solid $color-border;
-  border-radius: 999px;
-  font-family: $font-inter;
-  font-size: $font-size-s;
-  font-weight: 600;
-  white-space: nowrap;
-  color: $color-text;
-  background-color: $color-bg-secondary;
+  display: flex;
+  align-items: center;
 }
 
-.status-connected,
-.status-saved {
+.status-connected svg,
+.status-saved svg {
   color: $color-status-success;
 }
 
-.status-disconnected,
-.status-error {
+.status-disconnected svg,
+.status-error svg {
   color: $color-status-error;
 }
 
-.status-reconnecting,
-.status-saving,
-.status-unsaved {
+.status-reconnecting svg,
+.status-saving svg,
+.status-unsaved svg {
   color: $color-status-warning;
 }
 
-.editor-toolbar-content .toolbar-button {
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
+.status-saving svg,
+.status-reconnecting svg {
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+}
+
+.status-shrink-out {
+  animation: saveSuccess 1.2s ease forwards;
+}
+
+@keyframes saveSuccess {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Language Selector */
