@@ -75,7 +75,7 @@ export function useSocketFile(
 
     // Visar "saved" endast om användaren inte har skrivit vidare
     // sedan save-processen startade
-    function handleContentSaved() {
+    function handleContentSaved(data) {
       // console.log('Content saved:', data)
 
       if (data?.uid !== activeFile.uid) {
