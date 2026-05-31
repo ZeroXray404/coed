@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import {
   socket,
   connectSocket,
@@ -17,6 +17,8 @@ export function useSocketFile(
   setSaveStatus,
   setActiveUsers
 ) {
+  const clientIdRef = useRef(crypto.randomUUID())
+
   useEffect(() => {
     // Om ingen fil är vald ska hooken inte ansluta till något socket-room.
     if (!activeFile?.uid) {
@@ -56,6 +58,11 @@ export function useSocketFile(
       if (data?.uid !== activeFile.uid) {
         return
       }
+
+      if (data?.clientId === clientIdRef.current) {
+        return
+      }
+
       // Uppdaterar editorns state med det content som kom från socket-servern.
       if (data?.content !== undefined) {
         setActiveFileCode(data.content)
@@ -160,6 +167,7 @@ export function useSocketFile(
     socket.emit('content', {
       content: newContent,
       uid: activeFile.uid,
+      clientId: clientIdRef.current,
     })
 
     console.log('content emitted:', {

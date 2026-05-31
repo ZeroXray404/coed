@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import Editor from '@monaco-editor/react'
 
 function CodeEditor({
@@ -9,6 +10,32 @@ function CodeEditor({
   theme,
   onMount,
 }) {
+  const editorRef = useRef(null)
+  const previousPathRef = useRef(path)
+
+  useEffect(() => {
+    const editor = editorRef.current
+
+    if (!editor) {
+      previousPathRef.current = path
+      return
+    }
+
+    if (previousPathRef.current !== path) {
+      previousPathRef.current = path
+
+      if (editor.getValue() !== value) {
+        editor.setValue(value)
+      }
+    }
+  }, [path, value])
+
+  function handleMount(editor, monaco) {
+    editorRef.current = editor
+    previousPathRef.current = path
+    onMount?.(editor, monaco)
+  }
+
   // Tar emot props från MainArea:
   // 'language' = valt språk
   // 'value' = kodinnehåll
@@ -21,10 +48,10 @@ function CodeEditor({
         theme={theme}
         height="100%"
         path={path}
-        value={value}
+        defaultValue={value}
         onChange={(newValue) => onChange(newValue || '')}
         options={options}
-        onMount={onMount}
+        onMount={handleMount}
         saveViewState={true}
       />
     </div>
