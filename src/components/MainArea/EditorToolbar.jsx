@@ -1,5 +1,16 @@
 import { useState } from 'react'
-import { Settings, Redo, Undo } from 'lucide-react'
+import {
+  Settings,
+  Redo,
+  Undo,
+  Wifi,
+  WifiOff,
+  RefreshCw,
+  CircleCheck,
+  TriangleAlert,
+  Save,
+  CircleDot,
+} from 'lucide-react'
 import EditorOptions from './EditorToolbar/EditorOptions'
 
 // Komponent för att välja programmeringsspråk
@@ -96,33 +107,81 @@ function RedoButton({ onRedo }) {
 // -realtimeStatus: status för socket anslutning
 // -saveStatus: status för sprande/sync av innehåll
 
-function StatusIndicator({ realtimeStatus, saveStatus }) {
-  const realtimeLabels = {
-    connected: 'Connected',
-    disconnected: 'Not Connected',
-    reconnecting: 'Reconnecting...',
-    error: 'Error',
+function RealtimeStatus({ status }) {
+  const realtimeStatusConfig = {
+    connected: {
+      label: 'Socket Connected',
+      icon: <Wifi size={20} />,
+    },
+    disconnected: {
+      label: 'Socket Disconnected',
+      icon: <WifiOff size={20} />,
+    },
+    reconnecting: {
+      label: 'Socket Reconnecting...',
+      icon: <RefreshCw size={20} />,
+    },
+    error: {
+      label: 'Socket Connection error',
+      icon: <TriangleAlert size={20} />,
+    },
   }
-  const saveLabels = {
-    idle: '',
-    unsaved: 'Unsaved changes',
-    saving: 'Saving...',
-    saved: 'Saved',
-    error: 'Save failed',
-  }
-  // Visar save-status bara om status inte är "idle"
-  return (
-    <div className="toolbar-status">
-      <span className={`status-label status-${realtimeStatus}`}>
-        {realtimeLabels[realtimeStatus] || ''}
-      </span>
 
-      {saveStatus !== 'idle' && (
-        <span className={`status-label status-${saveStatus}`}>
-          {saveLabels[saveStatus] || ''}
-        </span>
-      )}
-    </div>
+  const config = realtimeStatusConfig[status]
+
+  if (!config) {
+    return null
+  }
+
+  return (
+    <span
+      className={`status-label status-${status}`}
+      title={config.label}
+      aria-label={`Realtime status: ${config.label}`}
+    >
+      {config.icon}
+      <span className="sr-only">{config.label}</span>
+    </span>
+  )
+}
+
+function SaveStatus({ status }) {
+  const saveStatusConfig = {
+    unsaved: {
+      label: 'Unsaved changes',
+      icon: <CircleDot size={20} />,
+    },
+    saving: {
+      label: 'Saving...',
+      icon: <RefreshCw size={20} />,
+    },
+    saved: {
+      label: 'Saved',
+      icon: <Save size={20} />,
+    },
+    error: {
+      label: 'Save failed',
+      icon: <TriangleAlert size={20} />,
+    },
+  }
+
+  const config = saveStatusConfig[status]
+
+  if (!config) {
+    return null
+  }
+
+  return (
+    <span
+      className={`status-label status-${status} ${
+        status === 'saved' ? 'status-shrink-out' : ''
+      }`}
+      title={config.label}
+      aria-label={`Save status: ${config.label}`}
+    >
+      {config.icon}
+      <span className="sr-only">{config.label}</span>
+    </span>
   )
 }
 
@@ -160,10 +219,10 @@ function EditorToolbar({
         <UndoButton onUndo={onUndo} />
         <RedoButton onRedo={onRedo} />
 
-        <StatusIndicator
-          realtimeStatus={realtimeStatus}
-          saveStatus={saveStatus}
-        />
+        <div className="toolbar-status">
+          <RealtimeStatus status={realtimeStatus} />
+          <SaveStatus status={saveStatus} />
+        </div>
 
         <ActiveUsers users={activeUsers} />
 
