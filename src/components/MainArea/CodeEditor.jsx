@@ -21,13 +21,11 @@ function CodeEditor({
       return
     }
 
-    if (previousPathRef.current !== path) {
-      previousPathRef.current = path
-
-      if (editor.getValue() !== value) {
-        editor.setValue(value)
-      }
+    if (editor.getValue() !== value) {
+      editor.setValue(value)
     }
+
+    previousPathRef.current = path
   }, [path, value])
 
   function handleMount(editor, monaco) {
