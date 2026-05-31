@@ -9,7 +9,7 @@ function getEditorViewState(editor) {
     scrollLeft: editor.getScrollLeft(),
   }
 }
-
+// Hjälpfunktion för att återställa editor state (position och scroll-läge)
 function restoreEditorViewState(editor, viewState) {
   if (viewState.position) {
     editor.setPosition(viewState.position)
