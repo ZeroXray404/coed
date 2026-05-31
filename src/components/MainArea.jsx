@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import CodeEditor from './MainArea/CodeEditor'
 import EditorToolbar from './MainArea/EditorToolbar'
 import { useSocketFile } from '../hooks/useSocketFile'
+import { useSocketSelection } from '../hooks/useSocketSelection'
 
 // Objekt som innehåller en standard-template för varje språk.
 // Används när användaren byter språk utan att en fil är aktiv
@@ -38,36 +39,33 @@ function MainArea({
   setSaveStatus,
   activeUsers,
   setActiveUsers,
+  currentUser,
 }) {
   // State som håller editor-inställningar
   const [editorOptions, setEditorOptions] = useState(() => {
-    // Försöker hämta sparade inställningar från localStorage
     const savedOptions = localStorage.getItem('editorOptions')
-    // Om det finns sparade inställningar, parsea och returnera dem, annars returnera defaultinställningarna
     return savedOptions ? JSON.parse(savedOptions) : defaultEditorOptions
   })
   // State för valt tema i editorn
   const [theme, setTheme] = useState(() => {
-    // Försöker hämta sparat tema från localStorage
     const savedTheme = localStorage.getItem('editorTheme')
-    // Om det finns ett sparat tema, returnera det, annars default vs-dark
     return savedTheme || 'vs-dark'
   })
 
+  // State för användarens cursor
+  const [localCursor, setLocalCursor] = useState(null)
+
+  // State för Monaco-editorns instans
+  const [editorInstance, setEditorInstance] = useState(null)
   // Referens till Monaco-editorns instans.
-  // Används för att kunna trigga editor-kommandon som undo/redo
   const editorRef = useRef(null)
 
   // Hämtar uid för den aktiva filen.
-  // Om ingen fil är vald blir värdet undefiend
   const activeFileUid = activeFile?.uid
 
   // Uppdaterar content för den aktiva filen.
   // useCallback användss för att React ska återanvända samma funktion
-  // mellan renders så öänge activeFileUid inte ändras
-  //
-  // Det behövs eftersom funktionen skicks vidare till useSocketFile
-  // Annars körts socket-effekten om vid vare render
+  // mellan renders så länge activeFileUid inte ändras
   let code = languageTemplates[language] || ''
 
   if (activeFileUid) {
@@ -105,9 +103,14 @@ function MainArea({
 
   // Körs när Monaco-editorn mountas.
   // Sparar editor-instansen i refen
+  // Sparar editor-instansen i state
   function handleEditorMount(editor) {
     editorRef.current = editor
+    setEditorInstance(editor)
   }
+
+  // Anropar useSocketSelection med valda props
+  useSocketSelection(editorInstance, activeFile, currentUser, setLocalCursor)
 
   // Triggar Monaco-editorns inbyggda undo-kommando
   function handleUndo() {
@@ -119,7 +122,7 @@ function MainArea({
     editorRef.current?.trigger('toolbar', 'redo')
   }
 
-  // Sparar editor-instllningar i localStorage när de ändras
+  // Sparar editor-inställningar i localStorage när de ändras
   useEffect(() => {
     localStorage.setItem('editorOptions', JSON.stringify(editorOptions))
   }, [editorOptions])
