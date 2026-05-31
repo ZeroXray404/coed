@@ -77,6 +77,7 @@ function App() {
           setSaveStatus={setSaveStatus}
           activeUsers={activeUsers}
           setActiveUsers={setActiveUsers}
+          currentUser={currentUser}
         />
       </section>
       <footer className="app-footer">

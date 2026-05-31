@@ -35,19 +35,19 @@ export function useSocketFile(
     // Alla användare som öppnar samma fil-uid hamnar i samma room.
     function openActiveFileRoom() {
       socket.emit('open file', activeFile.uid)
-      console.log('Opened socket file room:', activeFile.uid)
+      // console.log('Opened socket file room:', activeFile.uid)
     }
     // Körs när socketen har anslutit till servern.
     // När anslutningen är klar öppnar vi room för aktiv fil.
     function handleConnect() {
-      console.log('Socket connected:', socket.id)
+      // console.log('Socket connected:', socket.id)
       setRealtimeStatus('connected')
       openActiveFileRoom()
     }
     // Körs när servern bekräftar att filen har öppnats.
     // Om servern skickar med content uppdateras editorn.
     function handleFileLoaded(data) {
-      console.log('File loaded:', data)
+      // console.log('File loaded:', data)
 
       if (data?.content !== undefined) {
         setActiveFileCode(data.content)
@@ -56,7 +56,7 @@ export function useSocketFile(
     // Körs när servern skickar nytt content för en fil.
     // Det kan vara content från den egna klienten eller från en annan användare.
     function handleContent(data) {
-      console.log('Content received:', data)
+      // console.log('Content received:', data)
       // Ignorera content-events som gäller en annan fil.
       if (data?.uid !== activeFile.uid) {
         return
@@ -72,10 +72,11 @@ export function useSocketFile(
       }
     }
     // Körs när servern har sparat innehållet.
+
     // Visar "saved" endast om användaren inte har skrivit vidare
     // sedan save-processen startade
     function handleContentSaved(data) {
-      console.log('Content saved:', data)
+      // console.log('Content saved:', data)
 
       if (data?.uid !== activeFile.uid) {
         return
@@ -105,13 +106,13 @@ export function useSocketFile(
       setRealtimeStatus('error')
     }
     // Körs när socketen kopplas från.
-    function handleDisconnect(reason) {
-      console.log('Socket disconnected:', reason)
+    function handleDisconnect() {
+      // console.log('Socket disconnected:', reason)
       setRealtimeStatus('disconnected')
     }
 
     function handleReconnectAttempt() {
-      console.log('Socket reconnecting...')
+      // console.log('Socket reconnecting...')
       setRealtimeStatus('reconnecting')
     }
     function handleUsers(users) {
@@ -144,7 +145,7 @@ export function useSocketFile(
     // Rensa upp när komponenten avmonterar eller när activeFile ändras
     // Det behövs för att lämna gamla socket-room och undvika dubbla listeners.
     return () => {
-      console.log('Closing socket file room:', activeFile.uid)
+      // console.log('Closing socket file room:', activeFile.uid)
       socket.emit('close file', activeFile.uid)
       socket.off('connect', handleConnect)
       socket.off('connect_error', handleConnectError)
@@ -204,10 +205,10 @@ export function useSocketFile(
       clientId: clientIdRef.current,
     })
 
-    console.log('content emitted:', {
-      content: newContent,
-      uid: activeFile.uid,
-    })
+    // console.log('content emitted:', {
+    //   content: newContent,
+    //   uid: activeFile.uid,
+    // })
   }
 
   return {
