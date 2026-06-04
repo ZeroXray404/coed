@@ -54,7 +54,10 @@ function MainArea({
 
   // State för användarens cursor
   // localCursor placeras i hakparentesen senare när den skall användas
-  const [setLocalCursor] = useState(null)
+  const [, setLocalCursor] = useState(null)
+  // remoteCursor placeras i hakparentesen senare när den skall användas
+  const [, setRemoteCursor] = useState({})
+  const [, setRemoteCursors] = useState({})
 
   // State för Monaco-editorns instans
   const [editorInstance, setEditorInstance] = useState(null)
@@ -110,8 +113,23 @@ function MainArea({
     setEditorInstance(editor)
   }
 
+  const handleRemoteCursorChange = useCallback((cursorData) => {
+    setRemoteCursors((prev) => ({
+      ...prev,
+      [cursorData.userId]: cursorData,
+    }))
+    console.log('Remote cursor updated: ', cursorData)
+  }, [])
+
   // Anropar useSocketSelection med valda props
-  useSocketSelection(editorInstance, activeFile, currentUser, setLocalCursor)
+  useSocketSelection(
+    editorInstance,
+    activeFile,
+    currentUser,
+    setLocalCursor,
+    setRemoteCursor,
+    handleRemoteCursorChange
+  )
 
   // Triggar Monaco-editorns inbyggda undo-kommando
   function handleUndo() {
