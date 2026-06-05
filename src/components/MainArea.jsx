@@ -53,10 +53,8 @@ function MainArea({
   })
 
   // State för användarens cursor
-  // localCursor placeras i hakparentesen senare när den skall användas
   const [, setLocalCursor] = useState(null)
-  // remoteCursors placeras i hakparentesen senare när den skall användas
-  const [, setRemoteCursors] = useState({})
+  const [remoteCursors, setRemoteCursors] = useState({})
 
   // State för Monaco-editorns instans
   const [editorInstance, setEditorInstance] = useState(null)
@@ -112,23 +110,6 @@ function MainArea({
     setEditorInstance(editor)
   }
 
-  const handleRemoteCursorChange = useCallback((cursorData) => {
-    setRemoteCursors((prev) => ({
-      ...prev,
-      [cursorData.userId]: cursorData,
-    }))
-    console.log('Remote cursor updated: ', cursorData)
-  }, [])
-
-  // Anropar useSocketSelection med valda props
-  useSocketSelection(
-    editorInstance,
-    activeFile,
-    currentUser,
-    setLocalCursor,
-    handleRemoteCursorChange
-  )
-
   // Triggar Monaco-editorns inbyggda undo-kommando
   function handleUndo() {
     editorRef.current?.trigger('toolbar', 'undo')
@@ -153,6 +134,55 @@ function MainArea({
   function handleLanguageChange(newLanguage) {
     setLanguage(newLanguage)
   }
+
+  const handleRemoteCursorChange = useCallback((cursorData) => {
+    setRemoteCursors((prev) => ({
+      ...prev,
+      // Uppdaterar / lägger till cursorData för den användare som skickade eventet
+      // cursorData.userId = e-postadress för användare som skickade eventet
+      // cursorData = lineNumber och column för cursor-position
+      [cursorData.userId]: cursorData,
+    }))
+    console.log('Remote cursor updated: ', cursorData)
+  }, [])
+
+  // Anropar useSocketSelection för att hantera cursor-position och markeringar i realtid
+  useSocketSelection(
+    editorInstance,
+    activeFile,
+    currentUser,
+    setLocalCursor,
+    handleRemoteCursorChange
+  )
+
+  useEffect(() => {
+    if (!editorInstance) {
+      return
+    }
+    const decorationCollection = editorInstance.createDecorationsCollection()
+    const decorations = Object.values(remoteCursors).map((cursor) => {
+      const userIndex = activeUsers.indexOf(cursor.userId)
+
+      return {
+        range: {
+          startLineNumber: cursor.lineNumber,
+          startColumn: cursor.column,
+          endLineNumber: cursor.lineNumber,
+          endColumn: cursor.column + 1,
+        },
+        options: {
+          className: `remote-cursor remote-cursor-${userIndex}`,
+          afterContentClassName: `remote-cursor-head remote-cursor-head-${userIndex}`,
+          hoverMessage: { value: `User: ${cursor.userId}` },
+        },
+      }
+    })
+    decorationCollection.set(decorations)
+
+    return () => {
+      decorationCollection.clear()
+    }
+  }, [editorInstance, remoteCursors, activeUsers])
 
   return (
     <section className="main-area">
