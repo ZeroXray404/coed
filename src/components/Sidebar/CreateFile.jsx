@@ -118,6 +118,8 @@ function CreateFileHeader({
             setDeleteMode((prev) => !prev)
             setCreateMode('')
           }}
+          title={deleteMode ? 'Exit Delete Mode' : 'Delete Mode'}
+          aria-label="Toggle delete mode"
         >
           <Trash2 />
         </button>
@@ -135,6 +137,8 @@ function CreateFileHeader({
             setAddMember((prev) => !prev)
             setCreateMode('')
           }}
+          title={addMember ? 'Exit Addmember Mode' : 'Add Project Member'}
+          aria-label="Toggle add project member mode"
         >
           <UserPlus />
         </button>
@@ -149,6 +153,8 @@ function CreateFileHeader({
               setCreateMode('')
             }
           }}
+          title="Create Project"
+          aria-label="Create project"
         >
           <FolderPlus />
         </button>
@@ -163,6 +169,9 @@ function CreateFileHeader({
               setCreateMode('')
             }
           }}
+          title="Create File"
+          aria-label="Create file"
+          disabled={!expandedProjectUid}
         >
           <FilePlus />
         </button>

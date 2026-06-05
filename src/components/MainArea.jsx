@@ -55,8 +55,7 @@ function MainArea({
   // State för användarens cursor
   // localCursor placeras i hakparentesen senare när den skall användas
   const [, setLocalCursor] = useState(null)
-  // remoteCursor placeras i hakparentesen senare när den skall användas
-  const [, setRemoteCursor] = useState({})
+  // remoteCursors placeras i hakparentesen senare när den skall användas
   const [, setRemoteCursors] = useState({})
 
   // State för Monaco-editorns instans
@@ -127,7 +126,6 @@ function MainArea({
     activeFile,
     currentUser,
     setLocalCursor,
-    setRemoteCursor,
     handleRemoteCursorChange
   )
 

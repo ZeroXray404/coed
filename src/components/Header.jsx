@@ -15,8 +15,8 @@ function Header({ isLoggedIn, onLogoutClick, onLoginSuccess }) {
   return (
     <section className="header">
       <div className="search-bar">
-        <Search size={24} />
-        <input type="text" placeholder="Search..." />
+        {/* <Search size={24} />
+        <input type="text" placeholder="Search..." /> */}
       </div>
 
       <div className="user-btns">
@@ -26,10 +26,17 @@ function Header({ isLoggedIn, onLogoutClick, onLoginSuccess }) {
             className="login-btn btn-primary"
             type="button"
             value={isLoggedIn ? 'Logout' : 'Login'}
+            title={isLoggedIn ? 'Logout' : 'Login or register'}
+            aria-label={isLoggedIn ? 'Logout' : 'Login'}
           />
         </div>
 
-        <button onClick={() => alert('USER-PROFILE')} className="user">
+        <button
+          onClick={() => alert('USER-PROFILE')}
+          className="user"
+          title="User Profile"
+          aria-label="User Profile"
+        >
           <User size={24} />
         </button>
       </div>
