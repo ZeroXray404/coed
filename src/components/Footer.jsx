@@ -5,7 +5,7 @@ function Footer() {
     <section className="footer">
       <div className="projectinfo-left">
         <button className="problem-info" title="Errors">
-          <CircleX size={18} />
+          <CircleX size={20} />
           <input
             onClick={() => alert('ERROR COUNTER')}
             type="button"
@@ -13,7 +13,7 @@ function Footer() {
           />
         </button>
         <button className="problem-info" title="Warnings">
-          <TriangleAlert size={18} />
+          <TriangleAlert size={20} />
           <input
             onClick={() => alert('WARNING COUNTER')}
             type="button"
@@ -26,7 +26,7 @@ function Footer() {
       </div>
       <div className="projectinfo-right">
         <button className="prettier-button" title="Prettier">
-          <Check size={18} />
+          <Check size={20} />
           <input
             onClick={() => alert('PRETTIER')}
             type="button"
@@ -38,7 +38,7 @@ function Footer() {
           className="notifications"
           title="Notifications"
         >
-          <Bell size={18} />
+          <Bell size={20} />
         </button>
       </div>
     </section>
