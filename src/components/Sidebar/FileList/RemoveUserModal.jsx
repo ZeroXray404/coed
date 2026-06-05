@@ -7,7 +7,7 @@ function RemoveUserModal({ project, isOpen, onConfirm, onCancel }) {
     <div className="delete-modal">
       <div className="delete-modal-text">
         <h1>Leave Project?</h1>
-        <p>Are you sure you want to leave '{project.name}'?</p>
+        <p>Are you sure you want to leave {project.name}?</p>
         <p>
           Once you leave, you'll lose access to this project and must be
           re-invited to rejoin.

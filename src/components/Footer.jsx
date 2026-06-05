@@ -4,40 +4,41 @@ function Footer() {
   return (
     <section className="footer">
       <div className="projectinfo-left">
-        <div className="problem-info">
-          <CircleX size={24} />
+        <button className="problem-info" title="Errors">
+          <CircleX size={18} />
           <input
             onClick={() => alert('ERROR COUNTER')}
             type="button"
             value="0"
           />
-        </div>
-        <div className="problem-info">
-          <TriangleAlert size={24} />
+        </button>
+        <button className="problem-info" title="Warnings">
+          <TriangleAlert size={18} />
           <input
             onClick={() => alert('WARNING COUNTER')}
             type="button"
             value="0"
           />
-        </div>
+        </button>
       </div>
       <div className="copyright-info">
         <p>&copy; ProjFront - Copyright by Team 12</p>
       </div>
       <div className="projectinfo-right">
-        <div className="prettier-button">
-          <Check size={24} />
+        <button className="prettier-button" title="Prettier">
+          <Check size={18} />
           <input
             onClick={() => alert('PRETTIER')}
             type="button"
             value="Prettier"
           />
-        </div>
+        </button>
         <button
           onClick={() => alert('NOTIFICATIONS')}
           className="notifications"
+          title="Notifications"
         >
-          <Bell size={24} />
+          <Bell size={18} />
         </button>
       </div>
     </section>

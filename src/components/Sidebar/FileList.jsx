@@ -393,7 +393,7 @@ function FileListContent(
                     className={`shared-users ${deleteMode ? 'disabled' : ''}`}
                     onClick={() => openRemoveUserModal(project)}
                     disabled={deleteMode}
-                    title={`Shared project with ${projectDetails?.[project.uid]?.users.length || 0} members. Click to leave project.`}
+                    title={`Leave project: ${project.name}`}
                     aria-label={`Remove myself from ${project.name}`}
                   >
                     {hoveredProjectUid === project.uid ? (

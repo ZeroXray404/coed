@@ -1,6 +1,6 @@
 @use '../base/variables' as *;
 
-$footer-height: 40px;
+$footer-height: 100%;
 
 .footer {
   @include flexStyling(row, normal, space-between);
@@ -38,7 +38,7 @@ $footer-height: 40px;
       input {
         @include centerVert();
         height: $footer-height;
-        font-size: 24px;
+        font-size: 16px;
         color: $color-text;
         padding-left: 36px;
         padding-right: 8px;
@@ -66,7 +66,7 @@ $footer-height: 40px;
       input {
         height: $footer-height;
         color: $color-text;
-        font-size: 16px;
+        font-size: 14px;
         padding-left: 36px;
         padding-right: 8px;
         z-index: 1;
