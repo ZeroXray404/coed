@@ -35,9 +35,21 @@ $radius-size: 10px;
   }
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  padding-left: 8px;
+
+  img {
+    height: 100%;
+    width: auto;
+  }
+}
+
 .search-bar {
   @extend %max-height;
-  width: 20vw;
+  width: 30vw;
   position: relative;
   margin: 0 0.5rem;
 

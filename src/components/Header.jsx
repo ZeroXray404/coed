@@ -1,6 +1,7 @@
 import { Search, User } from 'lucide-react'
 import { useState } from 'react'
 import AuthCard from './Header/AuthCard'
+import logo from '../assets/coed-logo-header.svg'
 
 function Header({ isLoggedIn, onLogoutClick, onLoginSuccess }) {
   const [showAuth, setShowAuth] = useState(false)
@@ -14,9 +15,12 @@ function Header({ isLoggedIn, onLogoutClick, onLoginSuccess }) {
   }
   return (
     <section className="header">
+      <a href="/" className="logo" aria-label="Go to homepage">
+        <img src={logo} alt="Coed Logo" />
+      </a>
       <div className="search-bar">
-        {/* <Search size={24} />
-        <input type="text" placeholder="Search..." /> */}
+        <Search size={24} />
+        <input type="text" placeholder="Search..." />
       </div>
 
       <div className="user-btns">
