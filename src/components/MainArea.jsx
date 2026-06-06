@@ -53,7 +53,6 @@ function MainArea({
   })
 
   // State för användarens cursor
-  const [, setLocalCursor] = useState(null)
   const [remoteCursors, setRemoteCursors] = useState({})
 
   // State för Monaco-editorns instans
@@ -151,7 +150,6 @@ function MainArea({
     editorInstance,
     activeFile,
     currentUser,
-    setLocalCursor,
     handleRemoteCursorChange
   )
 
