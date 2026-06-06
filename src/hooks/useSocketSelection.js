@@ -7,13 +7,13 @@ import { socket } from '../services/socketServices'
 // - lyssna på "selection"
 // - uppdatera UI med andra användares markeringar
 
-export function useSocketSelection(
+export function useSocketSelection({
   editor,
   activeFile,
   currentUser,
   onLocalCursorChange,
-  onRemoteCursorChange
-) {
+  onRemoteCursorChange,
+}) {
   useEffect(() => {
     if (!editor || !activeFile?.uid || !currentUser?.email) {
       return

@@ -146,12 +146,12 @@ function MainArea({
   }, [])
 
   // Anropar useSocketSelection för att hantera cursor-position och markeringar i realtid
-  useSocketSelection(
-    editorInstance,
+  useSocketSelection({
+    editor: editorInstance,
     activeFile,
     currentUser,
-    handleRemoteCursorChange
-  )
+    onRemoteCursorChange: handleRemoteCursorChange,
+  })
 
   useEffect(() => {
     if (!editorInstance) {
