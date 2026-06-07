@@ -47,6 +47,11 @@ or
 - [Eslint](https://eslint.org/)
 - [Lucide](https://lucide.dev)
 
+### API documentation
+
+- [Backend: Project, Files, Socket](docket.emilfolino.se)
+- [Backend: Users and Authentication](auth.emilfolino.se)
+
 ### GitHub Pages
 
 The project is deployed via GitHub Pages:
