@@ -10,20 +10,69 @@ import {
 // och skickar nytt content när användaren skriver.
 // activeFile = filen som användaren just nu har öppen
 // setActiveFileCode = setter från App/MainArea som uppdaterar innehållet i editorn
+
+// === Hjälpfuntion för att minska området som behöver uppdateras i editorn ===
+function createEdit(currentText, newText, model) {
+  if (currentText === newText) {
+    return null
+  }
+
+  let start = 0
+
+  // Loopar tills första positionen där texterna skiljer sig åt därefter start ökar med 1
+  while (
+    start < currentText.length &&
+    start < newText.length &&
+    currentText[start] === newText[start]
+  ) {
+    start++
+  }
+
+  let currentEnd = currentText.length
+  let nextEnd = newText.length
+
+  // Loopar tills sista positionen där texterna skiljer sig åt därefter currentEnd och nextEnd minskar med 1
+  while (
+    currentEnd > start &&
+    nextEnd > start &&
+    currentText[currentEnd - 1] === newText[nextEnd - 1]
+  ) {
+    currentEnd--
+    nextEnd--
+  }
+
+  // Översätter teckenindex till monaco-positioner (med radnummer och kolumn)
+  const startPosition = model.getPositionAt(start)
+  const endPosition = model.getPositionAt(currentEnd)
+
+  // Skapar ett edit-objekt som beskriver skillnaden mellan currentText och newText
+  return {
+    range: {
+      startLineNumber: startPosition.lineNumber,
+      startColumn: startPosition.column,
+      endLineNumber: endPosition.lineNumber,
+      endColumn: endPosition.column,
+    },
+    text: newText.slice(start, nextEnd),
+    forceMoveMarkers: true,
+  }
+}
+
 export function useSocketFile(
   activeFile,
+  editorRef,
   setActiveFileCode,
   setRealtimeStatus,
   setSaveStatus,
   setActiveUsers
 ) {
   const clientIdRef = useRef(crypto.randomUUID())
+  const isApplyingRemoteRef = useRef(false) // flagga för att identifiera lokal vs remote ändring
   const lastChangeAtRef = useRef(0) // Tidspunkt för senaste lokal ändring
   const savingTimerRef = useRef(null) // Timer för att växla från "unsaved" till "saving"
   const savedTimerRef = useRef(null) // Timder för att dölja "saved"-status
 
   useEffect(() => {
-    // Om ingen fil är vald ska hooken inte ansluta till något socket-room.
     if (!activeFile?.uid) {
       setRealtimeStatus('disconnected')
       setSaveStatus('idle')
@@ -31,33 +80,69 @@ export function useSocketFile(
       return
     }
 
+    // === Funktion som uppdaterar editorn med nytt content som kommer från servern ===
+    function applyRemoteContent(newContent) {
+      const editor = editorRef.current
+
+      if (!editor) {
+        setActiveFileCode(newContent)
+        return
+      }
+
+      // Hämtar monaco-editorns model som hanterar textinnehållet
+      const model = editor.getModel()
+
+      if (!model) {
+        setActiveFileCode(newContent)
+        return
+      }
+
+      // Hämtar det aktuella textinnehållet i editorn
+      const currentText = model.getValue()
+
+      if (currentText === newContent) {
+        setActiveFileCode(newContent)
+        return
+      }
+
+      // Skapar variabeln edit som innehåller edit-objekt (beskriver skillnaden mellan currentText och newContent)
+      const edit = createEdit(currentText, newContent, model)
+
+      if (!edit) {
+        setActiveFileCode(newContent)
+        return
+      }
+
+      // Sätter flaggan till true för att indikera att ändringen kommer från socket-servern
+      isApplyingRemoteRef.current = true
+
+      try {
+        // Applicera edit-objektet i editorn (endast del som skiljer sig uppdateras)
+        editor.executeEdits('remote-content', [edit])
+        setActiveFileCode(editor.getValue()) // Uppdaterar React-state med nya innehållet
+      } finally {
+        isApplyingRemoteRef.current = false
+      }
+    }
+
     // Öppnar ett socket-room för den aktiva filen.
-    // Alla användare som öppnar samma fil-uid hamnar i samma room.
     function openActiveFileRoom() {
       socket.emit('open file', activeFile.uid)
-      // console.log('Opened socket file room:', activeFile.uid)
     }
     // Körs när socketen har anslutit till servern.
-    // När anslutningen är klar öppnar vi room för aktiv fil.
     function handleConnect() {
-      // console.log('Socket connected:', socket.id)
       setRealtimeStatus('connected')
       openActiveFileRoom()
     }
     // Körs när servern bekräftar att filen har öppnats.
     // Om servern skickar med content uppdateras editorn.
     function handleFileLoaded(data) {
-      // console.log('File loaded:', data)
-
       if (data?.content !== undefined) {
-        setActiveFileCode(data.content)
+        applyRemoteContent(data.content)
       }
     }
     // Körs när servern skickar nytt content för en fil.
-    // Det kan vara content från den egna klienten eller från en annan användare.
     function handleContent(data) {
-      // console.log('Content received:', data)
-      // Ignorera content-events som gäller en annan fil.
       if (data?.uid !== activeFile.uid) {
         return
       }
@@ -68,16 +153,11 @@ export function useSocketFile(
 
       // Uppdaterar editorns state med det content som kom från socket-servern.
       if (data?.content !== undefined) {
-        setActiveFileCode(data.content)
+        applyRemoteContent(data.content)
       }
     }
     // Körs när servern har sparat innehållet.
-
-    // Visar "saved" endast om användaren inte har skrivit vidare
-    // sedan save-processen startade
     function handleContentSaved(data) {
-      // console.log('Content saved:', data)
-
       if (data?.uid !== activeFile.uid) {
         return
       }
@@ -85,14 +165,11 @@ export function useSocketFile(
       const timeSinceLastChange = Date.now() - lastChangeAtRef.current
 
       // Om användaren har skrivit något nytt inom 500ms efter att save-processen startade
-      // så visar vi inte "saved" eftersom det inte längre är sant.
       if (timeSinceLastChange < 500) {
         setSaveStatus('unsaved')
         return
       }
-
       setSaveStatus('saved')
-
       clearTimeout(savedTimerRef.current)
 
       // Sätter saved-statusen till "idle" efter 1.2s så att "saved"-indikatorn försvinner.
@@ -100,19 +177,15 @@ export function useSocketFile(
         setSaveStatus('idle')
       }, 1200)
     }
-    // Körs om socketen inte lyckas ansluta.
     function handleConnectError(error) {
       console.error('Connection error:', error.message)
       setRealtimeStatus('error')
     }
-    // Körs när socketen kopplas från.
     function handleDisconnect() {
-      // console.log('Socket disconnected:', reason)
       setRealtimeStatus('disconnected')
     }
 
     function handleReconnectAttempt() {
-      // console.log('Socket reconnecting...')
       setRealtimeStatus('reconnecting')
     }
     function handleUsers(users) {
@@ -135,17 +208,13 @@ export function useSocketFile(
     // connectSocket ser till att aktuell token skickas med innan anslutning.
     connectSocket()
 
-    // Om socketen redan är ansluten när användaren byter fil
-    // kommer inte connect-eventet att triggas igen.
-    // därför öppnas filrummet direkt
+    // Om socketen redan är ansluten när användaren byter fil så öppnas det nya fil-rummet direkt.
     if (socket.connected) {
       openActiveFileRoom()
     }
 
     // Rensa upp när komponenten avmonterar eller när activeFile ändras
-    // Det behövs för att lämna gamla socket-room och undvika dubbla listeners.
     return () => {
-      // console.log('Closing socket file room:', activeFile.uid)
       socket.emit('close file', activeFile.uid)
       socket.off('connect', handleConnect)
       socket.off('connect_error', handleConnectError)
@@ -167,9 +236,9 @@ export function useSocketFile(
       // Stänger socket-anslutningen när hooken inte längre behöver den.
       disconnectSocket()
     }
-    // Kör om effekten när den aktiva filens uid ändras.
   }, [
     activeFile?.uid,
+    editorRef,
     setActiveFileCode,
     setRealtimeStatus,
     setSaveStatus,
@@ -182,8 +251,12 @@ export function useSocketFile(
     if (!activeFile?.uid) {
       return
     }
+
+    if (isApplyingRemoteRef.current) {
+      return
+    }
+
     // Uppdaterar lokal React-state direkt.
-    // Det gör att texten syns omedelbart i editorn utan att vänta på servern.
     lastChangeAtRef.current = Date.now()
 
     clearTimeout(savingTimerRef.current)
@@ -197,18 +270,11 @@ export function useSocketFile(
     }, 500)
 
     // Skickar nytt filinnehåll till servern.
-    // Servern broadcastar content till användare i samma room
-    // och sparar content automatiskt efter en kort paus.
     socket.emit('content', {
       content: newContent,
       uid: activeFile.uid,
       clientId: clientIdRef.current,
     })
-
-    // console.log('content emitted:', {
-    //   content: newContent,
-    //   uid: activeFile.uid,
-    // })
   }
 
   return {

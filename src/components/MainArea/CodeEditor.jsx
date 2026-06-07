@@ -16,7 +16,7 @@ function CodeEditor({
         theme={theme}
         height="100%"
         path={path}
-        value={value}
+        defaultValue={value}
         onChange={(newValue) => onChange(newValue || '')}
         options={options}
         onMount={onMount}

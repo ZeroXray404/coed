@@ -7,7 +7,14 @@ import { useSocketSelection } from '../hooks/useSocketSelection'
 // Objekt som innehåller en standard-template för varje språk.
 // Används när användaren byter språk utan att en fil är aktiv
 const languageTemplates = {
-  javascript: 'console.log("Hello World")',
+  javascript: `/* 
+    Welcome to CoEd, an intuitive realtime code editor where collaboration is made easy!
+    Feel free to try the editor at your conviniance
+    To enjoy the full experience with realtime collaborative editing Register an account or Login
+      
+    Bonus: As a registered user you get free cloudstorage for all your files and projects 
+  
+*/`,
   python: 'print("Hello World")',
   html: '<h1>Hello World</h1>',
   css: 'h1 {color: red;}',
@@ -95,6 +102,7 @@ function MainArea({
   // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
   const { sendContent } = useSocketFile(
     activeFile,
+    editorRef,
     setActiveFileCode,
     setRealtimeStatus,
     setSaveStatus,
@@ -171,7 +179,7 @@ function MainArea({
         options: {
           className: `remote-cursor remote-cursor-${userIndex}`,
           afterContentClassName: `remote-cursor-head remote-cursor-head-${userIndex}`,
-          hoverMessage: { value: `User: ${cursor.userId}` },
+          hoverMessage: { value: `${cursor.userId}` },
         },
       }
     })
