@@ -362,7 +362,20 @@ function FileListContent(
                 <button
                   className={`list-row ${expandedProjectUid === project.uid ? 'active-proj' : ''}`}
                   onClick={() => handleProjectRowClick(project.uid)}
-                  aria-label={`Open project ${project.name}`}
+                  title={
+                    !deleteMode && expandedProjectUid === project.uid
+                      ? `Collapse ${project.name}`
+                      : deleteMode
+                        ? expandedProjectUid === project.uid
+                          ? `Select ${project.name} for deletion`
+                          : `Open ${project.name}`
+                        : `Open ${project.name}`
+                  }
+                  aria-label={
+                    deleteMode
+                      ? `Select project ${project.name} for deletion`
+                      : `Open project ${project.name}`
+                  }
                 >
                   <div className="listselect-btn">
                     <AppWindow size={16} />
@@ -380,6 +393,7 @@ function FileListContent(
                     className={`shared-users ${deleteMode ? 'disabled' : ''}`}
                     onClick={() => openRemoveUserModal(project)}
                     disabled={deleteMode}
+                    title={`Leave project: ${project.name}`}
                     aria-label={`Remove myself from ${project.name}`}
                   >
                     {hoveredProjectUid === project.uid ? (
@@ -424,6 +438,16 @@ function FileListContent(
                           <button
                             className={`list-row ${isSelectedFile ? 'selected' : ''}`.trim()}
                             onClick={() => handleFileClick(file)}
+                            title={
+                              deleteMode
+                                ? `Select ${file.filename} for deletion`
+                                : `Open ${file.filename} in editor`
+                            }
+                            aria-label={
+                              deleteMode
+                                ? `Select file ${file.filename} for deletion`
+                                : `Open file ${file.filename} in editor`
+                            }
                           >
                             <div className="listselect-btn">
                               {getIconNameFromFileName(file.filename)}

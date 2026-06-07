@@ -93,7 +93,7 @@ function Sidebar({
     }
   }, [isLoggedIn])
 
-  // === Lazy loading av användare när addMember är true ===q
+  // === Lazy loading av användare när addMember är true ===
   useEffect(() => {
     if (addMember && !usersLoaded) {
       fetchUsers()

@@ -80,7 +80,7 @@ function UndoButton({ onUndo }) {
       type="button"
       className="toolbar-button undo-button"
       onClick={onUndo}
-      title="Undo"
+      title="Undo (Ctrl+Z)"
       aria-label="Undo"
     >
       <Undo size={20} />
@@ -94,7 +94,7 @@ function RedoButton({ onRedo }) {
       type="button"
       className="toolbar-button redo-button"
       onClick={onRedo}
-      title="Redo"
+      title="Redo (Ctrl+Y)"
       aria-label="Redo"
     >
       <Redo size={20} />

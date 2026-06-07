@@ -122,6 +122,7 @@ function AddProjectMemberContent({
                 <button
                   className="list-row"
                   onClick={() => toggleProject(project.uid)}
+                  title={`Add member to ${project.name}`}
                   aria-label={`Add user to ${project.name}`}
                 >
                   <div className="listselect-btn">

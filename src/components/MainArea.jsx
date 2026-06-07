@@ -7,7 +7,14 @@ import { useSocketSelection } from '../hooks/useSocketSelection'
 // Objekt som innehåller en standard-template för varje språk.
 // Används när användaren byter språk utan att en fil är aktiv
 const languageTemplates = {
-  javascript: 'console.log("Hello World")',
+  javascript: `/* 
+    Welcome to CoEd, an intuitive realtime code editor where collaboration is made easy!
+    Feel free to try the editor at your conviniance
+    To enjoy the full experience with realtime collaborative editing Register an account or Login
+      
+    Bonus: As a registered user you get free cloudstorage for all your files and projects 
+  
+*/`,
   python: 'print("Hello World")',
   html: '<h1>Hello World</h1>',
   css: 'h1 {color: red;}',
@@ -53,8 +60,7 @@ function MainArea({
   })
 
   // State för användarens cursor
-  // localCursor placeras i hakparentesen senare när den skall användas
-  const [setLocalCursor] = useState(null)
+  const [remoteCursors, setRemoteCursors] = useState({})
 
   // State för Monaco-editorns instans
   const [editorInstance, setEditorInstance] = useState(null)
@@ -96,6 +102,7 @@ function MainArea({
   // Använder custom hooken useSocketFile för att hantera socket-logiken för aktiv fil
   const { sendContent } = useSocketFile(
     activeFile,
+    editorRef,
     setActiveFileCode,
     setRealtimeStatus,
     setSaveStatus,
@@ -109,9 +116,6 @@ function MainArea({
     editorRef.current = editor
     setEditorInstance(editor)
   }
-
-  // Anropar useSocketSelection med valda props
-  useSocketSelection(editorInstance, activeFile, currentUser, setLocalCursor)
 
   // Triggar Monaco-editorns inbyggda undo-kommando
   function handleUndo() {
@@ -137,6 +141,53 @@ function MainArea({
   function handleLanguageChange(newLanguage) {
     setLanguage(newLanguage)
   }
+
+  const handleRemoteCursorChange = useCallback((cursorData) => {
+    setRemoteCursors((prev) => ({
+      ...prev,
+      // Uppdaterar / lägger till cursorData för den användare som skickade eventet
+      // cursorData.userId = e-postadress för användare som skickade eventet
+      // cursorData = lineNumber och column för cursor-position
+      [cursorData.userId]: cursorData,
+    }))
+    console.log('Remote cursor updated: ', cursorData)
+  }, [])
+
+  // Anropar useSocketSelection för att hantera cursor-position och markeringar i realtid
+  useSocketSelection({
+    editor: editorInstance,
+    activeFile,
+    currentUser,
+    onRemoteCursorChange: handleRemoteCursorChange,
+  })
+
+  useEffect(() => {
+    if (!editorInstance) {
+      return
+    }
+    const decorationCollection = editorInstance.createDecorationsCollection()
+    const decorations = Object.values(remoteCursors).map((cursor) => {
+      const userIndex = activeUsers.indexOf(cursor.userId)
+
+      return {
+        range: {
+          startLineNumber: cursor.lineNumber,
+          startColumn: cursor.column,
+          endLineNumber: cursor.lineNumber,
+          endColumn: cursor.column,
+        },
+        options: {
+          className: `remote-cursor remote-cursor-${userIndex}`,
+          hoverMessage: { value: `${cursor.userId}` },
+        },
+      }
+    })
+    decorationCollection.set(decorations)
+
+    return () => {
+      decorationCollection.clear()
+    }
+  }, [editorInstance, remoteCursors, activeUsers])
 
   return (
     <section className="main-area">

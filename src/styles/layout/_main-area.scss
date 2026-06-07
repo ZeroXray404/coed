@@ -49,7 +49,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  max-width: 600px;
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: thin;
@@ -79,6 +79,22 @@
   &-3 {
     color: #ec554a;
   }
+}
+
+.remote-cursor-0 {
+  border-left: 3px solid #58a6ff;
+}
+
+.remote-cursor-1 {
+  border-left: 3px solid #32e241;
+}
+
+.remote-cursor-2 {
+  border-left: 3px solid #e6a10e;
+}
+
+.remote-cursor-3 {
+  border-left: 3px solid #ec554a;
 }
 
 .toolbar-status {

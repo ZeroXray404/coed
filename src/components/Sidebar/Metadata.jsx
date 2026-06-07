@@ -39,7 +39,12 @@ function MetadataFooter({ activeFile, fileListRef }) {
   return (
     <div className="sidebar-footer">
       <div className={`metadata ${isOpened ? 'opened' : ''}`} ref={metadataRef}>
-        <button className="metadata-btn" onClick={toggleMetadata}>
+        <button
+          className="metadata-btn"
+          onClick={toggleMetadata}
+          title="Toggle file metadata"
+          aria-label="Toggle file metadata"
+        >
           <p className="metadata-btn-text">Metadata</p>
           <span className="metadata-btn-icon">
             {!isOpened ? <ChevronDown /> : <ChevronUp />}
