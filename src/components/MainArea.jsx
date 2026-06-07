@@ -174,11 +174,10 @@ function MainArea({
           startLineNumber: cursor.lineNumber,
           startColumn: cursor.column,
           endLineNumber: cursor.lineNumber,
-          endColumn: cursor.column + 1,
+          endColumn: cursor.column,
         },
         options: {
           className: `remote-cursor remote-cursor-${userIndex}`,
-          afterContentClassName: `remote-cursor-head remote-cursor-head-${userIndex}`,
           hoverMessage: { value: `${cursor.userId}` },
         },
       }
