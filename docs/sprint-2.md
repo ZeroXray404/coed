@@ -1,12 +1,12 @@
-# Sprint 2 - Gruppuppgift
+# Sprint 2 - Group Assignment
 
 ## 1. Sprint Planning
 
-### Sprintmål
+### Sprint Goal
 
-Målet är att göra klart autentisering (inloggning och utloggning), samt skapa en fungerande kod editor med stöd för filhantering och grundläggande editor inställningar.
+The goal is to complete authentication (login and logout), and to create a working code editor with support for file handling and basic editor settings.
 
-### Valda User Stories
+### Selected User Stories
 
 US-103, US-201, US-202, US-203, US-205
 
@@ -18,160 +18,160 @@ US-103, US-201, US-202, US-203, US-205
 - T-203-1, T-203-2, T-203-3, T-203-4, T-203-5
 - T-205-1, T-205-2, T-205-3, T-205-4
 
-### Fördelning
+### Distribution
 
-Vi har kört på fri fördelning och först till kvarn på samtliga tasks i backloggen. Då vi alla arbetar under olika tider/dagar i veckan så vill vi inte låsa upp tasks genom att “paxxa” tasks som kan blockera för fortsättning för andra. Därför låter vi backlogen vara fri för vem som helst att påbörja en task när den har tid.
+We used open allocation and first-come, first-served for all tasks in the backlog. Since we all work on different days and at different times during the week, we do not want to block progress by reserving tasks that others may need in order to continue. Because of that, the backlog stays open for anyone to start a task when they have time.
 
-### Estimering
+### Estimation
 
-Tidsestimering finns här under flik “Sprint 2”: https://docs.google.com/spreadsheets/d/1C4emn6hofD2PmGw2cUFbroMHP918EOgcrvQGSVOMWcU/edit?gid=0#gid=0
+Time estimates are available here under the tab "Sprint 2": https://docs.google.com/spreadsheets/d/1C4emn6hofD2PmGw2cUFbroMHP918EOgcrvQGSVOMWcU/edit?gid=0#gid=0
 
-### Acceptanskriterer
+### Acceptance Criteria
 
-#### US-103:
+#### US-103
 
-- Givet att man har ett konto,
-  När jag är på sidan ska det finnas en tydlig knapp längst uppe som man kan klicka på,
-  Då ska en popup med ett login formulär visas så att jag kan logga in.
+- Given that I have an account,
+  When I am on the page and there is a clear button at the top that I can click,
+  Then a popup with a login form should be shown so that I can log in.
 
-- Givet att man har ett konto,
-  När jag klickar på logga in,
-  Då ska jag kunna komma åt min arbetsyta.
+- Given that I have an account,
+  When I click log in,
+  Then I should be able to access my workspace.
 
-- Givet att man är inloggad,
-  När jag vill logga ut från kontot,
-  Då ska det finnas en "logga ut" knapp längst uppe som loggar ut mig.
+- Given that I am logged in,
+  When I want to log out of the account,
+  Then there should be a "log out" button at the top that logs me out.
 
-- Givet att man har filer på sitt konto,
-  När jag är utloggad från sidan,
-  Då ska man inte kunna nå filerna på sidan om inte man är inloggad.
+- Given that I have files in my account,
+  When I am logged out of the page,
+  Then I should not be able to access the files unless I log in.
 
-- Givet att jag skriver en ogiltig email eller lösenord,
-  När jag försöker logga in
-  Då ska felmeddelanden visas.
+- Given that I enter an invalid email or password,
+  When I try to log in,
+  Then error messages should be shown.
 
-#### US-201:
+#### US-201
 
-- Givet att jag är inloggad
-  När jag trycker på knappen "New Project"
-  Då ska en projektmapp skapas som jag kan namnge
+- Given that I am logged in,
+  When I press the "New Project" button,
+  Then a project folder should be created that I can name.
 
-- Givet att jag har skapat ett projekt
-  När jag trycker på knappen "New file"
-  Då ska en fil skapas som ska kunna namnges
+- Given that I have created a project,
+  When I press the "New file" button,
+  Then a file should be created that can be named.
 
-- Givet att i mitt projekt finns en fil som jag vill ta bort
-  När jag klickar på "Delete"
-  Då ska ett fönster visas för att bekräfta borttagning
+- Given that there is a file in my project that I want to delete,
+  When I click "Delete",
+  Then a dialog should be shown to confirm the deletion.
 
-- Givet att jag bekräftar borttagning av vald fil
-  När jag tar bort filen
-  Då ska filen försvinna permanent
+- Given that I confirm the deletion of the selected file,
+  When I delete the file,
+  Then the file should disappear permanently.
 
-- Givet att jag är inloggad och äger/har skapat ett projekt
-  När jag trycker på knappen "Share"
-  Då ska jag ett formulär visas där jag kan fylla i epostadress till den jag vill dela projektet med
+- Given that I am logged in and own or have created a project,
+  When I press the "Share" button,
+  Then a form should be shown where I can enter the email address of the person I want to share the project with.
 
-#### US-202:
+#### US-202
 
-- Givet att jag är inloggad,
-  När jag trycker på knappen "Load Project",
-  Då ska det valda projektet läsas in med tillhörande filer.
+- Given that I am logged in,
+  When I press the "Load Project" button,
+  Then the selected project should be loaded together with its files.
 
-- Givet att jag inte har något projekt,
-  När jag trycker på knappen "Load Projekt",
-  Då ska man bli erbjuden att skapa ett projekt.
+- Given that I do not have a project,
+  When I press the "Load Project" button,
+  Then I should be offered the option to create a project.
 
-- Givet att jag inte är inloggad,
-  När jag kollar på sidan,
-  Då ska inga filer eller projekt vara listade.
+- Given that I am not logged in,
+  When I look at the page,
+  Then no files or projects should be listed.
 
-- Givet att jag inte är inloggad,
-  När jag försöker klicka på "Load Project",
-  Då ska den inte vara aktiv.
+- Given that I am not logged in,
+  When I try to click "Load Project",
+  Then it should not be active.
 
-- Givet att jag har skapat projekt eller filer
-  När jag klickar på ett projekt eller fil
-  Då ska projektet eller filen öppnas i code-editor
+- Given that I have created projects or files,
+  When I click a project or file,
+  Then the project or file should open in the code editor.
 
-- Givet att jag har delat ett projekt eller fil
-  När jag navigerar min fil-lista
-  Då ska det tydligt framgå vilka projekt eller mappar som är delade
+- Given that I have shared a project or file,
+  When I navigate my file list,
+  Then it should be clear which projects or folders are shared.
 
-#### US-203:
+#### US-203
 
-- Givet att jag befinner mig i ett projekt med flera filer
-  När jag skriver i sökfältet
-  Då filtreras fillistan i realtid baserat på filnamn
+- Given that I am in a project with several files,
+  When I type in the search field,
+  Then the file list should be filtered in real time based on the file names.
 
-- Givet att jag skriver en sökterm
-  När det finns matchande filer
-  Då visas endast filer vars namn innehåller söktermen
+- Given that I enter a search term,
+  When there are matching files,
+  Then only files whose names include the search term should be shown.
 
-- Givet att jag skriver en sökterm
-  När inga filer matchar
-  Då visas ett meddelande: "Inga filer hittades"
+- Given that I enter a search term,
+  When no files match,
+  Then a message should be shown: "No files found."
 
-- Givet att jag klickar på en fil i resultatet
-  Då öppnas filen i editorn
+- Given that I click a file in the result,
+  Then the file should open in the editor.
 
-#### US-205:
+#### US-205
 
-- Givet att jag vill välja vilket kod språk jag ska programmera i,
-  När jag klickar på knappen för att byta språk,
-  Då ska ska detta språk sättas som aktivt språk i Monaco Editorn
+- Given that I want to choose which programming language to use,
+  When I click the button to switch language,
+  Then that language should be set as the active language in the Monaco Editor.
 
-- Givet att vill anpassa min kod editor med lite personliga inställningar,
-  När jag ställt in dessa inställningar.
-  Då ska de fungera.
+- Given that I want to customize my code editor with some personal settings,
+  When I have configured those settings,
+  Then they should work.
 
-- Givet att byter språk,
-  När jag klickar på knappen,
-  Då ska ett kort kod exempel för det språket sättas i kod editorn.
+- Given that I switch language,
+  When I click the button,
+  Then a short code example for that language should be inserted into the code editor.
 
-### Trello: Förebilder
+### Trello: Before
 
-![Github Projects – Sprint 2 start](images/trello-sprint2-bild1.png)
-![Github Projects – Sprint 2 start](images/trello-sprint2-bild2.png)
+![GitHub Projects - Sprint 2 start](images/trello-sprint2-bild1.png)
+![GitHub Projects - Sprint 2 start](images/trello-sprint2-bild2.png)
 
-### Trello: Efterbilder
+### Trello: After
 
-![Github Projects – Sprint 2 start](images/trello-sprint2-slut.png)
+![GitHub Projects - Sprint 2 end](images/trello-sprint2-slut.png)
 
-Efter att vi börjat med tidsestermerings filen så tyckte vi denna trello tavla blev lite överflödig, därför minskade uppdateringen av denna tavla.
+After we started using the time-estimation file, we felt that this Trello board became somewhat redundant, which is why we updated it less frequently.
 
-### Github-projects förebild:
+### GitHub Projects: Before
 
-![Github Projects – Sprint 2 start](images/projects-sprint2-start.png)
+![GitHub Projects - Sprint 2 start](images/projects-sprint2-start.png)
 
-### Github-projects efterbild:
+### GitHub Projects: After
 
-![Github Projects – Sprint 2 start](images/projects-sprint2-slut.png)
+![GitHub Projects - Sprint 2 end](images/projects-sprint2-slut.png)
 
-## 2. Leveransdokumenation
+## 2. Delivery Documentation
 
-### Färdigställda user stories
+### Completed User Stories
 
-- US-103: Logga in och autentisiering (krav: 2.1.1)
-- US-205: Grundläggande kodredigering (krav:2.3.1)
+- US-103: Login and authentication (requirement 2.1.1)
+- US-205: Basic code editing (requirement 2.3.1)
 
-### Färdigställda tasks
+### Completed Tasks
 
-- T-103-2: Implementera klientvaliderign för auth-formulär
-- T-103-4: Implementera logout genom att rensa JWT
-- T-103-3: Spara och hantera autentisiering med JWT
-- T-102-5: Refaktor register-success steget
-- T-201-1: Skapa CreateFile-komponent
-- T-201-2: Skapa en FileList-komponent
-- T-205-2: Hantera språk och initialt kodinnehåll i editiorn
-- T-201-2: Skapa funktioner för fil-/projekt hantering i fileServices.js
-- T-202-2: Skapa funktioner för att hämta projekt och filer i fileServices.js
-- T-205-1: Implementera State hantering för editorinnehåll
-- T-205-2: Hantera språk och initialt kodinnehåll i editorn
-- T-205-3: Säkerställa korrekt editor-konfiguration
-- T-205-4: Editor settings (UI + lagring av inställningar)
+- T-103-2: Implement client-side validation for auth forms
+- T-103-4: Implement logout by clearing the JWT
+- T-103-3: Save and handle authentication with JWT
+- T-102-5: Refactor the register-success step
+- T-201-1: Create the `CreateFile` component
+- T-201-2: Create a `FileList` component
+- T-205-2: Handle language selection and initial code content in the editor
+- T-201-2: Create functions for file and project handling in `fileServices.js`
+- T-202-2: Create functions for fetching projects and files in `fileServices.js`
+- T-205-1: Implement state handling for editor content
+- T-205-2: Handle language selection and initial code content in the editor
+- T-205-3: Ensure correct editor configuration
+- T-205-4: Editor settings (UI + storing settings)
 
-### Fördelning - vem ansvarade för vad?
+### Distribution - who was responsible for what?
 
 - Jenny:
   T-103-2
@@ -180,98 +180,94 @@ Efter att vi börjat med tidsestermerings filen så tyckte vi denna trello tavla
 - Arian:
   T-201-1, T-202-1
 - Zebastian:
-  T-205-1, T-205-2, T-205-3 och T-205-4
+  T-205-1, T-205-2, T-205-3, and T-205-4
 
-### Tidsutfall - Hur många timmar per task?
+### Time Outcome - how many hours per task?
 
-- T-103-2: 6 timmar
-- T-103-3: 1 timme
-- T-103-4: 2 timmar
-- T-102-5: 2 timmar (Denna låg inte med i den ursprungliga planeringen)
-- T-201-1: 4 timmar
-- T-201-2: 6 timmar
-- T-202-2: 3 timmar
-- T-205-1: 4 timmar
-- T-205-2: 4 timmar
-- T-205-3: 3 timmar
-- T-205-4: 6 timmar (Denna låg inte med i den ursprungliga planeringen)
+- T-103-2: 6 hours
+- T-103-3: 1 hour
+- T-103-4: 2 hours
+- T-102-5: 2 hours (this was not part of the original plan)
+- T-201-1: 4 hours
+- T-201-2: 6 hours
+- T-202-2: 3 hours
+- T-205-1: 4 hours
+- T-205-2: 4 hours
+- T-205-3: 3 hours
+- T-205-4: 6 hours (this was not part of the original plan)
 
 ## Definition of Done
 
 ### Definition of Done - Team 12
 
-En user story anses vara klar när samtliga kriterier nedan är uppfyllda.
+A user story is considered complete when all criteria below are met.
 
-#### Funktionalitet & krav
+#### Functionality and Requirements
 
-- Funktionen **uppfyller** sin user stories **acceptance criteria**
+- The feature **meets** the user story's **acceptance criteria**
 
-### Spårbarhet & planering
+### Traceability and Planning
 
-- User story har **rätt namngivning** och task kan **spåras till user story**
-- Tidsestimering och **tidsrapport** för task är **dokumenterad**
+- The user story has **correct naming** and the task can be **traced back to the user story**
+- Time estimates and **time reporting** for the task are **documented**
 
-### Kodkvalitet
+### Code Quality
 
-- Koden **fungerar** lokalt **utan fel**
-- **Felhantering** är implementerad **där det är relevant**
+- The code **runs locally** **without errors**
+- **Error handling** is implemented **where relevant**
 
-### Dokumentation
+### Documentation
 
-- README är uppdaterad när det behövs
+- The README is updated when needed
 
-### Kodgranskning & leverans
+### Code Review and Delivery
 
-- **PR**-beskrivningen **förklarar vad** som gjorts och **kopplar till en user story**
-- **Minst en** annan gruppmedlem **har granskat** och godkänt PR:en
-- Koden är mergad till main
+- The **PR** description **explains what** was done and **links to a user story**
+- **At least one** other group member **has reviewed** and approved the PR
+- The code is merged into `main`
 
-### Kodstandard
+### Code Standard
 
-- Koden följer gruppens kodkonventioner:
-  - Commits, kod & filnamn: Engelsk text
-  - Brödtext i ex Trello/PR/Code-review: Svensk text
-  - React, jsx-filer: PascalCase
-  - js-filer, variabler, props: camelCase
-  - CSS, SASS: kebab-case
-  - mappar: lowercase
+- The code follows the group's coding conventions:
+  - Commits, code, and file names: English text
+  - Body text in, for example, Trello/PR/code review: Swedish text
+  - React `.jsx` files: PascalCase
+  - `.js` files, variables, props: camelCase
+  - CSS and SASS: kebab-case
+  - Folders: lowercase
 
-## 3. Sprint retrospective
+## 3. Sprint Retrospective
 
-**Vad fungerade bra? T ex vad ni är nöjda med — tekniskt, processmässigt eller samarbetsmässigt?**
+**What worked well? For example, what are you satisfied with technically, process-wise, or collaboration-wise?**
 
-Vi tycker det är bra med daily standup och att vi bör fortsätta med dessa möten. Vi är duktiga på att vara flexibla för varandras scheman. Vi är också duktiga på att stötta upp varandra och få arbetet att fortgå även om vi inte kan samlas allihop i ett möte eller om vi upplever motgångar i arbetsuppgifter eller i livet i allmänhet. Processen är att vi uppdaterar varandra i discord när någon inte varit närvarande så att alla lätt kan uppdatera sig.
+We think daily standups are useful and that we should continue with them. We are also good at being flexible with each other's schedules. We support one another well and keep the work moving forward even when we cannot all meet at the same time, or when we run into difficulties in tasks or in life in general. Our process is to update each other in Discord when someone has not been present so that everyone can catch up easily.
 
-**Vad fungerade mindre bra?
-Vad skapade friktion, förseningar eller frustration? Var ärliga — retrospektivet är ett verktyg för förbättring, inte en värdering av gruppen**
+**What worked less well? What created friction, delays, or frustration? Be honest - the retrospective is a tool for improvement, not an evaluation of the group.**
 
-Vi har inte riktigt kommit igång med daily standup på det sätt som vi kommit överens om i förra sprint retrospective. Vi ska därför jobba med att tydligare fokusera på daily standup under 30 min vilket innebär att vi under denna tid kör bordet runt att besvara vad vi tänkt göra idag och identifierare om det finns blockerare. Eventuella blockerare ska inte diskuteras under daily standup utan man kommer istället överens om vilka som kan lösa dem tillsammans efter mötet. Ett nytt arbetsmöte startas för att jobba med andra uppgifter och ska inte ingå i daily standup.
+We have not fully gotten our daily standups running in the way we agreed on in the previous sprint retrospective. We therefore need to focus more clearly on keeping the daily standup within 30 minutes. During that time, we should go around the group and answer what we plan to do today and whether there are any blockers. Potential blockers should not be discussed during the daily standup itself. Instead, the people involved should agree on who can solve them together after the meeting. A separate work session can then start for those tasks and should not be part of the daily standup.
 
-**Vad gör vi annorlunda nästa sprint?
-Formulera minst en konkret åtgärd — inte bara en insikt. En åtgärd är något ni faktiskt kan följa upp: vad ska göras, av vem och när?**
+**What will we do differently next sprint? Formulate at least one concrete action - not just an insight. An action is something you can actually follow up on: what should be done, by whom, and when?**
 
-Vi kan bli ännu bättre på att sammanfatta:
+We can get even better at summarizing:
 
-- vad var och en ska göra under dagen i daily update
+- what each person plans to do during the day in the daily update
+- or taking meeting notes about what was done during a work session if that would help the rest of the group understand what was discussed
 
-- eller ta mötesanteckningar vad som gjorts under ett arbetsmöte om det kan gynna övriga gruppmedlemmar att veta vad som diskuterats.
+This means that if someone was not present at the daily standup or a work meeting:
 
-Detta görs genom att om någon inte varit närvarande i daily standup eller ett arbetsmöte:
+- Daily standup: everyone posts an update in the Discord daily-update channel according to our template, which means that even people who did not attend the meeting write a short update, including if they are not able to work at all because they are busy with other things
+- Other meetings: summarize together what was said and done in the meeting if it could benefit other group members
 
-- Daily standup: Alla uppdaterar var och en i discord daily update enligt vår mall, vilket innebär att även de som inte deltagit i mötet skriver en kort uppdatering samt ifall de inte alls kan göra något pga upptagen med annat
+We can also become more structured in how we share planned presence or absence in advance for the daily standup. In addition, we can share our upcoming availability for work in a more structured way for the next sprint.
 
-- Övriga möten: Sammanfatta tillsammans vad som sagt och gjorts i mötet som kan gynna övriga gruppmedlemmar
+This will be handled more clearly from the next sprint onward, starting in Sprint 3, by filling in a tab in our shared Google Sheets document instead of writing in the chat.
 
-Vi kan bli mer strukturerade i hur vi i förväg delar eventuell närvaro/frånvaro i daily standup. Vi kan också på ett mer strukturerat sätt dela vilka tider vi är tillgängliga för arbete kommande sprint.
+## 4. Time Logging and Estimation
 
-Detta struktureras från nästa sprint (sprint 3) tydligare genom att vi fyller i en flik i vårt delade Google Sheets-dokument istället för att skriva i chatten.
+**How well did the group's overall time estimates match the logged time during the sprint? Highlight one concrete example of a task that took more or less time than estimated and discuss why.**
 
-## 4. Tidloggning & estimering
+One example of a task that took longer than planned is T-103-2: Implement client-side validation for auth forms. As a group, we estimated that it would take 6 hours. After 6 hours, it felt like the task was largely done, but we re-estimated it to require 2 more hours because some fixes remained, a PR had to be created, and test instructions had to be written. However, the remaining coding took more time and required a better understanding of `useState` in React, among other things. As a group, we also needed to agree on the best solution for error output and whether the solution was good enough. After some discussion, we created a solid solution for error output beyond the standard validation in the form element. The PR was created, but the code review brought back valuable feedback and identified further improvement potential. That also took a couple of extra hours. During that time, all feedback points were addressed except for one part that was particularly tricky. That part took two hours for two group members to solve together through discussion. After that, the PR was approved and merged. In total, the task took 14 hours, partly because more than one participant was involved. It had originally been estimated at 6 hours, as mentioned earlier.
 
-**Hur väl stämde gruppens samlade tidsestimat med inloggad tid under sprinten? Lyft ett konkret exempel på en uppgift som tog mer eller mindre tid än estimerat och diskutera vad det berodde på.**
+**What will you bring into the next sprint planning session?**
 
-Ett exempel på uppgift som tagit längre tid än planerat är task T-103-2: Implementera klientvalidering för auth-formulär. Vi hade som grupp estimerat att den skulle ta 6 timmar att genomföra. När 6 h var gjord kändes det som att uppgiften till stor del var genomförd men skattades om till att kräva 2 timmar till med tanke på lite fix och att PR ska skapas och att instruktion för test skulle skrivas. Men det som var kvar att skriva kod för tog lite mer tid och krävde bättre förståelse av bland annat useState i React. Vi behövde också som grupp komma överens om vad som var bästa lösningen för felutskrift och om lösningen blev tillräckligt bra enligt gruppen. Efter lite dialog fick vi till en bra lösning för felutskrift utanför standardvalideringen i form-elementet. PR gjordes men i code review kom det tillbaka väldigt bra feedback och utvecklingspotential. Även detta tog ett par extra timmar ytterligare. Under denna tid löste sig alla feedback-punkter förutom en del som var extra klurig. Denna extra kluriga del tog två timmar för två gruppmedlemmar att lösa genom att gemensamt diskutera fram en möjlig lösning. Därefter godkändes och mergades denna PR. Det blev totalt 14 timmar, då vi delvis var mer än en deltagare, för att lösa uppgiften. Den hade estimerats till 6 timmar som tidigare nämnts.
-
-**Vad tar ni med er i nästa sprints planering?**
-
-Något vi tar med oss är att man gärna uppskattar tiden för kort mot vad det tar att göra en uppgift i verkligheten.Vi tar med oss att det är svårt att göra en heltäckande planering. Det är exempelvis svårt att förutse alla delmoment i detalj och se alla hinder eller utmaningar i förväg som kan uppkomma på vägen mot en löst uppgift. Det är även viktigt att planera in tid till code review och att det kan behövas tid till att göra justeringar utifrån code review, vilket vi har underskattat något denna sprint.
+One thing we are taking with us is that we tend to estimate tasks too optimistically compared to the time they take in reality. We are also taking with us that it is difficult to create a fully comprehensive plan. For example, it is hard to predict every sub-step in detail and foresee every obstacle or challenge that might appear on the way to a finished task. It is also important to plan time for code review and for adjustments based on code review, which we underestimated somewhat during this sprint.

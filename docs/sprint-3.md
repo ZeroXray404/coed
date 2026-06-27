@@ -1,210 +1,210 @@
-# Sprint 2 - Gruppuppgift
+# Sprint 3 - Group Assignment
 
 ## 1. Sprint Planning
 
-### Sprint mål
+### Sprint Goal
 
-Målet är att göra klart filhantering, spara, läsa, visa, öppna filer samt göra klart editor funktionaliteten. Utöver det så är målet att börja med realtids-samarbete via socket-io.
+The goal of this sprint is to complete file handling, including saving, loading, displaying, and opening files, as well as finishing the editor functionality. In addition, the goal is to begin real-time collaboration via `socket.io`.
 
-### Valda user stories
+### Selected User Stories
 
-Vi fortsätter med User Stories från förra sprinten som vi inte hann klart med:
+We are continuing with the user stories from the previous sprint that we did not finish:
 
-- US-201: Skapa, ta bort och dela filer (Krav: 2.2.1)
-- US-202: Visa projekt och fillista (Krav:2.2.2)
+- US-201: Create, delete, and share files (Requirement 2.2.1)
+- US-202: Display projects and file list (Requirement 2.2.2)
 
-De nya User Stories som vi börjar med är:
+The new user stories we are starting are:
 
-- US-301: Utökad editorfunktionalitet (Krav: 2.3.2–2.3.5)
-- US-302: Samtidig redigering (Krav: 2.4.1)
+- US-301: Extended editor functionality (Requirements 2.3.2-2.3.5)
+- US-302: Simultaneous editing (Requirement 2.4.1)
 
 ### Tasks
 
-- T-201-3: Koppla UI till backend via fileServices
-- T-201-4: Bjud in medlemmar i projektet
-- T-201-5: Skapa modala fönster för radering bekräftelse
-- T-201-6: Skapa input fält för namngivning av projekt/filer
-- T-201-7: Skapa funktioner för användarhantering i userServices.js (tillkom under sprint 3)
+- T-201-3: Connect the UI to the backend through `fileServices`
+- T-201-4: Invite members to the project
+- T-201-5: Create modal dialogs for delete confirmation
+- T-201-6: Create input fields for naming projects and files
+- T-201-7: Create functions for user handling in `userServices.js` (added during Sprint 3)
 
-- T-202-3: Implementera hämtning av projekt och fillista i UI
-- T-202-4: Hämta metadata per projekt och fil
-- T-202-5: Implementera sortering
-- T-202-6: Öppna klickade fil i code-editor och highlighting
-- T-202-7: Visuellt markera delade projekt och filer
+- T-202-3: Implement fetching of projects and the file list in the UI
+- T-202-4: Fetch metadata per project and file
+- T-202-5: Implement sorting
+- T-202-6: Open the clicked file in the code editor and highlight it
+- T-202-7: Visually mark shared projects and files
 
-- T-301-1: Konfigurera syntax highlighting med fil-ändelse
-- T-301-2: Säkerställa radnummer och editor-options
-- T-301-3: Implementera visning av cursor position
-- T-301-4: Verifiera sök- och ersätt funktion i aktiv fil
-- T-301-5: Verifiera ångra/gör om
+- T-301-1: Configure syntax highlighting based on file extension
+- T-301-2: Ensure line numbers and editor options
+- T-301-3: Implement display of cursor position
+- T-301-4: Verify search and replace in the active file
+- T-301-5: Verify undo and redo
 
-- T-302-1: Sätta upp socket-anslutning mellan klient och server
-- T-302-2: Skicka editor ändringar från Monaco till servern
-- T-302-3: Implementera mottagning av realtidsuppdateringar i klienten
-- T-302-4: Synkronisera editor innehåll mellan flera klienter
-- T-302-5: Säkerställa korrekt syntax highlighting efter externa ändringar
-- T-302-6: Ladda senaste filversion vid anslutning till edito
+- T-302-1: Set up the socket connection between client and server
+- T-302-2: Send editor changes from Monaco to the server
+- T-302-3: Implement receiving real-time updates in the client
+- T-302-4: Synchronize editor content between multiple clients
+- T-302-5: Ensure correct syntax highlighting after external changes
+- T-302-6: Load the latest file version when connecting to the editor
 
-### Fördelning
+### Distribution
 
-Vi har kört på fri fördelning och först till kvarn på samtliga tasks i backloggen. Samtal gällande fördelning har skett kontinuerligt och fortlöpande, då vi alla arbetar under olika tider/dagar i veckan så vill vi inte låsa upp tasks genom att “paxxa” tasks som kan blockera för fortsättning för andra. Därför låter vi backloggen vara fri för vem som helst att påbörja en task när den har t
+We used open allocation and first-come, first-served for all tasks in the backlog. Discussions about distribution took place continuously and on an ongoing basis. Since we all work on different days and at different times during the week, we do not want to block progress by reserving tasks that others may need in order to continue. Because of that, the backlog stays open for anyone to start a task when they have time.
 
-### Estimering
+### Estimation
 
-Estimering finns här i fliken Sprint 3:
+Estimates are available here under the "Sprint 3" tab:
 https://docs.google.com/spreadsheets/d/1C4emn6hofD2PmGw2cUFbroMHP918EOgcrvQGSVOMWcU/edit?gid=0#gid=0
 
-### Acceptanskriterier
+### Acceptance Criteria
 
-#### 201:
+#### US-201
 
-- Givet att jag är inloggad
-  När jag trycker på knappen "New Project"
-  Då ska en projektmapp skapas som jag kan namnge
+- Given that I am logged in,
+  When I press the "New Project" button,
+  Then a project folder should be created that I can name.
 
-- Givet att jag har skapat ett projekt
-  När jag trycker på knappen "New file"
-  Då ska en fil skapas som ska kunna namnges
+- Given that I have created a project,
+  When I press the "New file" button,
+  Then a file should be created that can be named.
 
-- Givet att i mitt projekt finns en fil som jag vill ta bort
-  När jag klickar på "Delete"
-  Då ska ett fönster visas för att bekräfta borttagning
+- Given that there is a file in my project that I want to delete,
+  When I click "Delete",
+  Then a dialog should be shown to confirm the deletion.
 
-- Givet att jag bekräftar borttagning av vald fil
-  När jag tar bort filen
-  Då ska filen försvinna permanent
+- Given that I confirm the deletion of the selected file,
+  When I delete the file,
+  Then the file should disappear permanently.
 
-- Givet att jag är inloggad och äger/har skapat ett projekt
-  När jag trycker på knappen "Share"
-  Då ska jag ett formulär visas där jag kan fylla i e postadress till den jag vill dela projektet med
+- Given that I am logged in and own or have created a project,
+  When I press the "Share" button,
+  Then a form should be shown where I can enter the email address of the person I want to share the project with.
 
-#### 202:
+#### US-202
 
-- Givet att jag är inloggad,
-  När jag trycker på knappen "Load Project",
-  Då ska det valda projektet läsas in med tillhörande filer.
+- Given that I am logged in,
+  When I press the "Load Project" button,
+  Then the selected project should be loaded together with its files.
 
-- Givet att jag inte har något projekt,
-  När jag trycker på knappen "Load Projekt",
-  Då ska man bli erbjuden att skapa ett projekt.
+- Given that I do not have a project,
+  When I press the "Load Project" button,
+  Then I should be offered the option to create a project.
 
-- Givet att jag inte är inloggad,
-  När jag kollar på sidan,
-  Då ska inga filer eller projekt vara listade.
+- Given that I am not logged in,
+  When I look at the page,
+  Then no files or projects should be listed.
 
-- Givet att jag inte är inloggad,
-  När jag försöker klicka på "Load Project",
-  Då ska den inte vara aktiv.
+- Given that I am not logged in,
+  When I try to click "Load Project",
+  Then it should not be active.
 
-- Givet att jag har skapat projekt eller filer
-  När jag klickar på ett projekt eller fil
-  Då ska projektet eller filen öppnas i code-editor
+- Given that I have created projects or files,
+  When I click a project or file,
+  Then the project or file should open in the code editor.
 
-- Givet att jag har delat ett projekt eller fil
-  När jag navigerar min fil-lista
-  Då ska det tydligt framgå vilka projekt eller mappar som är delade
+- Given that I have shared a project or file,
+  When I navigate my file list,
+  Then it should be clear which projects or folders are shared.
 
-#### 301:
+#### US-301
 
-- Givet att jag har öppnat en fil i editorn  
-  När filen visas i Monaco-editorn  
-  Då ska koden visas med syntax- highlighting baserat på filtyp, till exempel HTML, CSS eller JavaScript.
+- Given that I have opened a file in the editor,
+  When the file is displayed in the Monaco Editor,
+  Then the code should be shown with syntax highlighting based on file type, such as HTML, CSS, or JavaScript.
 
-- Givet att jag har öppnat en fil i editorn  
-  När jag skriver eller navigerar i koden  
-  Då ska editorn visa radnummer och använda konfigurerade editor-options som gör koden lättare att läsa och redigera.
+- Given that I have opened a file in the editor,
+  When I write or navigate in the code,
+  Then the editor should show line numbers and use configured editor options that make the code easier to read and edit.
 
-- Givet att jag har markören placerad i editorn  
-  När jag flyttar markören till en annan plats i koden  
-  Då ska aktuell rad och kolumn för markörens position visas i gränssnittet.
+- Given that I have the cursor placed in the editor,
+  When I move the cursor to another place in the code,
+  Then the current line and column of the cursor position should be shown in the interface.
 
-- Givet att jag har en aktiv fil öppen i editorn  
-  När jag använder sök- eller ersätt funktionen  
-  Då ska jag kunna hitta och ersätta text i den aktiva filen.
+- Given that I have an active file open in the editor,
+  When I use the search or replace function,
+  Then I should be able to find and replace text in the active file.
 
-- Givet att jag har gjort en ändring i koden  
-  När jag använder ångra eller gör om  
-  Då ska editorn återställa eller återskapa ändringen korrekt i den aktiva filen.
+- Given that I have made a change in the code,
+  When I use undo or redo,
+  Then the editor should correctly restore or recreate the change in the active file.
 
-#### 302:
+#### US-302
 
-- Givet att flera användare har öppnat samma fil  
-  När en användare gör en ändring i editorn  
-  Då ska ändringen visas för övriga användare i realtid.
+- Given that multiple users have opened the same file,
+  When one user makes a change in the editor,
+  Then the change should be shown to the other users in real time.
 
-- Givet att två eller fler användare redigerar samma fil samtidigt  
-  När ändringar skickas mellan klienterna  
-  Då ska filens innehåll hållas synkroniserat mellan alla användare.
+- Given that two or more users edit the same file at the same time,
+  When changes are sent between the clients,
+  Then the file content should remain synchronized for all users.
 
-- Givet att en användare får ändringar från en annan användare  
-  När innehållet uppdateras i Monaco-editorn  
-  Då ska syntax- och editors rendering uppdateras korrekt.
+- Given that a user receives changes from another user,
+  When the content is updated in the Monaco Editor,
+  Then syntax rendering and editor rendering should be updated correctly.
 
-- Givet att en användare ansluter till en redan öppen fil  
-  När filen laddas in  
-  Då ska användaren få den senaste versionen av filens innehåll.
+- Given that a user connects to a file that is already open,
+  When the file is loaded,
+  Then the user should receive the latest version of the file content.
 
-- Givet att anslutningen till realtids servern bryts  
-  När användaren försöker fortsätta redigera  
-  Då ska användaren få feedback om att real tidssynkronisering inte fungerar.
+- Given that the connection to the real-time server is lost,
+  When the user tries to continue editing,
+  Then the user should receive feedback that real-time synchronization is not working.
 
 #### GitHub Projects Start
 
-![Github Projects – Sprint 3 Start ](images/projects-sprint3-start.png)
+![GitHub Projects - Sprint 3 start](images/projects-sprint3-start.png)
 
-## 2. Leveransdokumentation
+## 2. Delivery Documentation
 
-[Länk till GitHub Pages](https://zebwul.github.io/coed-grupp-12/)
+[Link to GitHub Pages](https://zebwul.github.io/coed-grupp-12/)
 
-### Färdigställda user stories
+### Completed User Stories
 
-- US-301: Utökad editorfunktionalitet (Krav: 2.3.2–2.3.5)
-- US-201: Skapa, ta bort och dela filer (Krav: 2.2.1)
+- US-301: Extended editor functionality (Requirements 2.3.2-2.3.5)
+- US-201: Create, delete, and share files (Requirement 2.2.1)
 
-### Färdigställda Tasks
-
-Niklas:
-
-- T-202-3: Implementera hämtning av projekt och fil lista i UI
-- T-201-3: Koppla UI till backend via fileServices
-- Bug: Knapparna "delete" och "addUser" trasiga
-
-Jenny:
-
-- T-201-4: Bjud in medlemmar i projektet
-- T-201-7: Skapa funktioner för användarhantering i userServices.js
-
-Arian:
-
-- T-201-5: Skapa modalfönster för raderingsbekräftelse
-- T-202-4: Hämta metadata per projekt och fil
-- Chore: Lägga till miljövariabler i pages.yml
-- Chore: Refaktorera om sidebaren
-- T-201-6: Skapa inputfält för namngivning av projekt/filer
-
-Zebastian:
-
-- T-202-6: Öppna klickade fil i code-editor och highlighting
-- T-301-1: Konfigurera syntax highlighting med fil-ändelse
-- T-301-2: Säkerställa radnummer och editor-options
-- T-301-3: Implementera visning av cursorposition
-- T-301-4: Verifiera sök- och ersättfunktion i aktiv fil
-- T-301-5: Verifiera ångra/gör om
-- T-302-1: Sätta upp socket-anslutning mellan klient och server
-- T-302-2: Skicka editor ändringar från Monaco till servern
-- T-302-3: Implementera mottagning av realtidsuppdateringar i klienten
-- T-302-4: Synkronisera editorinnehåll mellan flera klienter
-- T-302-5: Säkerställa korrekt syntax highlighting efter externa ändringar
-
-### Påbörjade men ej färdigställda tasks
+### Completed Tasks
 
 Niklas:
 
+- T-202-3: Implement fetching of projects and the file list in the UI
+- T-201-3: Connect the UI to the backend through `fileServices`
+- Bug: The "delete" and "addUser" buttons were broken
+
+Jenny:
+
+- T-201-4: Invite members to the project
+- T-201-7: Create functions for user handling in `userServices.js`
+
+Arian:
+
+- T-201-5: Create a modal dialog for delete confirmation
+- T-202-4: Fetch metadata per project and file
+- Chore: Add environment variables to `pages.yml`
+- Chore: Refactor the sidebar
+- T-201-6: Create input fields for naming projects and files
+
+Zebastian:
+
+- T-202-6: Open the clicked file in the code editor and highlight it
+- T-301-1: Configure syntax highlighting based on file extension
+- T-301-2: Ensure line numbers and editor options
+- T-301-3: Implement display of cursor position
+- T-301-4: Verify search and replace in the active file
+- T-301-5: Verify undo and redo
+- T-302-1: Set up the socket connection between client and server
+- T-302-2: Send editor changes from Monaco to the server
+- T-302-3: Implement receiving real-time updates in the client
+- T-302-4: Synchronize editor content between multiple clients
+- T-302-5: Ensure correct syntax highlighting after external changes
+
+### Started but Not Completed Tasks
+
+Niklas:
+
 - N/A
 
 Jenny:
 
-- T-202-7: Visuellt markera delade projekt och filer
+- T-202-7: Visually mark shared projects and files
 
 Arian:
 
@@ -214,84 +214,84 @@ Zebastian:
 
 - N/A
 
-### Tidsutfafall
+### Time Outcome
 
-Tidsutfall finns här under flik “Sprint 3”: https://docs.google.com/spreadsheets/d/1C4emn6hofD2PmGw2cUFbroMHP918EOgcrvQGSVOMWcU/edit?gid=0#gid=0
+Time outcome is available here under the "Sprint 3" tab: https://docs.google.com/spreadsheets/d/1C4emn6hofD2PmGw2cUFbroMHP918EOgcrvQGSVOMWcU/edit?gid=0#gid=0
 
 ### Definition of Done - Team 12
 
-En user story anses vara klar när samtliga kriterier nedan är uppfyllda.
+A user story is considered complete when all criteria below are met.
 
-#### Funktionalitet & krav
+#### Functionality and Requirements
 
-- Funktionen **uppfyller** sin user stories **acceptance criteria**
+- The feature **meets** the user story's **acceptance criteria**
 
-### Spårbarhet & planering
+### Traceability and Planning
 
-- User story har **rätt namngivning** och task kan **spåras till user story**
-- Tidsestimering och **tidsrapport** för task är **dokumenterad**
+- The user story has **correct naming** and the task can be **traced back to the user story**
+- Time estimates and **time reporting** for the task are **documented**
 
-### Kodkvalitet
+### Code Quality
 
-- Koden **fungerar** lokalt **utan fel**
-- **Felhantering** är implementerad **där det är relevant**
+- The code **runs locally** **without errors**
+- **Error handling** is implemented **where relevant**
 
-### Dokumentation
+### Documentation
 
-- README är uppdaterad när det behövs
+- The README is updated when needed
 
-### Kodgranskning & leverans
+### Code Review and Delivery
 
-- **PR**-beskrivningen **förklarar vad** som gjorts och **kopplar till en user story**
-- **Minst en** annan gruppmedlem **har granskat** och godkänt PR:en
-- Koden är mergad till main
+- The **PR** description **explains what** was done and **links to a user story**
+- **At least one** other group member **has reviewed** and approved the PR
+- The code is merged into `main`
 
-### Kodstandard
+### Code Standard
 
-- Koden följer gruppens kodkonventioner:
-  - Commits, kod & filnamn: Engelsk text
-  - Brödtext i ex Trello/PR/Code-review: Svensk text
-  - React, jsx-filer: PascalCase
-  - js-filer, variabler, props: camelCase
-  - CSS, SASS: kebab-case
-  - mappar: lowercase
+- The code follows the group's coding conventions:
+  - Commits, code, and file names: English text
+  - Body text in, for example, Trello/PR/code review: Swedish text
+  - React `.jsx` files: PascalCase
+  - `.js` files, variables, props: camelCase
+  - CSS and SASS: kebab-case
+  - Folders: lowercase
 
-#### GitHub Projects Slut
+#### GitHub Projects End
 
-![Github Projects – Sprint 3 slut ](images/projects-sprint3-slut.png)
+![GitHub Projects - Sprint 3 end](images/projects-sprint3-slut.png)
 
-## 3. Sprint retrospective
+## 3. Sprint Retrospective
 
-### Vad fungerade bra?
+### What worked well?
 
-Vi har haft väldigt bra energi och är mycket kreativa i gruppen, vilket vi vill fortsätta att bygga vidare på. Vi har också fått klart största delen av grundstrukturen på plats, vilket vi är väldigt nöjda med.
+We had very good energy and were highly creative as a group, which we want to continue building on. We also managed to get most of the basic structure in place, which we are very satisfied with.
 
-### Vad fungerade mindre bra?
+### What worked less well?
 
-Vi är överens om att vi inte alltid efterlever de beslut som är tagna. Vi har pratat om att vi kanske sätter målen lite för högt och behöver hitta en medelväg för vad som ska göras. Om uppslutningen på möten hade varit bättre och alla hade samlats oftare så hade behovet av att följa processerna minskat eftersom uppdateringen då görs direkt i våra möten. Det har exempelvis varit lite otydligheter kring om daily standup ska bli av fysiskt eller inte denna sprinten.
+We agree that we do not always follow through on the decisions we make. We have discussed that we may be setting our goals too high and need to find a middle ground for what should be done. If attendance at meetings had been better and everyone had gathered more often, the need to strictly follow the process would have been lower because updates would have happened directly during meetings. For example, there was some uncertainty during this sprint about whether the daily standup would happen live or not.
 
-### Vad skapade friktion, förseningar eller frustration?
+### What created friction, delays, or frustration?
 
-Vi har sett över processen när beslut tas då inte besluten alltid efterlevts vilket gjort att vi jobbat på olika sätt. Vi har exempelvis inte jobbat på samma sätt med hur vi uppdaterar varandra med närvaro, vilket kan ha lett till frustration såsom att alla inte känt sig uppdaterade och därmed också har lett till förvirring om möten ska hållas eller ej.
+We reviewed the process for how decisions are made because decisions were not always followed, which meant that we ended up working in different ways. For example, we did not consistently handle presence updates in the same way, which may have created frustration because not everyone felt informed and that, in turn, led to confusion about whether meetings would happen.
 
-Denna sprint hade även vi flera tätt kopplade tasks som var beroende av varandra, vilket resulterade i ett delvis ineffektivt arbete då det ledde till konflikter i koden som behövde lösas i efterhand.
+During this sprint we also had several tightly coupled tasks that depended on each other, which resulted in partly inefficient work because it led to code conflicts that had to be resolved afterward.
 
-### Vad gör vi annorlunda nästa sprint?
+### What will we do differently next sprint?
 
-Vi har beslutat att alla ska gå in i vårt delade exceldokument och uppdatera när man är tillgänglig för arbete i gruppen och när man ska delta i daily standup. Då har alla ett samlat dokument att titta i och alla är uppdaterade kring vem som är tillgänglig och när. Detta för att vi ska kunna fortsätta vara flexibla med alla gruppens medlemmars tider. Vi vill också i förhand ha tiderna för sprint planning och sprint retrospective planerade så att så många kan vara med som möjligt. Sprint retrospective ska därför göras efter lunch på torsdagen när sprint review är klar. Då kan alla närvara.
+We decided that everyone should go into our shared spreadsheet and update when they are available for group work and when they will participate in the daily standup. That gives everyone one shared document to check and keeps everyone informed about who is available and when. This is intended to help us remain flexible with each group member's schedule. We also want to have the times for sprint planning and sprint retrospective scheduled in advance so that as many people as possible can participate. The sprint retrospective should therefore be held after lunch on Thursday when the sprint review is complete so that everyone can attend.
 
-Vi har också beslutat att oftare skriva kommentarer i koden så det blir lättare för övriga gruppmedlemmar att läsa och förstå.
+We also decided to write comments in the code more often so that it becomes easier for the other group members to read and understand.
 
-Det finns olika sätt att undvika för stora konflikter när vi jobbar i tight sammankopplade tasks. Vi kommer att se över om vi om möjligt i större utsträckning kan jobba i olika filer istället för att flera personer jobbar och gör ändringar i samma filer. Vi kommer också försöka merga koden vi jobbar i oftare och skapa fler men mindre PRs samt försöka göra tasken mindre för att öka sannolikheten att vi har mer lika kod i vårt löpande arbete.
+There are different ways to avoid conflicts that become too large when we work on tightly connected tasks. We will review whether we can, where possible, work in different files instead of having several people making changes in the same files. We will also try to merge the code we work on more frequently, create more but smaller PRs, and make tasks smaller in order to increase the likelihood that our ongoing work stays closer together.
 
-## 4. Tidloggning & estimering
+## 4. Time Logging and Estimation
 
-### Hur väl stämde gruppens samlade tidsestimat med loggad tid under sprinten?
+### How well did the group's overall time estimates match the logged time during the sprint?
 
-Majoriteten av tasksen stämde med estimeringen. Men vi hade över estimerat tiden på US 301 och det tog oss kortare tid att färdigställa dessa fem tasks kopplade till denna US. Detta kom av att många av de tasks vi skapade och estimerade helt enkelt kommer med i monaco-biblioteket.
+The majority of the tasks matched the estimates. However, we overestimated the time for US-301, and it took us less time than expected to complete the five tasks connected to that user story. This was because many of the tasks we created and estimated were already supported by the Monaco library.
 
-Vi hade också några få tasks som vi underestimerade tiden på då de var mer komplexa än vi vid första anblick hade räknat med. Vi reflekterade efteråt kring att dessa tasks till och med skulle kunna ha varit egna user stories.
+We also had a few tasks where we underestimated the time because they were more complex than we initially expected. After reflecting on them, we felt that some of those tasks could even have been their own user stories.
 
-### Vad tar ni med er i nästa sprintplanering?
+### What will you bring into the next sprint planning session?
 
-Vi kommer att kraftsamla på att bryta ner kravspecen i fler userstories med flera, mindre tasks där vi strävar mot att varje task högst kan ta 3 timmar att färdigställa samt 1 timme för codereview och merge till main samt annan daglig rutinverksamhet (daily standups, tidrapport, mm).
+We will make a strong effort to break down the requirements specification into more user stories with more, smaller tasks. Our goal is for each task to take no more than 3 hours to complete, plus 1 hour for code review, merge to `main`, and other daily routine work such as daily standups, time reporting, and similar activities.
