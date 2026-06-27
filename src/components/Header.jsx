@@ -1,6 +1,6 @@
 import { Search, User } from 'lucide-react'
 import { useState } from 'react'
-import AuthCard from './Header/AuthCard'
+import AuthModal from './Header/AuthModal'
 import logo from '../assets/coed-logo-header.svg'
 
 function Header({ isLoggedIn, onLogoutClick, onLoginSuccess }) {
@@ -44,9 +44,9 @@ function Header({ isLoggedIn, onLogoutClick, onLoginSuccess }) {
           <User size={24} />
         </button>
       </div>
-      {/* Visar AuthCard endast när showAuth är true */}
+      {/* Visar AuthModal endast när showAuth är true */}
       {showAuth && (
-        <AuthCard
+        <AuthModal
           onClose={() => setShowAuth(false)}
           onLoginSuccess={handleLoginSuccess}
         />

@@ -2,12 +2,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 import { useEscapeKey } from '../../hooks/useEscapeKey'
-import EmailStep from './AuthCard/EmailStep'
-import LoginStep from './AuthCard/LoginStep'
-import RegisterStep from './AuthCard/RegisterStep'
-import RegisterSuccessStep from './AuthCard/RegisterSuccessStep'
+import EmailStep from './AuthModal/EmailStep'
+import LoginStep from './AuthModal/LoginStep'
+import RegisterStep from './AuthModal/RegisterStep'
+import RegisterSuccessStep from './AuthModal/RegisterSuccessStep'
 
-function AuthCard({ onClose, onLoginSuccess }) {
+function AuthModal({ onClose, onLoginSuccess }) {
   // Stänger modalen när man klickar på escape-knappen
   useEscapeKey(onClose)
 
@@ -33,7 +33,7 @@ function AuthCard({ onClose, onLoginSuccess }) {
     <div className="auth-overlay" onClick={onClose}>
       {/* Själva modal-fönstret */}
       {/* stopPropagation förhindrar att klick inuti modalen stänger den */}
-      <div className="auth-card" onClick={(e) => e.stopPropagation()}>
+      <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
         {/* Tar emot onClose-funktionen från App-komponenten */}
         {step !== 'register-success' && (
           <button
@@ -90,4 +90,4 @@ function AuthCard({ onClose, onLoginSuccess }) {
   )
 }
 
-export default AuthCard
+export default AuthModal
