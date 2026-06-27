@@ -2,7 +2,7 @@
 // Returnerar { API_KEY, AUTH_BASE_URL, DOCKET_BASE_URL } eller null om något saknas
 export function getApiConfig() {
   // 1. Läser env
-  const API_KEY = import.meta.env.VITE_API_KEY
+  const API_KEY = import.meta.env.VITE_AUTH_API_KEY
   const AUTH_BASE_URL = import.meta.env.VITE_AUTH_BASE_URL
   const DOCKET_BASE_URL = import.meta.env.VITE_DOCKET_BASE_URL
 

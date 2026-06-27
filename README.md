@@ -1,4 +1,4 @@
-# Short description about the project
+# About the project
 
 In the project we develop a web-based code editor that updates in real-time. This means several developers can edit the code simultaneously. The application is user friendly, responsive and robust.
 
@@ -8,7 +8,7 @@ In the project we develop a web-based code editor that updates in real-time. Thi
 
 To install the application clone the repository.
 
-`git clone git@github.com:Zebwul/coed-grupp-12.git`<br>`cd coed-grupp-12`
+`git clone git@github.com:ZeroXray404/coed.git`<br>`cd coed`
 
 ### Use correct Node version
 
@@ -55,7 +55,7 @@ or
 ### GitHub Pages
 
 The project is deployed via GitHub Pages:
-https://zebwul.github.io/coed-grupp-12/
+https://zeroxray404.github.io/coed/
 
 <!-- ### React + Vite
 
