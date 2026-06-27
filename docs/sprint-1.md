@@ -181,12 +181,12 @@ Actual time: 22h
 
 ### US-103:
 
-| Task   | Sprint | Estimate | Actual time | Name |
-| ------ | ------ | -------- | ----------- | ---- |
-| T-103-1 | 1     | ~4h      | ~4h         | Zeb  |
-| #86    | 1      | ~2h      | ~N/A        |      |
-| #84    | 1      | ~6h      | ~N/A        |      |
-| #87    | 1      | ~2h      | ~N/A        |      |
+| Task    | Sprint | Estimate | Actual time | Name |
+| ------- | ------ | -------- | ----------- | ---- |
+| T-103-1 | 1      | ~4h      | ~4h         | Zeb  |
+| #86     | 1      | ~2h      | ~N/A        |      |
+| #84     | 1      | ~6h      | ~N/A        |      |
+| #87     | 1      | ~2h      | ~N/A        |      |
 
 Estimated time: ~20h<br>
 Actual time: ??h
