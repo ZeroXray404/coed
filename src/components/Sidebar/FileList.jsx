@@ -1,4 +1,4 @@
-import { AppWindow, File, Users, UserMinus } from 'lucide-react'
+import { AppWindow, FileQuestionMark, Users, UserMinus } from 'lucide-react'
 
 import {
   deleteProjectWithFiles,
@@ -9,7 +9,7 @@ import {
 } from '../../services/fileServices.js'
 import { forwardRef, useState, useEffect } from 'react'
 import { getLanguageFromFileName } from '../../utils/getLanguageFromFileName.js'
-import { getIconNameFromFileName } from '../../utils/getIconNameFromFileName.jsx'
+import { getIconSrcFromFileName } from '../../utils/getIconNameFromFileName.js'
 import InputField from './FileList/InputField.jsx'
 import SortFiles from './FileList/SortFiles.jsx'
 import DeleteModal from './FileList/DeleteModal.jsx'
@@ -429,6 +429,7 @@ function FileListContent(
                     {sortedFiles.map((file) => {
                       const isActiveFile = activeFile?.uid === file.uid
                       const isSelectedFile = selectedFiles.includes(file.uid)
+                      const iconSrc = getIconSrcFromFileName(file.filename)
 
                       return (
                         <li
@@ -450,7 +451,16 @@ function FileListContent(
                             }
                           >
                             <div className="listselect-btn">
-                              {getIconNameFromFileName(file.filename)}
+                              {iconSrc ? (
+                                <img
+                                  src={iconSrc}
+                                  className="sidebar-file-icon"
+                                  alt=""
+                                  aria-hidden="true"
+                                />
+                              ) : (
+                                <FileQuestionMark size={14} />
+                              )}
                               {/*Returnerar ikon-komponent baserat på filnamnets ändelse*/}
                               <span className="list-label">
                                 {file.filename}
