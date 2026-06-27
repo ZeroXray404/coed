@@ -1,111 +1,106 @@
-# **1. Sprint planning-dokumentation**
+# 1. Sprint Planning Documentation
 
-## Sprint-mål
+## Sprint Goal
 
-Huvudmålet med denna sprint var först att säkerställa att arbetsätt var på plats och dokumenterat för att därefter kunna påbörja sprint planning med målet att börja bygga CoEd under andra sprintveckan med maximalt 15 h arbetstid var.
+The main goal of this sprint was first to make sure that our working process was in place and documented, and then to begin sprint planning with the goal of starting to build CoEd during the second sprint week, with a maximum of 15 hours of work per person.
 
-## Valda user stories
+## Selected User Stories
 
-Vi valde att skapa userstories för att skapa en grundläggande layout för vår CoEd. Därefter valde vi att skapa user stories för att bygga användarfunktionalitet. User stories som kopplats till sprint 1 är:
+We chose to create user stories for a basic CoEd layout first. After that, we selected user stories for user functionality. The user stories connected to Sprint 1 are:
 
-- 1: US-101: Skapa grundläggande layout för editor
-  - “Som användare,
-    vill jag ha en tydlig och uppdelad arbetsyta med en navbar, footer, fil panel och kodeditor,
-    så att jag kan få tydlig och logisk fördelning av layouten som blir lätt att navigera i.”
-- 2: US-102: Registrering (Krav 2.1.1)
-  - “Som ny användare,
-    vill jag kunna registerna ett konto,
-    så att jag kan logga in.”
-- 3: US-103: Logga in och autentisering (Krav: 2.1.1)
-  - “Som användare
-    vill jag kunna trycka på en knapp för att logga in
-    så att jag kan komma åt min arbetsyta”
+- 1: US-101: Create a basic editor layout
+  - "As a user, I want a clear and divided workspace with a navbar, footer, file panel, and code editor so that the layout is easy to understand and navigate."
+- 2: US-102: Registration (Requirement 2.1.1)
+  - "As a new user, I want to register an account so that I can log in."
+- 3: US-103: Login and authentication (Requirement 2.1.1)
+  - "As a user, I want to click a button to log in so that I can access my workspace."
 
 ## Tasks
 
-Nedan tasks är avslutade för US-101:
+The following tasks were completed for US-101:
 
-- T-101-1: Implementera en MainArea-komponent
-- T-101-2: Flytta in befintlig CodeEditor komponent i MainArea och säkerställ korrekt rendering
-- T-101-3: Implementera en Header komponent
-- T-101-4: Implementera en SidBar-komponent
-- T-101-5: Implementera en Footer komponent
+- T-101-1: Implement a `MainArea` component
+- T-101-2: Move the existing `CodeEditor` component into `MainArea` and ensure correct rendering
+- T-101-3: Implement a `Header` component
+- T-101-4: Implement a `SideBar` component
+- T-101-5: Implement a `Footer` component
+- T-101-6: Overall styling for footer, header, sidebar, global color variables, and font variables
 
-Nedan tasks är avslutade för US-102:
+The following tasks were completed for US-102:
 
-- T-102-1: Forms-kompontent + Register-komponent + Formulär
-- T-102-2: Skapa funktioner som hanterar API anrop
-- T-102-3: Hantera formulärstate och koppla auth-flödet till API
-- T-102-4: Layout och Stil Login/Register-flödet
+- T-102-1: `Forms` component + `Register` component + form
+- T-102-2: Create functions that handle API requests
+- T-102-3: Handle form state and connect the auth flow to the API
+- T-102-4: Layout and styling for the login/register flow
 
-## Fördelning & Estimering
-
-**US-101:**
-
-| Uppgift | Sprint | Estimat | Faktisk tid | Namn   |
-| ------- | ------ | ------- | ----------- | ------ |
-| T-101-1 | 1      | ~2h     | ~2h         | Zeb    |
-| T-101-2 | 1      | ~1h     | ~2h         | Zeb    |
-| T-101-3 | 1      | ~2h     | ~3h         | Arian  |
-| T-101-4 | 1      | ~2h     | ~6h         | Niklas |
-| T-101-5 | 1      | ~2h     | ~5h         | Jenny  |
-| T-101-6 | 1      | ~2h     | ~4h         | Arian  |
-
-Estimerad tid: 11h<br>
-Faktisk tid: 22h
-
-**US-102:**
-
-| Uppgift | Sprint | Estimat | Faktisk tid | Namn   |
-| ------- | ------ | ------- | ----------- | ------ |
-| T-102-1 | 1      | ~6h     | ~6h         | Zeb    |
-| T-102-2 | 1      | ~8h     | ~5h         | Zeb    |
-| T-102-3 | 1      | ~6h     | ~7h         | Niklas |
-| T-102-4 | 1      | ~4h     | ~4h         | Arian  |
-
-Estimerad tid: 24h<br>
-Faktisk tid: 22h
-
-## Acceptanskriterier
+## Distribution and Estimates
 
 **US-101:**
 
-- Givet att applikationen startas,<br>
-  När sidan laddas,<br>
-  Då ska en layout med filpanel, editor, footer och navbar visas.
-  <br>
-- Givet att sidan är renderad,<br>
-  När jag tittar på arbetsytan,<br>
-  - Då ska filpanelen vara placerad till vänster om editor-ytan.
-  - Då ska Editor-ytan vara placerad till höger om filpanelen.
-  - Då ska navbaren vara placerad högst upp på sidan.
-  - Då ska footern vara placerad längst ner på sidan.
-    <br>
-- Givet att layouten visas,<br>
-  När jag ändrar storlek på webbläsarfönstret,<br>
-  Då ska fönstren vara responsiva och anpassas utan att bryta layouten.
+| Task    | Sprint | Estimate | Actual time | Name   |
+| ------- | ------ | -------- | ----------- | ------ |
+| T-101-1 | 1      | ~2h      | ~2h         | Zeb    |
+| T-101-2 | 1      | ~1h      | ~2h         | Zeb    |
+| T-101-3 | 1      | ~2h      | ~3h         | Arian  |
+| T-101-4 | 1      | ~2h      | ~6h         | Niklas |
+| T-101-5 | 1      | ~2h      | ~5h         | Jenny  |
+| T-101-6 | 1      | ~2h      | ~4h         | Arian  |
+
+Estimated time: 11h<br>
+Actual time: 22h
 
 **US-102:**
 
-- Givet att man inte har ett konto,<br>
-  När jag klickar på logga in,<br>
-  Då ska det finnas en knapp för att gå till registeringssidan.
+| Task    | Sprint | Estimate | Actual time | Name   |
+| ------- | ------ | -------- | ----------- | ------ |
+| T-102-1 | 1      | ~6h      | ~6h         | Zeb    |
+| T-102-2 | 1      | ~8h      | ~5h         | Zeb    |
+| T-102-3 | 1      | ~6h      | ~7h         | Niklas |
+| T-102-4 | 1      | ~4h      | ~4h         | Arian  |
+
+Estimated time: 24h<br>
+Actual time: 22h
+
+## Acceptance Criteria
+
+**US-101:**
+
+- Given that the application is started,<br>
+  When the page loads,<br>
+  Then a layout with a file panel, editor, footer, and navbar should be displayed.
   <br>
-- Givet att man inte har ett konto,<br>
-  När jag klickar på logga in utan ett existerande konto,<br>
-  Då ska jag bli omdirigerad automatiskt till registeringssidan.
+- Given that the page is rendered,<br>
+  When I look at the workspace,<br>
+  Then the file panel should be placed to the left of the editor area.<br>
+  Then the editor area should be placed to the right of the file panel.<br>
+  Then the navbar should be placed at the top of the page.<br>
+  Then the footer should be placed at the bottom of the page.
   <br>
-- Givet att skriver in en giltig email och lösenord,<br>
-  När jag registrerar mig,<br>
-  Då ska kontot skapas.
+- Given that the layout is displayed,<br>
+  When I resize the browser window,<br>
+  Then the panels should be responsive and adapt without breaking the layout.
+
+**US-102:**
+
+- Given that I do not have an account,<br>
+  When I click log in,<br>
+  Then there should be a button that takes me to the registration page.
   <br>
-- Givet att jag skriver en ogiltig email eller lösenord,<br>
-  När jag försöker registrera mig,<br>
-  Då ska felmeddelanden visas.
+- Given that I do not have an account,<br>
+  When I click log in without an existing account,<br>
+  Then I should automatically be redirected to the registration page.
+  <br>
+- Given that I enter a valid email and password,<br>
+  When I register,<br>
+  Then the account should be created.
+  <br>
+- Given that I enter an invalid email or password,<br>
+  When I try to register,<br>
+  Then error messages should be shown.
 
 ## Backlog
 
-Startläge för backloggen och Trello tavla:
+Initial state of the backlog and Trello board:
 
 ### GitHub Projects
 
@@ -116,149 +111,143 @@ Startläge för backloggen och Trello tavla:
 ![Trello](images/trello-sprint-1-v1.png)
 ![Trello](images/trello-sprint-1-v2.png)
 
-# **2. Leveransdokumentation**
+# 2. Delivery Documentation
 
-### Färdigställda och påbörjade user stories
+### Completed and Started User Stories
 
-#### Under sprinten färdigställdes följande user stories:
+#### The following user stories were completed during the sprint:
 
-US-101: Skapa grundläggande layout för editor<br>
-US-102: Registrering
+US-101: Create a basic editor layout<br>
+US-102: Registration
 
-#### Under sprinten påbörjades följande user stories
+#### The following user stories were started during the sprint:
 
-US-103: Logga in och autentisering (delvis implementerad - UI klart och validering + API koppling påbörjad)
+US-103: Login and authentication (partially implemented - UI completed and validation plus API integration started)
 
-Utöver detta lades även tid på så kallade spikes (förberedande arbete), där samtliga i teamet la varierande antal timmar på att tex. sätta sig in i React, SASS och hur man arbetar agilt med Github och Github Flow. Syftet var att minska osäkerheten och försöka bygga en så stabil grund som möjligt.
+In addition to this, time was also spent on so-called spikes (preparatory work), where everyone on the team spent varying numbers of hours, for example learning React, SASS, and how to work agilely with GitHub and GitHub Flow. The purpose was to reduce uncertainty and build as stable a foundation as possible.
 
 ## Tasks
 
-#### Följande tasks färdigställdes under sprinten:
+#### The following tasks were completed during the sprint:
 
-Task: Uppdatera Labbmiljön med socket.io-client  
-Task: Implementera PR Checks  
-T-101-1: Implementera av MainArea-komponent  
-T-101-2: Flytta in befintlig CodeEditor komponent i MainArea och säkerställ korrekt rendering.  
-T-101-3: Implementera en Header komponent  
-T-101-4: Implementera en SidBar-komponent  
-T-101-5: Implementera en Footer komponent  
-T-101-6: Övergripande styling - Footer, Header, Sidebar, Globala färgvariabler och typsnitts variabler  
-T-102-1: Forms-kompontent + Register-komponent + Formulär  
-T-102-2: Skapa funktioner som hanterar API anrop
-T-102-3: Hantera formulärstate och koppla auth-flödet till API
-T-102-4: Layout och Stil Login/Register-flödet
-T-103-1: Skapa Login-komponent med formulär
+Task: Update the lab environment with `socket.io-client`  
+Task: Implement PR checks  
+T-101-1: Implement the `MainArea` component  
+T-101-2: Move the existing `CodeEditor` component into `MainArea` and ensure correct rendering  
+T-101-3: Implement a `Header` component  
+T-101-4: Implement a `SideBar` component  
+T-101-5: Implement a `Footer` component  
+T-101-6: Overall styling - footer, header, sidebar, global color variables, and font variables  
+T-102-1: `Forms` component + `Register` component + form  
+T-102-2: Create functions that handle API requests  
+T-102-3: Handle form state and connect the auth flow to the API  
+T-102-4: Layout and styling for the login/register flow  
+T-103-1: Create a `Login` component with a form
 
-### Fördelning av färdigställda tasks
+### Distribution of Completed Tasks
 
 Jenny: T-101-5, T-102-3, T-103-2<br>
-Niklas: T-101-4, Task: Uppdatera Labbmiljön med socket.io-client, T-102-3, T-103-2<br>
-Arian: T-101-3, Task: Implementera PR Checks, T-101-6, T-102-4<br>
+Niklas: T-101-4, Task: Update the lab environment with `socket.io-client`, T-102-3, T-103-2<br>
+Arian: T-101-3, Task: Implement PR checks, T-101-6, T-102-4<br>
 Zebastian: T-101-1, T-101-2, T-102-1, T-102-2, T-103-1
 
-## Tidsutfall
+## Time Outcome
 
 ### US-101:
 
-| Uppgift | Sprint | Estimat | Faktisk tid | Namn   |
-| ------- | ------ | ------- | ----------- | ------ |
-| T-101-1 | 1      | ~2h     | ~2h         | Zeb    |
-| T-101-2 | 1      | ~1h     | ~2h         | Zeb    |
-| T-101-3 | 1      | ~2h     | ~3h         | Arian  |
-| T-101-4 | 1      | ~2h     | ~6h         | Niklas |
-| T-101-5 | 1      | ~2h     | ~5h         | Jenny  |
-| T-101-6 | 1      | ~2h     | ~4h         | Arian  |
+| Task    | Sprint | Estimate | Actual time | Name   |
+| ------- | ------ | -------- | ----------- | ------ |
+| T-101-1 | 1      | ~2h      | ~2h         | Zeb    |
+| T-101-2 | 1      | ~1h      | ~2h         | Zeb    |
+| T-101-3 | 1      | ~2h      | ~3h         | Arian  |
+| T-101-4 | 1      | ~2h      | ~6h         | Niklas |
+| T-101-5 | 1      | ~2h      | ~5h         | Jenny  |
+| T-101-6 | 1      | ~2h      | ~4h         | Arian  |
 
-Estimerad tid: 11h<br>
-Faktisk tid: 22h
+Estimated time: 11h<br>
+Actual time: 22h
 
 ### US-102:
 
-**US-102:**
+| Task    | Sprint | Estimate | Actual time | Name   |
+| ------- | ------ | -------- | ----------- | ------ |
+| T-102-1 | 1      | ~6h      | ~6h         | Zeb    |
+| T-102-2 | 1      | ~8h      | ~5h         | Zeb    |
+| T-102-3 | 1      | ~6h      | ~7h         | Niklas |
+| T-102-4 | 1      | ~4h      | ~4h         | Arian  |
 
-| Uppgift | Sprint | Estimat | Faktisk tid | Namn   |
-| ------- | ------ | ------- | ----------- | ------ |
-| T-102-1 | 1      | ~6h     | ~6h         | Zeb    |
-| T-102-2 | 1      | ~8h     | ~5h         | Zeb    |
-| T-102-3 | 1      | ~6h     | ~7h         | Niklas |
-| T-102-4 | 1      | ~4h     | ~4h         | Arian  |
-
-Estimerad tid: 24h<br>
-Faktisk tid: 22h
+Estimated time: 24h<br>
+Actual time: 22h
 
 ### US-103:
 
-| Uppgift | Sprint | Estimat | Faktisk tid | Namn |
-| ------- | ------ | ------- | ----------- | ---- |
-| T-103-1 | 1      | ~4h     | ~4h         | Zeb  |
-| #86     | 1      | ~2h     | ~N/A        |      |
-| #84     | 1      | ~6h     | ~N/A        |      |
-| #87     | 1      | ~2h     | ~N/A        |      |
+| Task    | Sprint | Estimate | Actual time | Name |
+| ------- | ------ | -------- | ----------- | ---- |
+| T-103-1 | 1      | ~4h      | ~4h         | Zeb  |
+| #86     | 1      | ~2h      | ~N/A        |      |
+| #84     | 1      | ~6h      | ~N/A        |      |
+| #87     | 1      | ~2h      | ~N/A        |      |
 
-Estimerad tid: ~20h<br>
-Faktisk tid: ??h
+Estimated time: ~20h<br>
+Actual time: ??h
 
 ## Definition of Done
 
-#### En user story anses vara klar när:
+#### A user story is considered complete when:
 
-- Funktionen **uppfyller** sin user stories **acceptance criteria**
-- User story har **rätt namngivning** och task kan **spåras till user story**
-- Tidsestimering och **tidsrapport** för task är **dokumenterad**
-- Koden **fungerar** lokalt **utan fel**
-- **Felhantering** är implementerad **där det är relevant**
-- README är uppdaterad när det behövs
-- **PR**-beskrivningen **förklarar vad** som gjorts och **kopplar till en user story**
-- **Minst en** annan gruppmedlem **har granskat** och godkänt PR:en
-- Koden är mergad till main
-- Koden följer gruppens kodkonventioner:
-  - Commits, kod & filnamn: Engelsk text
-  - Brödtext i ex Trello/PR/Code-review: Svensk text
-  - React, jsx-filer: PascalCase
-  - js-filer, variabler, props: camelCase
-  - CSS, SASS: kebab-case
-  - mappar: lowercase
+- The feature **meets** the user story's **acceptance criteria**
+- The user story has **correct naming** and the task can be **traced back to the user story**
+- Time estimates and **time reporting** for the task are **documented**
+- The code **runs locally** **without errors**
+- **Error handling** is implemented **where relevant**
+- The README is updated when needed
+- The **PR** description **explains what** was done and **links to a user story**
+- **At least one** other group member **has reviewed** and approved the PR
+- The code is merged into `main`
+- The code follows the group's coding conventions:
+  - Commits, code, and file names: English text
+  - Body text in, for example, Trello/PR/code review: Swedish text
+  - React `.jsx` files: PascalCase
+  - `.js` files, variables, props: camelCase
+  - CSS and SASS: kebab-case
+  - Folders: lowercase
 
 ## Backlog
 
-Slutläge för backloggen:
+Final state of the backlog:
 
 ### GitHub Projects
 
 ![GitHub Projects](images/sprint-1-slut.png)
 
-# **3. Sprint retrospective**
+# 3. Sprint Retrospective
 
-## Vad fungerade bra?
+## What worked well?
 
-Det som fungerade bra var att alla tog eget ansvar och respekterade varandras olika scheman och tillgänglighet. Det gjorde att arbetet kunde flyta på utan att någon behövde bli pushad hela tiden.
+What worked well was that everyone took responsibility and respected each other's different schedules and availability. That made it possible for the work to keep moving without anyone needing to be pushed constantly.
 
-Vi hade också bra kommunikation i gruppen och var snabba på att hjälpa varandra när någon fastnade, vilket gjorde samarbetet smidigare.
+We also had good communication within the group and were quick to help each other when someone got stuck, which made collaboration smoother.
 
-## Vad fungerade mindre bra?
+## What worked less well?
 
-En sak som fungerade mindre bra var att alla fyra jobbade på samma user story/krav samtidigt. Det blev ganska rörigt och ibland ineffektivt när alla skulle vara inne i samma delar och göra allt tillsammans.
+One thing that worked less well was that all four of us worked on the same user story and requirement area at the same time. It became fairly messy and sometimes inefficient when everyone was working in the same areas and trying to do everything together.
 
-Jag tror att det hade varit smidigare att dela upp oss, till exempel två och två på olika user stories. Då hade vi kunnat jobba mer fokuserat och parallellt istället för att alla är inne i alla steg hela tiden.
+We think it would have been smoother to split up, for example by working in pairs on different user stories. That way we could have worked more focused and in parallel instead of everyone being involved in every step all the time.
 
-Det är något vi kan förbättra framöver för att få ett bättre flow i arbetet.
+This is something we can improve going forward to create a better workflow.
 
-## Vad gör vi annorlunda nästa sprint?
+## What will we do differently next sprint?
 
-Nästa sprint vill vi formulera tasks lite bredare, så att det inte blir för många små steg inom samma user story. Som det varit nu kan flera personer bli involverade i onödigt små delar, vilket gör arbetet mindre effektivt.
+In the next sprint we want to formulate tasks a bit more broadly, so that we do not end up with too many small steps inside the same user story. As things have worked so far, several people can become involved in unnecessarily small parts, which makes the work less efficient.
 
-Vi vill också få in en bättre rutin för våra daily standups. Tanken är att hålla dem korta, max 15 minuter, där vi snabbt går igenom vad vi har gjort, vad vi ska göra och om det finns några blockerare. Om något behöver diskuteras mer i detalj tar vi det efter mötet, så att standupen inte drar ut på tiden.
+We also want to establish a better routine for our daily standups. The idea is to keep them short, at most 15 minutes, where we quickly go through what we have done, what we are going to do, and whether there are any blockers. If something needs a more detailed discussion, we will handle it after the meeting so that the standup does not run too long.
 
-## Åtgärder
+## Actions
 
-### Sprintplanning:
+### Sprint Planning
 
-Vi kommer att planera våra user stories och tasks så att de passar för pararbete (två och två). Tanken är att minska beroenden och göra det lättare att vara flexibel i teamet. För att få det att funka kommer vi hålla tasks lite mer övergripande istället för att detaljplanera allt från början. Det par som tar en user story ansvarar själva för att bryta ner den i mindre delar. Vi börjar med detta direkt i nästa sprintplanning.
+We will plan our user stories and tasks so that they fit pair work. The idea is to reduce dependencies and make it easier to stay flexible as a team. To make that work, we will keep the tasks a bit more high level instead of planning every detail from the start. The pair that takes on a user story will be responsible for breaking it down into smaller parts. We will start doing this in the next sprint planning session.
 
-### Daily standup:
+### Daily Standup
 
-Vi sätter av 30 minuter för daily standup. Första 15 minuterna kör vi strukturerat enligt Scrum där alla kort säger vad de gjort, vad de ska göra och om de har några problem. Om något blockerar tar vi det utanför mötet så att standupen inte drar ut på tiden.
-
-Om någon inte kan vara med på voice ska de istället skriva en kort uppdatering i #daily-updates på Discord innan mötet.
-
-Resten av tiden kan användas mer fritt för att snacka igenom saker eller bara hålla lite bättre teamkänsla.
+We will set aside 30 minutes for the daily standup. The first 15 minutes will follow a structured Scrum-style round where everyone briefly says what they have done, what they will do, and whether they have any problems. If something is blocking progress, we will handle it outside the meeting so that the standup does not run too long.
