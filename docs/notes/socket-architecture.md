@@ -137,6 +137,7 @@ It reflects the implementation in `App.jsx`, `Sidebar.jsx`, `MainArea.jsx`,
 - Calls `onRemoteCursorChange(...)` so `MainArea.jsx` can update Monaco decorations.
 
 Note:
+
 - Despite the hook name, the current implementation tracks cursor position only.
 - It does not yet render full text selections or multi-range highlights.
 
