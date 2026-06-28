@@ -1,6 +1,6 @@
 # About the project
 
-In the project we develop a web-based code editor that updates in real-time. This means several developers can edit the code simultaneously. The application is user friendly, responsive and robust.
+This application consists of a web-based code editor that updates in real-time. This means several developers can edit the code simultaneously. The application is user friendly, responsive and robust.
 
 ## Instructions on how to run the application locally
 
@@ -35,6 +35,17 @@ or
 
 `npm run format`<br>
 `npm run format:check`
+
+### Environment variables
+
+To properly run the application make sure you set up environment variables.
+
+- Create file `.env.local` and make sure it is included in .gitignore
+- In `.env.local` add following:
+  VITE_AUTH_API_KEY= [ YOUR API KEY ]
+
+  VITE_AUTH_BASE_URL= [ YOUR AUTH URL ]
+  VITE_DOCKET_BASE_URL= [ YOUR FILESTORAGE URL ]
 
 ## Tech stack
 
